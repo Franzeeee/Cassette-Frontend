@@ -1,0 +1,138 @@
+
+:root {
+    --bg-color: #1E1E1E;
+    --bg-secondary: #101010;
+    --secondary-color: #FF0000;
+}
+
+*::after, *::before, * {
+    box-sizing: border-box;
+}
+
+.bg-main-custom {
+    background-color: var(--bg-color);
+}
+.bg-secondary-custom {
+    background-color: var(--bg-secondary);
+}
+.text-secondary-custom {
+    color: var(--secondary-color);
+}
+
+.gap-1 {
+    gap: 1rem
+}
+.gap-2 {
+    gap: 2rem
+}
+.gap-3 {
+    gap: 3rem
+}
+.gap-4 {
+    gap: 4rem;
+}
+.label-font {
+    font-size: .7rem;
+}
+.fs-custom {
+    font-size: .8rem;
+}
+.w-35 {
+    width: 37%;
+    min-width: 375px;
+    max-width: 600px;
+}
+.rounded-custom {
+    border-radius: 2px !important;
+}
+.fs-custom-input {
+    font-size: .1rem;
+}
+.cursor-pointer {
+    cursor: pointer;
+}
+.website-logo {
+    width: 60px;
+    aspect-ratio: 1/1;
+    border: 2px solid rgb(183, 0, 0);
+}
+.border-red {
+    border-top: 1.5px solid rgb(183, 0, 0);
+    background: transparent;
+}
+
+.socmed-btn {
+    transition: all 0.3s ease;
+    border-radius: 5px;
+    padding: 5px;
+    border: none !important;
+}
+.socmed-btn:hover {
+    transform: scale(1.02) ;
+    box-shadow: 1px 1px 3px rgb(156, 156, 156);
+}
+
+.login-btn {
+    transition: all 0.3s ease;
+    background-color: #c20000;
+    border: none !important;
+    color: white;
+}
+.login-btn:hover {
+    transform: scale(1.02);
+    box-shadow: 1px 1px 3px rgb(217, 0, 0);    
+
+}
+.reg-btn {
+    transition: all 0.3s ease;
+    background-color: #c20000;
+}
+.reg-btn:hover {
+    transform: scale(1.0);
+    box-shadow: 1px 1px 3px rgb(217, 0, 0);    
+
+}
+.email-input input:hover {
+    border: 1px solid red;
+    box-shadow: 3px 3px 5px rgb(217, 0, 0);  
+}
+.email-input input:focus {
+    border: 1px solid red;
+}
+.pw-input input:hover {
+    border: 1px solid red;
+    box-shadow: 3px 3px 5px rgb(217, 0, 0);  
+}
+
+.terms-condition {
+    font-size: .7rem;
+}
+.terms-condition-label {
+    margin-top: -.2rem;
+}
+form .invalid-input {
+    border: 2px solid red;
+}
+form .invalid-input:hover {
+    box-shadow: none;
+    border: 2px solid red;
+}
+form .custom-checkbox{
+    position: relative;
+}
+form .terms-condition.error .custom-checkbox::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 1px solid red;
+    background-color: #9c000088;
+    border-radius: 3px;
+    top: 0;
+    left: 0;
+}
+
+.logo {
+    max-width: 30px !important;
+    margin-right: 0 !important;
+}

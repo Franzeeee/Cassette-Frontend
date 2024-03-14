@@ -1,0 +1,35 @@
+.user-image {
+    border-radius: 100%;
+}
+.sidenav-container {
+    min-width: 200px !important;
+}
+
+.sidenav-links {
+    color: rgb(255, 255, 255);
+    background-color: transparent;
+    max-height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all .3s ease;
+    cursor: pointer;
+}
+
+.sidenav-links.active {
+    color: red;
+    background-color: #0000004e;
+}
+.sidenav-links.active::after {
+    content: "";
+    position: absolute;
+    left: 10px;
+    bottom: 0;
+    height: 100%;
+    width: 5px;
+    background-color: rgb(200, 0, 0);
+}
+.sidenav-links:hover {
+    background-color: #0000004e;
+}

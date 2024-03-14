@@ -1,0 +1,36 @@
+nav {
+    background-color: #101010;
+    max-width: 250px !important;
+    min-width: 250px !important;
+}
+nav ul li {
+    color: #fff;
+    cursor: pointer;
+    margin-bottom: 10px;
+    position: relative;
+    /* width: 100%; */
+}
+
+span {
+    margin-left: 10px;
+}
+nav ul li:after {
+    content: "";
+    width: 0;
+    height: 1px;
+    background-color: #ffffff;
+    box-shadow: 2px 2px 5px solid rgb(255, 47, 47);
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    transition: width .5s ease-out;
+}
+nav li:hover, li.active {
+    color: #ff0000b3;
+}
+nav li:hover::after {
+    width: 100%;
+}
+a {
+    text-decoration: none !important;
+}

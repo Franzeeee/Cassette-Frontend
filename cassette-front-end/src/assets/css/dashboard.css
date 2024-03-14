@@ -1,0 +1,80 @@
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    min-width: 100%;
+    min-height: 100svh;
+}
+
+.dashboard-container {
+    background-color: #000000ec;
+    width: 100% !important;
+}
+.dashboard-container h1 {
+    color: aliceblue;
+    font-size: 1.3rem;
+    font-weight: 400 !important;
+}
+.dashboard-nav {
+    font-size: .7rem;
+}
+.card {
+    background: transparent !important;
+}
+.card-header{
+    border-radius: 0 !important;
+    box-shadow: 0 !important;
+    background-color: #860101 !important;
+    color: #fff !important;
+}
+.card-body {
+    background-color: #0c0c0c33;
+}
+
+.chart-card {
+    min-height: 200px;
+    height: 100svh;
+    max-height: 230px;
+} 
+.chart-card-numbers {
+    min-height: 100px;
+    height: 100vh;
+    max-height: 120px;
+}
+.dashboard-parent {
+    max-height: 100vh !important;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.MuiBreadcrumbs-li:first-child {
+    margin-top: -5px;
+}
+
+.home-breedcrumbs:hover {
+    color: #d40000e0;
+}
+.breadcrumbs {
+    color:  #fffffff2 !important;
+    background-color: transparent !important;
+}
+
+@media (min-width: 1500px)
+{
+    .dashboard-container{
+        max-width: 100% !important;
+    }
+    .chart-card {
+        max-height: 300px;
+        margin-bottom: 1rem;
+        margin-top: 2rem;
+    }
+    .chart-card-numbers {
+        max-height: 200px;
+    }
+}

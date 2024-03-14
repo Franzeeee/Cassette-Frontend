@@ -1,0 +1,83 @@
+.navigation-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #ededed; 
+    margin-right: 20px;
+  }
+  
+  .navigation-button:hover {
+    color: #c20000; 
+  }
+  .search-container {
+    position: relative;
+    background-color: #171616;
+    border: 1px solid #727272;
+    border-radius: 15px;
+    height: 40px;
+    padding: 5px 10px;
+    transition: border-color 0.3s ease;
+    max-width: 300px;
+  }
+  
+  .search-input {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    border: 2px solid transparent;
+    color: #fff;
+    font-size: 16px;
+    outline: none;
+    padding-left: 30px; 
+  }
+  
+  .search-icon {
+    position: absolute;
+    left: 10px; 
+    top: 50%; 
+    transform: translateY(-50%);
+    color: #ccc; 
+  }
+  
+  .search-input::placeholder {
+    color: #ccc;
+    font-size: 14px;
+    padding-left: 10px; 
+  }
+  
+  .search-container:focus-within {
+    border-color: #ffffffff;
+  }
+  
+  .icon-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    margin-right: 25px; 
+    color: #c4baba; 
+  }
+  
+  .icon-button:hover {
+    color: #c20000; 
+  }
+  
+  .icon-button .upload-icon {
+    margin-right: 10px;
+    padding: 3px 3px;
+    font-size: 40px;
+    color:#c20000;
+     transition: transform 0.3s ease;
+  }
+  
+  .upload-icon:hover {
+    transform: scale(1.2); 
+  }
+  
+  .menu-item:hover {
+    background-color: #c20000; /* Highlight color on hover */
+  }
+  
+  
+  

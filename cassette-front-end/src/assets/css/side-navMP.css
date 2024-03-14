@@ -1,0 +1,120 @@
+/* sidenavMP.css */
+.side-nav-mp {
+    background-color: #101010;
+    max-width: 150px !important;
+    min-width: 100px !important;
+  }
+  
+  .side-nav-mp ul li {
+    color: #fff;
+    cursor: pointer;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  
+  .side-nav-mp span {
+    margin-left: 10px;
+  }
+  
+  .side-nav-mp ul li:after {
+    content: "";
+    width: 0;
+    height: 1px;
+    background-color: #ffffff;
+    box-shadow: 2px 2px 5px solid rgb(255, 47, 47);
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    transition: width .5s ease-out;
+  }
+  
+  .side-nav-mp li:hover, .side-nav-mp li.active {
+    color: #ff0000b3;
+  }
+  
+  .side-nav-mp li:hover::after {
+    width: 100%;
+  }
+  
+  .side-nav-mp a {
+    text-decoration: none !important;
+  }
+  
+  /* Additional styles specific to SideNavMP */
+  .divider-top {
+    width: 100%;
+    border: 2px solid #c40303 !important; 
+    margin: 2px 0px 0px;  
+  }
+  
+  .playlist-image {
+    width: 30px;
+    height: 30px; 
+    border-radius: 50%; 
+  }
+  
+  .library-section {
+    padding: 10px 0;
+  }
+
+  .playlist-container {
+    overflow-x: hidden;
+  }
+  
+  .library-header {
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+  
+  .playlist-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    /* Add additional styling as needed for playlist images and names */
+  }
+  
+  .create-playlist-button {
+    background-color: #db0000;
+    color: #fff;
+    border-radius: 20px;
+    padding: 5px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    margin-top: 5px;
+    margin-left:10px;
+    border: none;
+  }
+  
+  .create-playlist-button:hover {
+    background-color: #d11f1f;
+  }
+  
+  .playlist-button {
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+    text-align: left; 
+  }
+  
+  .playlist-button:focus {
+    outline: none; /* Remove default focus outline */
+  }
+  
+  .playlist-button:hover .playlist-image {
+    /* Add hover styles for playlist image */
+  }
+  
+  .playlist-button:hover .playlist-name {
+    /* Add hover styles for playlist name */
+  }
+  
+  .playlist-name {
+    color: white;
+    font-size: 12px;
+  }
+  
+  .library-header {
+    color: white;
+  }
+  

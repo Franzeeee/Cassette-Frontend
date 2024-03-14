@@ -1,0 +1,8 @@
+
+.main-content {
+    max-height: 100svh !important;
+    overflow: hidden;
+    height: auto;
+    min-height: 90svh !important;
+    width: 100%;
+}

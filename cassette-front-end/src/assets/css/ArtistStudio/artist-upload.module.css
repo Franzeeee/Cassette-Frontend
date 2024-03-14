@@ -1,0 +1,7 @@
+.upload-form {
+
+}
+.upload-form > .form-control {
+    border: grey;
+    background: transparent !important;
+}
