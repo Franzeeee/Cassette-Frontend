@@ -11,47 +11,49 @@ import ArtistContent from './pages/Artist/ArtistContent';
 import MusicPlayer from './pages/MusicPlayer';
 import ContentManagement from './pages/Admin/ContentManagement';
 import HomeMP from './pages/HomeMP';
+import AdminRoutes from './routes/AdminRoutes'
+import ListenerRoutes from './routes/ListenerRoutes';
+import StudioRoutes from './routes/StudioRoutes';
+import UnauthenticatedRoutes from './routes/UnauthenticatedRoutes';
+import NotFound from './pages/NotFound';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const isLoggedIn= useState(!!localStorage.getItem('jwt_token'));
+  const role = localStorage.getItem('user_type');
 
-  useEffect(() => {
-    // Check if the user is logged in
-    const token = localStorage.getItem('jwt_token');
-    const loggedIn = !!token;
-    setIsLoggedIn(loggedIn);
-
-    // Check if the user is an admin (you need to implement this logic)
-    const userRole = localStorage.getItem('user_type');
-    const isAdminUser = userRole === 'admin';
-    setIsAdmin(isAdminUser);
-  }, []);
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={isLoggedIn  ? <HomeMP /> : <Navigate to="/login" />}
-        />
-        <Route
-          path="/login"
-          element={isLoggedIn ? <Navigate to="/" /> : <Login />}
-        />
-        <Route
-          path="/register"
-          element={isLoggedIn ? <Navigate to="/" /> : <Register />}
-        />
-        <Route path="*" element={<Navigate to="/" />} />
-        <Route path="/dashboard" element={isAdmin ? (isAdmin ? <Dashboard /> : <Navigate to={'/login'} />) : <Dashboard />} /> 
-        {/* <Route path="/artist_approval" element={isAdmin ? (isAdmin ? <ArtistManagement /> : <Navigate to={'/login'} />) : <ArtistManagement />} /> */}
-        <Route path='/user_management' element={<UserManagement />} />
-        <Route path='/artist_management' element={<ArtistManagement/>} />
-        <Route path='/artist/content' element={<ArtistContent />}/>
-        <Route path='/content_management' element={<ContentManagement/>} />
-        <Route path='/music_player' element={<MusicPlayer/>} />
-        <Route path='/home_mp' element={<HomeMP/>} />
+
+        {/* Route for Unauthenticated users */}
+        <Route element={<UnauthenticatedRoutes loggedIn={isLoggedIn}/>}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />}/>
+        </Route>
+        
+        {/* Route for unassigned routes and for 404 Error page*/}
+        <Route path="*" element={<NotFound />} />
+
+        {/* Routes for Listeners or Authenticated Users */}
+        <Route element={<ListenerRoutes loggedIn={isLoggedIn}/>}>
+          <Route path="/" element={<HomeMP />} />
+          <Route path='/music_player' element={<MusicPlayer/>} />
+        </Route>
+
+        {/* Routes for Admin and Super Admin */}
+        <Route element={<AdminRoutes loggedIn={isLoggedIn} isAdmin={role === 'admin'} />}>
+          <Route path='/dashboard' element={<Dashboard />}/>
+          <Route path='/artist_management' element={<ArtistManagement />} />
+          <Route path='/user_management' element={<UserManagement />} />
+          <Route path='/content_management' element={<ContentManagement/>} />
+        </Route>
+
+        {/* Routes for Studio Page (only for artist, admin, super admin) */}
+        <Route element={<StudioRoutes loggedIn={isLoggedIn} role={role} />}>
+          <Route path='/studio/content' element={<ArtistContent />} />
+        </Route>
+
       </Routes>
     </BrowserRouter>
   );

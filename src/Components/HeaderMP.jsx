@@ -62,7 +62,7 @@ function HeaderMP() {
             },
           }}
         >
-          <Link to={'/artist/content'}><MenuItem onClick={handleMenuClose} sx={{ '&:hover': { backgroundColor: '#c20000' }, color: 'white' }}>Music</MenuItem></Link>
+          <Link to={'/studio/content'}><MenuItem onClick={handleMenuClose} sx={{ '&:hover': { backgroundColor: '#c20000' }, color: 'white' }}>Music</MenuItem></Link>
           <MenuItem onClick={handleMenuClose} sx={{ '&:hover': { backgroundColor: '#c20000' } }}>Podcast</MenuItem>
           <MenuItem onClick={handleMenuClose} sx={{ '&:hover': { backgroundColor: '#c20000' } }}>Videocast</MenuItem>
         </Menu>

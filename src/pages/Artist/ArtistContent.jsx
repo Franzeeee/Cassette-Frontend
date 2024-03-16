@@ -3,12 +3,19 @@ import ArtistLayout from '../../Layout/ArtistLayout';
 import cassette_api from '../../api';
 import styles from '../../assets/css/ArtistStudio/artist-upload.module.css';
 import { toast, ToastContainer } from 'react-toastify'
+import Select from 'react-select';
 
 function ArtistContent() {
     const [title, setTitle] = useState('');
     const [genre, setGenre] = useState('');
     const [selectedFile, setSelectedFile] = useState(null);
     const [selectedAlbum, setSelectedAlbum] = useState('');
+
+    const options = [
+        { value: 'chocolate', label: 'Chocolate' },
+        { value: 'strawberry', label: 'Strawberry' },
+        { value: 'vanilla', label: 'Vanilla' }
+      ]
 
     const handleTitleChange = (event) => {
         setTitle(event.target.value);
@@ -71,7 +78,7 @@ function ArtistContent() {
                 <form className={`w-50 d-flex flex-column gap-3 ${styles['upload-form']}`} onSubmit={handleSubmit} >
                     <div className="form-group d-flex flex-column">
                         <label htmlFor="file">Upload Music File:</label>
-                        <input type="file" className="form-control-file border p-1" id="file" onChange={handleFileChange} accept=".mp3" required />
+                        <input type="file" className="form-control-file border p-1" id="file" onChange={handleFileChange} accept=".mp3" required  multiple/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="title">Title (Required)</label>
@@ -106,6 +113,7 @@ function ArtistContent() {
                                 <option className='bg-dark' key={option.value} value={option.value}>{option.label}</option>
                             ))}
                         </select>
+                        {/* <Select options={options} className='form-control bg-transparent rounded-0 p-2 text-light' isMulti/> */}
                     </div>
                     <button type="submit" className="btn btn-outline-danger">Upload</button>
                 </form>
