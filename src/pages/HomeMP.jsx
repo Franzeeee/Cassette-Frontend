@@ -20,6 +20,7 @@ function Home() {
   const [popularTracks, setPopularTracks] = useState([]);
   const [trendingArtists, setTrendingArtists] = useState([]);
 
+
   // Simulated data for artist of the month
   const simulatedArtistOfMonth = {
     name: "user000001",

@@ -20,6 +20,7 @@ import NotFound from './pages/NotFound';
 function App() {
   const isLoggedIn= useState(!!localStorage.getItem('jwt_token'));
   const role = localStorage.getItem('user_type');
+  
 
 
   return (
