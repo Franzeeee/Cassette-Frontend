@@ -1,72 +1,92 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import LayoutMP from "../Layout/LayoutMP";
-import { Card, Typography } from "@mui/material";
-
 import "../assets/css/musicMP.css";
 import ArtistImg from "../assets/img/artist-img.jpg";
-import AlbumImg from "../assets/img/Cassette-logo.png";
+import AlbumImg from "../assets/img/Cassettelogosq.png";
 
 function MusicMP() {
-  const artists = [
-    { id: 1, name: "Artist 1", image: ArtistImg },
-    { id: 2, name: "Artist 2", image: ArtistImg },
-    { id: 3, name: "Artist 3", image: ArtistImg },
-    { id: 4, name: "Artist 4", image: ArtistImg },
-    { id: 5, name: "Artist 5", image: ArtistImg },
-    { id: 6, name: "Artist 6", image: ArtistImg },
-    { id: 7, name: "Artist 7", image: ArtistImg },
-    { id: 8, name: "Artist 8", image: ArtistImg }
+  const [showArtistPlayButton, setShowArtistPlayButton] = useState(null); // State to control play button visibility for artist cards
+  const [showAlbumPlayButton, setShowAlbumPlayButton] = useState(null); // State to control play button visibility for album cards
 
+  const artists = [
+    { id: 1, name: "Dyo", description: "Artist", image: ArtistImg },
+    { id: 2, name: "J. Poole", description: "Artist", image: ArtistImg },
+    { id: 3, name: "19 Savage", description: "Artist", image: ArtistImg },
+    { id: 4, name: "Yoyoy", description: "Artist", image: ArtistImg },
+    { id: 5, name: "Hev Agi", description: "Artist", image: ArtistImg }
   ];
 
   const albums = [
-    { id: 1, name: "Album 1", image: AlbumImg },
-    { id: 2, name: "Album 2", image: AlbumImg },
-    { id: 3, name: "Album 3", image: AlbumImg },
-    { id: 4, name: "Album 4", image: AlbumImg },
-    { id: 5, name: "Album 5", image: AlbumImg },
-    { id: 6, name: "Album 6", image: AlbumImg },
-    { id: 6, name: "Album 6", image: AlbumImg }
+    { id: 1, name: "Album 1", description: "Description 1", image: AlbumImg },
+    { id: 2, name: "Album 2", description: "Description 2", image: AlbumImg },
+    { id: 3, name: "Album 3", description: "Description 3", image: AlbumImg },
+    { id: 4, name: "Album 4", description: "Description 4", image: AlbumImg },
+    { id: 5, name: "Album 5", description: "Description 5", image: AlbumImg }
   ];
 
   return (
     <LayoutMP activePage={"MusicMP"}>
       <div className="dashboard-container">
-      <div className="artist-title-viewmore">
-      <Typography className="artist-title" variant="h6" gutterBottom>
-            Artists you may know
-          </Typography>
-      <button className="view-morebtn">View More</button>
-      </div>
+        <div className="artist-title-viewmore">
+          <h5 className="artist-title">Artists you may know</h5>
+          <Link to="/artists" className="view-morebtn">Show all</Link>
+        </div>
         <div className="artists-container">
           <div className="artist-cards-container">
             {artists.map(artist => (
-              <Card key={artist.id} className="artist-card">
-                {/* Artist card content */}
-                <img src={artist.image} alt={artist.name} className="artist-image" />
-                <div className="artist-name-container">
-                  <Typography className="artist-name">{artist.name}</Typography>
+              <div
+                key={artist.id}
+                className="artist-card"
+                onMouseEnter={() => setShowArtistPlayButton(artist.id)}
+                onMouseLeave={() => setShowArtistPlayButton(null)}
+              >
+                <div className="image-container">
+                  <img src={artist.image} alt={artist.name} className="artist-image" />
+                  {showArtistPlayButton === artist.id && (
+                    <div className="play-button">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    </div>
+                  )}
                 </div>
-              </Card>
+                <div className="artist-name-container">
+                  <h4 className="artist-name">{artist.name}</h4>
+                  <p className="artist-description">{artist.description}</p>
+                </div>
+              </div>
             ))}
           </div>
         </div>
         <div className="albums-title-viewmore">
-      <Typography className="albums-title" variant="h6" gutterBottom>
-            Popular Albums
-          </Typography>
-      <button className="view-morebtn">View More</button>
-      </div>
+          <h5 className="albums-title">Popular Albums</h5>
+          <Link to="/albums" className="view-morebtn">Show all</Link>
+        </div>
         <div className="albums-container">
           <div className="album-cards-container">
             {albums.map(album => (
-              <Card key={album.id} className="album-card">
-                {/* Album card content */}
-                <img src={album.image} alt={album.name} className="album-image" />
-                <div className="album-name-container">
-                  <Typography className="album-name">{album.name}</Typography>
+              <div
+                key={album.id}
+                className="album-card"
+                onMouseEnter={() => setShowAlbumPlayButton(album.id)}
+                onMouseLeave={() => setShowAlbumPlayButton(null)}
+              >
+                <div className="image-container">
+                  <img src={album.image} alt={album.name} className="album-image" />
+                  {showAlbumPlayButton === album.id && (
+                    <div className="play-button">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z" />
+                      </svg> 
+                    </div>
+                  )}
                 </div>
-              </Card>
+                <div className="album-name-container">
+                  <h4 className="album-name">{album.name}</h4>
+                  <p className="album-description">{album.description}</p>
+                </div>
+              </div>
             ))}
           </div>
         </div>

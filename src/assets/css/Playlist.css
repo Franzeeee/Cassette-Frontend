@@ -1,0 +1,26 @@
+.playlist-container {
+    display: flex;
+    flex-direction: column;
+    margin: 20px 20px 20px 20px;
+    
+  }
+  
+  .top-container,
+  .bottom-container {
+    padding: 20px;
+    color:white;
+  }
+
+  .top-container {
+    display: flex;
+    background: rgb(24, 24, 24);
+    max-height: 250px;
+    min-height: 200px;
+  }
+
+  .bottom-container {
+    display: flex;
+    background: rgba(46, 15, 15, 0.486);
+    min-height: 370px;
+    max-height: 380px;
+}
