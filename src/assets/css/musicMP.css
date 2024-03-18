@@ -1,0 +1,97 @@
+.dashboard-container {
+  width: 100%;
+  height: 50%;
+  padding: 3px 3px 2px 3px;
+  margin: 20px 20px 20px 20px;
+  overflow: hidden !important;
+}
+
+.overflow-auto {
+  overflow: hidden !important;
+}
+
+.artist-title-viewmore,
+.albums-title-viewmore {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  gap: 65%;
+  margin-right: 30px;
+}
+
+.view-morebtn {
+  background-color: transparent;
+  color: #c20000;
+  border-width: 0px;
+}
+
+.artists-container,
+.albums-container {
+  margin: 30px 30px 30px 30px;
+  min-height: 200px;
+  max-height: 350px;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+
+
+.artist-title,
+.albums-title {
+  color: rgb(214, 214, 214);
+}
+
+.artist-cards-container,
+.album-cards-container {
+  display: flex;
+  gap: 70px; 
+}
+
+.css-bhp9pd-MuiPaper-root-MuiCard-root {
+  max-width: fit-content;
+  background-color: transparent !important;
+}
+
+.artist-card,
+.album-card {
+  flex: 0 0 auto;
+  width: calc(20% - 20px); /* Adjust the width as needed */
+  display: flex;
+  flex-direction: column;
+}
+
+.artist-info,
+.album-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.artist-image,
+.album-image {
+  max-width: 150px !important;
+  min-width: 120px !important;
+  max-height: 150px !important;
+  min-height: 120px !important;
+  border-radius: 5px;
+}
+
+.artist-name-container,
+.album-name-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.artist-name,
+.album-name {
+  color: rgb(199, 197, 197);
+}
+
+
+/* Custom scrollbar styling */
+.artists-container::-webkit-scrollbar,
+.albums-container::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+

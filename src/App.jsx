@@ -11,6 +11,7 @@ import ArtistContent from './pages/Artist/ArtistContent';
 import MusicPlayer from './pages/MusicPlayer';
 import ContentManagement from './pages/Admin/ContentManagement';
 import HomeMP from './pages/HomeMP';
+import MusicMP from './pages/MusicMP';
 import AdminRoutes from './routes/AdminRoutes'
 import ListenerRoutes from './routes/ListenerRoutes';
 import StudioRoutes from './routes/StudioRoutes';
@@ -40,6 +41,7 @@ function App() {
         <Route element={<ListenerRoutes loggedIn={isLoggedIn}/>}>
           <Route path="/" element={<HomeMP />} />
           <Route path='/music_player' element={<MusicPlayer/>} />
+          <Route path='/musicMP' element={<MusicMP/>} />
         </Route>
 
         {/* Routes for Admin and Super Admin */}

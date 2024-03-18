@@ -1,6 +1,6 @@
 /* sidenavMP.css */
 .side-nav-mp {
-    background-color: #101010;
+    background-color: #0B0B0B;
     max-width: 150px !important;
     min-width: 100px !important;
   }
@@ -101,13 +101,7 @@
     outline: none; /* Remove default focus outline */
   }
   
-  .playlist-button:hover .playlist-image {
-    /* Add hover styles for playlist image */
-  }
-  
-  .playlist-button:hover .playlist-name {
-    /* Add hover styles for playlist name */
-  }
+
   
   .playlist-name {
     color: white;

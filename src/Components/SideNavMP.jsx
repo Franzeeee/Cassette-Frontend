@@ -25,7 +25,7 @@ function SideNavMP({ activePage }) {
 
   return (
     <nav className="side-nav-mp">
-      <ul className="w-100 d-flex flex-column list-unstyled align-items-start gap-4 py-4 px-3 mb-0">
+      <ul className=" d-flex flex-column list-unstyled align-items-start gap-4 py-4 px-3 mb-0">
         {navItems.map((item, index) => (
           <Link to={item.link} key={index}>
             <li
