@@ -14,7 +14,7 @@
   overflow: hidden !important;
 }
 
-.artist-title-viewmore{
+.artist-title-viewmore {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-around;
@@ -43,17 +43,15 @@
   overflow-y: hidden;
 }
 
-
 .artist-title,
 .albums-title {
   color: rgb(214, 214, 214);
-
 }
 
 .artist-cards-container,
 .album-cards-container {
   display: flex;
-  gap: 35px; 
+  gap: 35px;
   margin-right: 0px;
 }
 
@@ -61,7 +59,6 @@
   max-width: fit-content;
   background-color: transparent !important;
 }
-
 
 .album-card {
   max-width: 200px;
@@ -92,7 +89,6 @@
   left: 15px; /* Adjust the left position as needed */
 }
 
-
 .artist-info,
 .album-info {
   display: flex;
@@ -106,11 +102,10 @@
   max-height: 190px !important;
   min-height: 170px !important;
   border-radius: 50%;
-  object-fit:contain;
+  object-fit: contain;
   justify-content: center;
   align-items: center;
-  box-shadow: 0px 14px 16px rgba(8, 8, 8, 0.6)
-
+  box-shadow: 0px 14px 16px rgba(8, 8, 8, 0.6);
 }
 
 .album-image {
@@ -120,8 +115,7 @@
   min-height: 170px !important;
   border-radius: 10px;
   object-fit: cover;
-  box-shadow: 0px 14px 16px rgba(8, 8, 8, 0.6)
-
+  box-shadow: 0px 14px 16px rgba(8, 8, 8, 0.6);
 }
 
 .artist-name-container,
@@ -144,7 +138,6 @@
   margin-top: 5px; /* Add some space between the name and description */
 }
 
-
 /* Custom scrollbar styling */
 .artists-container::-webkit-scrollbar,
 .albums-container::-webkit-scrollbar {
@@ -160,20 +153,17 @@
 .artist-card:hover {
   background-color: rgba(15, 15, 15, 0.808); /* Lighter gray background color */
   transition: background-color 0.3s ease; /* Smooth transition */
-
 }
-
 
 .card-content {
   position: relative;
 }
 
-
 .play-button {
   position: absolute;
   right: 25px;
   bottom: 0;
-  display: none; 
+  display: none;
   width: 40px;
   height: 40px;
   background-color: rgba(219, 8, 8, 1);
@@ -184,7 +174,7 @@
   color: white;
   cursor: pointer;
   opacity: 0;
-  transition: 320ms
+  transition: 320ms;
 }
 
 .artist-card:hover .play-button,
@@ -193,9 +183,53 @@
   opacity: 1; /* Set opacity to 1 */
 }
 
-
 .play-button svg {
   width: 24px;
   height: 24px;
 }
 
+/* Responsive Styles */
+
+/* For screens smaller than 768px */
+@media (max-width: 768px) {
+  .dashboard-container {
+    margin: 20px 10px; /* Adjust margin for smaller screens */
+  }
+
+  .artist-title-viewmore,
+  .albums-title-viewmore {
+    gap: 5%; /* Reduce the gap between elements */
+  }
+
+  .artists-container,
+  .albums-container {
+    margin: 0px; /* Reset margin */
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: column; /* Stack cards vertically */
+    align-items: center; /* Center items */
+    gap: 20px; /* Add space between containers */
+  }
+
+  .artist-cards-container,
+  .album-cards-container {
+    flex-wrap: wrap; /* Allow cards to wrap */
+    justify-content: center; /* Center cards */
+    gap: 20px; /* Add space between cards */
+  }
+
+  .artist-card,
+  .album-card {
+    width: calc(50% - 20px); /* Adjust card width */
+    max-width: 200px; /* Limit maximum width */
+  }
+}
+
+/* For screens smaller than 480px */
+@media (max-width: 480px) {
+  .artist-card,
+  .album-card {
+    width: calc(100% - 20px); /* Adjust card width for smaller screens */
+  }
+}
