@@ -13,6 +13,7 @@ import ContentManagement from './pages/Admin/ContentManagement';
 import HomeMP from './pages/HomeMP';
 import MusicMP from './pages/MusicMP';
 import Playlist from './pages/Playlist';
+import Artist from './pages/Artist';
 import AdminRoutes from './routes/AdminRoutes'
 import ListenerRoutes from './routes/ListenerRoutes';
 import StudioRoutes from './routes/StudioRoutes';
@@ -44,6 +45,7 @@ function App() {
           <Route path='/music_player' element={<MusicPlayer/>} />
           <Route path='/musicMP' element={<MusicMP/>} />
           <Route path='/playlist' element={<Playlist/>} />
+          <Route path='/artist' element={<Artist/>} />
         </Route>
 
         {/* Routes for Admin and Super Admin */}

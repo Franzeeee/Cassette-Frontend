@@ -33,7 +33,7 @@ function MusicMP() {
       <div className="dashboard-container">
         <div className="artist-title-viewmore">
           <h5 className="artist-title">Artists you may know</h5>
-          <Link to="/artists" className="view-morebtn">Show all</Link>
+          <Link to="/artist" className="view-morebtn">Show all</Link>
         </div>
         <div className="artists-container">
           <div className="artist-cards-container">

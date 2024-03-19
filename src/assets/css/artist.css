@@ -1,0 +1,192 @@
+/* Adjustments for artist Component */
+
+.artist-container {
+    display: flex;
+    flex-direction: column;
+    margin: 20px; /* Adjust margins as needed */
+  }
+  
+  .a-top-container,
+  .a-bottom-container {
+    padding: 10px;
+    color: white;
+    border-radius: 10px;
+  }
+  
+  .a-top-container {
+    display: flex;
+    flex-direction: column;
+    background: 
+      linear-gradient(47deg, #111111 30%, transparent 30%) -2px -1px,
+      linear-gradient(-45deg, #111111 30%, transparent 25%) -1px -1px,
+      linear-gradient(45deg, transparent 75%, #3d0000 75%) -1px -1px,
+      linear-gradient(-45deg, transparent 75%, #6b0202 75%) -1px -1px,
+      radial-gradient(circle at 50% 50%, #5a0101, #7a0202, #8b0000);
+    max-height: 230px;
+    min-height: 210px;
+  }
+  
+  .a-top-mid-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    max-height: 240px;
+    min-height: 220px;
+    min-width: 600px;
+    max-width: 550px;
+    position: relative;
+  }
+  
+  .a-image img {
+    position: relative;
+    top: 10px;
+    left: 10px;
+    width: 180px;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3); /* Shadow effect */
+  }
+  
+  .a-info {
+    position: relative;
+    top: -130px;
+    left: 210px;
+    border-radius: 5px;
+    line-height: 50px;
+  }
+  
+  .a-type {
+    font-size: 13px;
+  }
+  
+  .a-name {
+    font-size: 45px;
+    font-weight: bold; 
+    font-family: "Circular Std", sans-serif;
+  }
+  .a-songs {
+    font-size: 14px;
+  }
+  .a-playbutton {
+    position: absolute;
+    bottom: 70px;
+    right: -420px;
+    width: 100px; /* Adjust width as needed */
+    height: 100px; /* Adjust height as needed */
+    background-color: #a70606;
+    border: none;
+    border-radius: 50%;
+    color: #ffffff;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Shadow effect */
+  }
+  
+  .bottom-container {
+    display: flex;
+    flex-direction: column;
+    background: rgba(19, 18, 18, 0.486);
+    min-height: 280px;
+    max-height: 300px;
+    padding: 20px; /* Add padding for better spacing */
+    overflow: hidden; /* Hide overflow */
+  }
+  
+  .artist-table-container {
+    overflow-y: auto; /* Add scroll only to tbody */
+    overflow-x: hidden;
+    max-height: 100%; /* Set maximum height to 100% of parent */
+  }
+  
+  .artist-table {
+    width: calc(100% + 17px); /* Add scrollbar width to avoid width jumping */
+    border-collapse: collapse;
+  }
+  
+  .artist-table tbody .track-number {
+    width: 20px !important; /* Adjust width for track number column */
+  }
+  
+  .artist-table tbody td {
+    padding: 10px 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-top: 20px; /* Add margin to prevent collision with th */
+  }
+  
+  .artist-table .a-track-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .artist-table .a-track-image {
+    width: 30px; /* Adjust width as needed */
+    height: 30px; /* Adjust height as needed */
+    margin-right: 10px; /* Add right margin for spacing */
+    border-radius: 50%; /* Make the image circular */
+  }
+  
+  .artist-table .a-track-details {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .artist-table .a-track-title {
+    font-size: 16px; /* Adjust font size as needed */
+    font-weight: bold; /* Make title bold */
+  }
+  
+  .artist-table .a-track-singer {
+    font-size: 14px; /* Adjust font size as needed */
+  }
+  
+  .artist-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 0; /* Adjust padding as needed */
+    border-bottom: 1px solid #333; /* Add border bottom to separate items */
+  }
+  
+  .artist-item:nth-last-child(1) {
+    border-bottom: none; /* Remove border bottom for the last item */
+  }
+  
+  .artist-item .number {
+    flex: 0 0 40px; /* Fixed width for number column */
+    text-align: center; /* Center align text */
+  }
+  
+  .artist-item .title {
+    flex: 1; /* Flex to take remaining space */
+    padding-left: 10px; /* Add left padding */
+  }
+  
+  .artist-item .album,
+  .artist-item .duration {
+    flex: 0 0 100px; /* Fixed width for album and duration columns */
+    text-align: center; /* Center align text */
+  }
+  
+  .artist-item .album {
+    padding-left: 10px; /* Add left padding */
+  }
+  
+  .artist-item .dateadded {
+    padding-left: 10px; /* Add left padding */
+  }
+  
+  .artist-item .duration {
+    padding-right: 10px; /* Add right padding */
+  }
+  
+  .artist-item:hover {
+    background-color: #333; /* Change background color on hover */
+    cursor: pointer; /* Add pointer cursor on hover */
+  }
+  
+  .artist-item:hover .number,
+  .artist-item:hover .title,
+  .artist-item:hover .album,
+  .artist-item:hover .duration {
+    color: #fff; /* Change text color on hover */
+  }
+  
