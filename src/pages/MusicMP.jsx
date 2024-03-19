@@ -14,7 +14,8 @@ function MusicMP() {
     { id: 2, name: "J. Poole", description: "Artist", image: ArtistImg },
     { id: 3, name: "19 Savage", description: "Artist", image: ArtistImg },
     { id: 4, name: "Yoyoy", description: "Artist", image: ArtistImg },
-    { id: 5, name: "Hev Agi", description: "Artist", image: ArtistImg }
+    { id: 5, name: "Hev Agi", description: "Artist", image: ArtistImg },
+    { id: 6, name: "Jumong", description: "Artist", image: ArtistImg }
   ];
 
   const albums = [
@@ -22,7 +23,9 @@ function MusicMP() {
     { id: 2, name: "Album 2", description: "Description 2", image: AlbumImg },
     { id: 3, name: "Album 3", description: "Description 3", image: AlbumImg },
     { id: 4, name: "Album 4", description: "Description 4", image: AlbumImg },
-    { id: 5, name: "Album 5", description: "Description 5", image: AlbumImg }
+    { id: 5, name: "Album 5", description: "Description 5", image: AlbumImg },
+    { id: 6, name: "Album 6", description: "Description 6", image: AlbumImg }
+
   ];
 
   return (

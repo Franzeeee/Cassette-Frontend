@@ -22,6 +22,8 @@ function Playlist() {
     { number: 3, title: "Track 3", singer: "Artist 3", album: "Album 3", dateadded: "March 23, 2024", duration: "3:45", image: PlaylistImg },
     { number: 4, title: "Track 4", singer: "Artist 4", album: "Album 4", dateadded: "March 23, 2024", duration: "3:45", image: PlaylistImg },
     { number: 5, title: "Track 5", singer: "Artist 5", album: "Album 5", dateadded: "March 23, 2024", duration: "3:45", image: PlaylistImg },
+    { number: 6, title: "Track 6", singer: "Artist 6", album: "Album 6", dateadded: "March 23, 2024", duration: "3:45", image: PlaylistImg }
+
     // Add more tracks as needed
   ];
 

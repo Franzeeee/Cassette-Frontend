@@ -37,7 +37,7 @@
 .artists-container,
 .albums-container {
   margin: 0px 10px 20px 30px;
-  min-height: 200px;
+  min-height: 230px;
   max-height: 250px;
   overflow-x: auto;
   overflow-y: hidden;
@@ -51,7 +51,7 @@
 .artist-cards-container,
 .album-cards-container {
   display: flex;
-  gap: 35px;
+  gap: 25px;
   margin-right: 0px;
 }
 
@@ -61,8 +61,8 @@
 }
 
 .album-card {
-  max-width: 200px;
-  min-width: 200px;
+  max-width: 180px;
+  min-width: 170px;
   display: flex;
   flex-direction: column;
   background-color: #080808c5;
@@ -70,8 +70,8 @@
 }
 
 .artist-card {
-  max-width: 200px;
-  min-width: 200px;
+  max-width: 180px;
+  min-width: 170px;
   display: flex;
   flex-direction: column;
   background-color: transparent;
@@ -79,14 +79,14 @@
 }
 
 .image-container {
-  position: relative; /* Ensure the container is positioned relative */
+  position: relative; 
 }
 
 .artist-image,
 .album-image {
-  position: relative; /* Position the image absolutely within its container */
-  top: 10px; /* Adjust the top position as needed */
-  left: 15px; /* Adjust the left position as needed */
+  position: relative; 
+  top: 10px; 
+  left: 10px; 
 }
 
 .artist-info,
@@ -97,10 +97,10 @@
 }
 
 .artist-image {
-  max-width: 190px !important;
-  min-width: 170px !important;
-  max-height: 190px !important;
-  min-height: 170px !important;
+  max-width: 160px !important;
+  min-width: 150px !important;
+  max-height: 160px !important;
+  min-height: 150px !important;
   border-radius: 50%;
   object-fit: contain;
   justify-content: center;
@@ -109,10 +109,10 @@
 }
 
 .album-image {
-  max-width: 170px !important;
-  min-width: 150px !important;
-  max-height: 190px !important;
-  min-height: 170px !important;
+  max-width: 150px !important;
+  min-width: 140px !important;
+  max-height: 150px !important;
+  min-height: 140px !important;
   border-radius: 10px;
   object-fit: cover;
   box-shadow: 0px 14px 16px rgba(8, 8, 8, 0.6);
@@ -133,9 +133,9 @@
 
 .artist-description,
 .album-description {
-  font-size: 12px; /* Set the font size for the descriptions */
-  color: #a8a8a8; /* Set the text color to gray */
-  margin-top: 5px; /* Add some space between the name and description */
+  font-size: 12px;
+  color: #a8a8a8; 
+  margin-top: 5px; 
 }
 
 /* Custom scrollbar styling */
@@ -146,12 +146,12 @@
 }
 
 .album-card:hover {
-  background-color: rgba(15, 15, 15, 0.808); /* Lighter gray background color */
+  background-color: rgba(15, 15, 15, 0.808); 
   transition: background-color 0.3s ease; /* Smooth transition */
 }
 
 .artist-card:hover {
-  background-color: rgba(15, 15, 15, 0.808); /* Lighter gray background color */
+  background-color: rgba(15, 15, 15, 0.808); 
   transition: background-color 0.3s ease; /* Smooth transition */
 }
 
@@ -177,6 +177,23 @@
   transition: 320ms;
 }
 
+.image-container .play-button {
+  position: absolute;
+  right: 25px;
+  top: 135px;
+  display: none;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(219, 8, 8, 1);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  cursor: pointer;
+  opacity: 0;
+  transition: 320ms;
+}
 .artist-card:hover .play-button,
 .album-card:hover .play-button {
   bottom: -5px; /* Adjust to original position */
@@ -191,7 +208,7 @@
 /* Responsive Styles */
 
 /* For screens smaller than 768px */
-@media (max-width: 768px) {
+@media (max-width: 650px) {
   .dashboard-container {
     margin: 20px 10px; /* Adjust margin for smaller screens */
   }
@@ -227,7 +244,7 @@
 }
 
 /* For screens smaller than 480px */
-@media (max-width: 480px) {
+@media (max-width: 380px) {
   .artist-card,
   .album-card {
     width: calc(100% - 20px); /* Adjust card width for smaller screens */
