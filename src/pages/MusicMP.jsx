@@ -1,32 +1,34 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
 import LayoutMP from "../Layout/LayoutMP";
 import "../assets/css/musicMP.css";
-import ArtistImg from "../assets/img/artist-img.jpg";
-import AlbumImg from "../assets/img/Cassettelogosq.png";
+import {artists} from '../logic/musicMp.logic'
+import cassette_api from "../api";
+
 
 function MusicMP() {
   const [showArtistPlayButton, setShowArtistPlayButton] = useState(null); // State to control play button visibility for artist cards
   const [showAlbumPlayButton, setShowAlbumPlayButton] = useState(null); // State to control play button visibility for album cards
 
-  const artists = [
-    { id: 1, name: "Dyo", description: "Artist", image: ArtistImg },
-    { id: 2, name: "J. Poole", description: "Artist", image: ArtistImg },
-    { id: 3, name: "19 Savage", description: "Artist", image: ArtistImg },
-    { id: 4, name: "Yoyoy", description: "Artist", image: ArtistImg },
-    { id: 5, name: "Hev Agi", description: "Artist", image: ArtistImg }
-  ];
+  //Album data
+  const [albums, setAlbums] = useState([])
 
-  const albums = [
-    { id: 1, name: "Album 1", description: "Description 1", image: AlbumImg },
-    { id: 2, name: "Album 2", description: "Description 2", image: AlbumImg },
-    { id: 3, name: "Album 3", description: "Description 3", image: AlbumImg },
-    { id: 4, name: "Album 4", description: "Description 4", image: AlbumImg },
-    { id: 5, name: "Album 5", description: "Description 5", image: AlbumImg }
-  ];
+  useEffect(() => {
+    const fetchAlbums = async () => {
+      try {
+        const response = await cassette_api.get('/album/all');
+        setAlbums(response.data)
+      } catch (error) {
+        console.error("Error fetching albums:", error);
+      }
+    };
+
+    fetchAlbums();
+  }, []);
+
 
   return (
-    <LayoutMP activePage={"MusicMP"}>
+    <LayoutMP activePage={"Home"}>
       <div className="dashboard-container">
         <div className="artist-title-viewmore">
           <h5 className="artist-title">Artists you may know</h5>
@@ -65,16 +67,16 @@ function MusicMP() {
         </div>
         <div className="albums-container">
           <div className="album-cards-container">
-            {albums.map(album => (
+            {albums.map((album,index) => (
               <div
-                key={album.id}
+                key={index}
                 className="album-card"
-                onMouseEnter={() => setShowAlbumPlayButton(album.id)}
+                onMouseEnter={() => setShowAlbumPlayButton(index)}
                 onMouseLeave={() => setShowAlbumPlayButton(null)}
               >
                 <div className="image-container">
-                  <img src={album.image} alt={album.name} className="album-image" />
-                  {showAlbumPlayButton === album.id && (
+                  <img src={album.cover_image} alt={album.title} className="album-image" />
+                  {showAlbumPlayButton === index && (
                     <div className="play-button">
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                         <path d="M8 5v14l11-7z" />
@@ -83,7 +85,7 @@ function MusicMP() {
                   )}
                 </div>
                 <div className="album-name-container">
-                  <h4 className="album-name">{album.name}</h4>
+                  <h4 className="album-name">{album.title}</h4>
                   <p className="album-description">{album.description}</p>
                 </div>
               </div>
