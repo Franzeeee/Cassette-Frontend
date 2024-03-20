@@ -47,11 +47,12 @@ body {
   
   .artist-card-container {
     width: calc(100%) !important; 
-    margin-right: 20px !important; 
     border: 2px solid #c20000;
     border-radius: 7px;
   }
-  
+  .artist-card-container:first-child {
+    width: 100% !important;
+  }
   .like-button {
     color: #afacac !important;
   }

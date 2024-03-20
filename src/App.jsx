@@ -41,9 +41,8 @@ function App() {
 
         {/* Routes for Listeners or Authenticated Users */}
         <Route element={<ListenerRoutes loggedIn={isLoggedIn}/>}>
-          <Route path="/" element={<HomeMP />} />
+          <Route path="/" element={<MusicMP />} />
           <Route path='/music_player' element={<MusicPlayer/>} />
-          <Route path='/musicMP' element={<MusicMP/>} />
           <Route path='/playlist' element={<Playlist/>} />
           <Route path='/artist' element={<Artist/>} />
         </Route>
