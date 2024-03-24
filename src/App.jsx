@@ -19,6 +19,9 @@ import ListenerRoutes from './routes/ListenerRoutes';
 import StudioRoutes from './routes/StudioRoutes';
 import UnauthenticatedRoutes from './routes/UnauthenticatedRoutes';
 import NotFound from './pages/NotFound';
+import { TestTrack } from './pages/TestTrack';
+import ArtistUpload from './pages/Artist/ArtistUpload';
+import Album from './pages/Album';
 
 function App() {
   const isLoggedIn= useState(!!localStorage.getItem('jwt_token'));
@@ -30,14 +33,18 @@ function App() {
     <BrowserRouter>
       <Routes>
 
+        <Route path='test' element={<ArtistUpload />} />
+
         {/* Route for Unauthenticated users */}
         <Route element={<UnauthenticatedRoutes loggedIn={isLoggedIn}/>}>
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />}/>
+
         </Route>
-        
+        <Route path="/register" element={<Register />}/>
+        <Route path="/album/:index" element={<Album />}/> 
         {/* Route for unassigned routes and for 404 Error page*/}
         <Route path="*" element={<NotFound />} />
+
 
         {/* Routes for Listeners or Authenticated Users */}
         <Route element={<ListenerRoutes loggedIn={isLoggedIn}/>}>
