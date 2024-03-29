@@ -1,13 +1,10 @@
-import { Navigate, Outlet } from "react-router-dom"
+import React from 'react';
+import { Navigate, Outlet } from 'react-router-dom';
 
-function ListenerRoutes(props) {
+function ListenerRoutes() {
+  const isLoggedIn = !!localStorage.getItem('jwt_token');
 
-    const useAuth = () => {
-        return props.loggedIn
-    }
-    
-    return useAuth() ? <Outlet /> : <Navigate to={'/login'} />
-
+  return isLoggedIn ? <Outlet /> : <Navigate to="/login" />;
 }
 
-export default ListenerRoutes
+export default ListenerRoutes;

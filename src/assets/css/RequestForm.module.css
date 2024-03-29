@@ -1,0 +1,10 @@
+.modalHeader {
+    background-color: #b71414 !important;
+    color: white !important;
+}
+.modalHeader button {
+    color: white !important;
+}
+.modal > .modal-content {
+    background: red !important;
+}

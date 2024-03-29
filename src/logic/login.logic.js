@@ -32,9 +32,11 @@ const useLogin = () => {
             .then(response => {
                 // Store token to local storage
                 const token = response.data.token;
-                const user_type = response.data.user_type; 
+                const user_type = response.data.user_type;
+                const user_id = response.data.user_id;
                 localStorage.setItem('jwt_token', token);
                 localStorage.setItem('user_type', user_type);
+                localStorage.setItem('ID', user_id);
                 window.location.reload();
             })
             .catch(error => {

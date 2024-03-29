@@ -1,31 +1,56 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect,useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import LayoutMP from "../Layout/LayoutMP";
 import "../assets/css/Playlist.css";
 import { faPlayCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PlaylistImg from "../assets/img/artist-img.jpg";
 import AlbumImg from "../assets/img/Cassettelogosq.png";
+import cassette_api from "../api";
 
-function Playlist() {
-  
-  const playlistData = {
-    type: "Playlist",
-    name: "My Playlist",
-    songs: "78",
-    image: AlbumImg,
-  };
+function Album() {
 
-  const playlistTracks = [
-    { number: 1, title: "Track 1", singer: "Artist 1", album: "Album 1", dateadded: "March 23, 2024", duration: "3:45", image: PlaylistImg },
-    { number: 2, title: "Track 2", singer: "Artist 2", album: "Album 2", dateadded: "March 23, 2024", duration: "3:45", image: PlaylistImg },
-    { number: 3, title: "Track 3", singer: "Artist 3", album: "Album 3", dateadded: "March 23, 2024", duration: "3:45", image: PlaylistImg },
-    { number: 4, title: "Track 4", singer: "Artist 4", album: "Album 4", dateadded: "March 23, 2024", duration: "3:45", image: PlaylistImg },
-    { number: 5, title: "Track 5", singer: "Artist 5", album: "Album 5", dateadded: "March 23, 2024", duration: "3:45", image: PlaylistImg },
-    { number: 6, title: "Track 6", singer: "Artist 6", album: "Album 6", dateadded: "March 23, 2024", duration: "3:45", image: PlaylistImg }
+    const [playlistData, setPlaylistData] = useState({
+        type: "Album",
+        name: "My Album",
+        songs: "78",
+        image: AlbumImg,
+    });
 
-    // Add more tracks as needed
-  ];
+    const [playlistTracks, setPlaylistTracks] = useState([]);
+    const navigate = useNavigate();
+
+    const { index } = useParams();
+
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        const options = { month: 'long', day: 'numeric', year: 'numeric' };
+        return date.toLocaleDateString('en-US', options);
+      }      
+
+    useEffect( () => {
+        
+        cassette_api.get(`/albums/${index}`)
+        .then(response => {
+            const responseData = response.data;
+            setPlaylistData({
+            ...playlistData,
+            name: responseData.title,
+            songs: responseData.music.length,
+            image: responseData.cover_image
+            });
+            setPlaylistTracks(response.data.music)
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
+    }, [index])
+
+    const playAlbum = () => {
+
+      navigate(`/player/${index}`);
+    }
 
   return (
     <LayoutMP activePage={"Music"}>
@@ -40,7 +65,7 @@ function Playlist() {
               <div className="p-name">{playlistData.name}</div>
               <div className="p-songs">{playlistData.songs} songs</div>
             </div>
-            <button className="p-playbutton">
+            <button className="p-playbutton" onClick={playAlbum}>
               <FontAwesomeIcon icon={faPlayCircle} size="3x" /> {/* Play button icon */}
             </button>
           </div>
@@ -52,7 +77,6 @@ function Playlist() {
                 <tr>
                   <th>#</th>
                   <th>Title</th>
-                  <th>Album</th>
                   <th>Date Added</th>
                   <th>Duration</th>
                 </tr>
@@ -60,18 +84,17 @@ function Playlist() {
               <tbody>
                 {playlistTracks.map((track, index) => (
                   <tr key={index}>
-                    <td>{track.number}</td>
+                    <td>{index + 1}</td>
                     <td>
                       <div className="p-track-info">
-                        <img src={track.image} alt={`Track ${track.number}`} className="p-track-image" />
+                        <img src={playlistData.image} alt={`Track ${track.number}`} className="p-track-image" />
                         <div className="p-track-details">
                           <span className="p-track-title">{track.title}</span>
                           <span className="p-track-singer">{track.singer}</span>
                         </div>
                       </div>
                     </td>
-                    <td>{track.album}</td>
-                    <td>{track.dateadded}</td>
+                    <td>{formatDate(track.updated_at)}</td>
                     <td>{track.duration}</td>
                   </tr>
                 ))}
@@ -84,4 +107,4 @@ function Playlist() {
   );
 }
 
-export default Playlist;
+export default Album;

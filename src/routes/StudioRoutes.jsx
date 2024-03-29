@@ -1,15 +1,11 @@
-import { Navigate, Outlet } from "react-router-dom"
+import React from 'react';
+import { Navigate, Outlet } from 'react-router-dom';
 
-function StudioRoutes(props) {
+function StudioRoutes({ role }) {
+  const isLoggedIn = !!localStorage.getItem('jwt_token');
+  const isArtist = role === 'admin' || role === 'artist';
 
-    const useAuth = () => {
-        const isArtist = props.role == 'admin' || props.role == 'artist';
-
-        return props.loggedIn && isArtist;
-    }
-    
-    return useAuth() ? <Outlet /> : <Navigate to={'/'} />
-
+  return isLoggedIn && isArtist ? <Outlet /> : <Navigate to="/" />;
 }
 
-export default StudioRoutes
+export default StudioRoutes;

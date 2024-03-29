@@ -1,5 +1,6 @@
 .user-image {
     border-radius: 100%;
+    min-height: 75px !important;
 }
 .sidenav-container {
     min-width: 200px !important;

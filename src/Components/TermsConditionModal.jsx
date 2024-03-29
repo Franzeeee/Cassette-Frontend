@@ -19,7 +19,7 @@ const TermsConditionModal = ({ show, handleClose }) => {
       </Modal.Body>
       <Modal.Footer>
         <Button variant="danger" className='w-100 text-white bg-danger p-2' onClick={handleClose}>
-          I Agree
+          Close
         </Button>
       </Modal.Footer>
     </Modal>
