@@ -50,7 +50,7 @@ function Register() {
                     </div>
                     <div className={`d-flex align-items-start justify-content-center gap-1 mt-3 terms-condition ${!disagree ? 'error' : ''}`}>
                         <input type="checkbox" onChange={handleCheckbox} name='agreement' className='custom-checkbox'/>
-                        <label htmlFor="agreement" className='terms-condition-label'>I agree to the Cassette's Terms and Condition of use and Privacy Policy</label>
+                        <label htmlFor="agreement" className='terms-condition-label'>I agree to the Cassette Terms and Condition of use and Privacy Policy</label>
                     </div>
                     <FormButton text={'Register'} isLoading={isLoading} />
                 </form>
