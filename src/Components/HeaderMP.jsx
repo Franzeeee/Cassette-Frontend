@@ -6,9 +6,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faChevronLeft, faChevronRight, faPlusCircle, faBell, faCog } from "@fortawesome/free-solid-svg-icons";
 import { Menu, MenuItem } from '@mui/material';
 import { Link } from "react-router-dom";
+import RequestForm from "./Artist/RequestForm";
+import LogoutButton from "./LogoutButton";
 
-function HeaderMP() {
+function HeaderMP({ verified }) {
   const [anchorEl, setAnchorEl] = useState(null);
+  const role = localStorage.getItem('user_type');
 
   const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -18,8 +21,15 @@ function HeaderMP() {
     setAnchorEl(null);
   };
 
+  const [show, setShow] = useState(false)
+  const handleOpen = () => setShow(true)
+
   return (
     <header className="w-100 p-2 row m-0 text-light bg-black">
+      <RequestForm
+        show={show}
+        handleClose={() => setShow(false)}
+      />
       <div className="col-lg-2 col-md-2 col-sm-4 d-flex gap-2">
         <div className="logo-container d-flex align-items-center justify-content-start gap-2">
           <img src={logo} alt="cassette logo" className="logo" />
@@ -48,9 +58,13 @@ function HeaderMP() {
       </div>
 
       <div className="col-lg-3 col-md-4 col-sm-2 d-flex justify-content-end align-items-center">
-        <button className="icon-button" onClick={handleMenuClick} title="Upload Content">
-          <FontAwesomeIcon icon={faPlusCircle} className="upload-icon" />
-        </button>
+        { 
+          role != 'listener' ? 
+            <button className="icon-button" onClick={handleMenuClick} title="Upload Content">
+              <FontAwesomeIcon icon={faPlusCircle} className="upload-icon" />
+            </button> : 
+            <button className="btn btn-danger applyArtistBtn" onClick={handleOpen} disabled={!verified}>Become an Artist</button>
+        }
         <Menu
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
@@ -70,7 +84,7 @@ function HeaderMP() {
           <FontAwesomeIcon icon={faBell} />
         </button>
         <button className="icon-button">
-          <FontAwesomeIcon icon={faCog} />
+          <LogoutButton />{/* Profile/Logout */}
         </button>
       </div>
     </header>

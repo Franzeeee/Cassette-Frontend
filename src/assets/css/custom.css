@@ -136,3 +136,11 @@ form .terms-condition.error .custom-checkbox::after {
     max-width: 30px !important;
     margin-right: 0 !important;
 }
+.TermsConditionText {
+    color: rgba(242, 16, 16, 0.998) !important;
+    text-decoration: underline;
+}
+
+.TermsConditionText :hover {
+    color: red;
+}

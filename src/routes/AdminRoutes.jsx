@@ -1,17 +1,10 @@
-import { Navigate, Outlet } from "react-router-dom"
-import Login from "../pages/Login";
+import React from 'react';
+import { Navigate, Outlet } from 'react-router-dom';
 
-function AdminRoutes(props) {
+function AdminRoutes({ isAdmin }) {
+  const isLoggedIn = !!localStorage.getItem('jwt_token');
 
-    const useAuth = () => {
-        const loggedIn = props.loggedIn;
-        const isAdmin = props.isAdmin;
-
-        return loggedIn && isAdmin
-    }
-    
-    return useAuth() ? <Outlet /> : <Navigate to={'/'} />
-
+  return isLoggedIn && isAdmin ? <Outlet /> : <Navigate to="/" />;
 }
 
-export default AdminRoutes
+export default AdminRoutes;

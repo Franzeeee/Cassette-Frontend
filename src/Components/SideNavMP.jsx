@@ -16,7 +16,7 @@ function SideNavMP({ activePage }) {
   const active = activePage;
   const navItems = [
     { text: "Home", icon: faHome, link: "/" },
-    { text: "Music", icon: faMusic, link: "/music_player" },
+    { text: "Music", icon: faMusic, link: "/music" },
     { text: "Podcasts", icon: faPodcast, link: "/Podcasts" },
     { text: "Videocasts", icon: faVideo, link: "/Videocasts" },
     { text: "Live", icon: faBroadcastTower, link: "/Live" },
@@ -60,8 +60,6 @@ function SideNavMP({ activePage }) {
           <button className="create-playlist-button">Create Playlist</button>
         </Link>
       </div>
-
-      {/* Profile/Logout */}
     </nav>
   );
 }

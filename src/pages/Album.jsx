@@ -1,5 +1,5 @@
 import React, { useEffect,useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import LayoutMP from "../Layout/LayoutMP";
 import "../assets/css/Playlist.css";
 import { faPlayCircle } from "@fortawesome/free-solid-svg-icons";
@@ -18,6 +18,7 @@ function Album() {
     });
 
     const [playlistTracks, setPlaylistTracks] = useState([]);
+    const navigate = useNavigate();
 
     const { index } = useParams();
 
@@ -46,6 +47,11 @@ function Album() {
 
     }, [index])
 
+    const playAlbum = () => {
+
+      navigate(`/player/${index}`);
+    }
+
   return (
     <LayoutMP activePage={"Music"}>
       <div className="playlist-container">
@@ -59,7 +65,7 @@ function Album() {
               <div className="p-name">{playlistData.name}</div>
               <div className="p-songs">{playlistData.songs} songs</div>
             </div>
-            <button className="p-playbutton">
+            <button className="p-playbutton" onClick={playAlbum}>
               <FontAwesomeIcon icon={faPlayCircle} size="3x" /> {/* Play button icon */}
             </button>
           </div>

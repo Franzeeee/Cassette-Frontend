@@ -4,6 +4,7 @@ import LayoutMP from "../Layout/LayoutMP";
 import "../assets/css/musicMP.css";
 import {artists} from '../logic/musicMp.logic'
 import cassette_api from "../api";
+import RequestForm from "../Components/Artist/RequestForm";
 
 
 function MusicMP() {
@@ -32,12 +33,18 @@ function MusicMP() {
     navigate(`/album/${id} `);
   }
 
+  const [show, setShow] = useState(false)
+  const handleOpen = () => setShow(true)
 
   return (
     <LayoutMP activePage={"Home"}>
       <div className="dashboard-container">
+        <RequestForm 
+          show={show}
+          handleClose={() => setShow(false)}
+        />
         <div className="artist-title-viewmore">
-          <h5 className="artist-title">Artists you may know</h5>
+          <h5 className="artist-title" onClick={handleOpen}>Artists you may know</h5>
           <Link to="/artist" className="view-morebtn">Show all</Link>
         </div>
         <div className="artists-container">

@@ -29,8 +29,7 @@ const useRegister = () => {
     };
 
     const handleCheckbox = (e) => {
-        setIsChecked(e.target.checked);
-        setShowModal(!showModal);
+        setIsChecked(!isChecked)
     }
 
     
@@ -41,7 +40,7 @@ const useRegister = () => {
     const handleSubmit = (e) => {
         setIsLoading(true);
         e.preventDefault();
-        if(!showModal && !isChecked){
+        if(!isChecked){
             toast.error("You must agree to the terms and condition to continue.");
             setIsLoading(false);
             setDisagree(false)
@@ -85,7 +84,7 @@ const useRegister = () => {
             });
     };
 
-    return { formData, responseMessage, errorMessage, isLoading, isChecked, showModal, showModal, emailError, passwordError, disagree, handleChange, handleSubmit, handleCloseModal, handleCheckbox };
+    return { formData, responseMessage, errorMessage, isLoading, isChecked, setIsChecked, showModal, showModal, emailError, passwordError, disagree, handleChange, handleSubmit, handleCloseModal, handleCheckbox };
 };
 
 export default useRegister;

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import SocialMediaButton from '../Components/SocialMediaButton';
 import NameLogo from '../Components/NameLogo';
 import useRegister from '../logic/register.logic';
@@ -17,6 +18,7 @@ function Register() {
             errorMessage, 
             isLoading,
             isChecked,
+            setIsChecked,
             showModal,
             emailError,
             passwordError,
@@ -24,15 +26,16 @@ function Register() {
             handleChange, 
             handleSubmit, 
             handleCheckbox, 
-            handleCloseModal
         } = useRegister();
+    const [show, setShow] = useState(false)
+    const handleOpen = () => setShow(true)
 
     return (
         <div className='container-fluid d-flex justify-content-center align-items-center vh-100 vw-100 bg-main-custom'>
             <ToastContainer />
             <TermsConditionModal 
-                show={isChecked}
-                handleClose={handleCloseModal}
+                show={show}
+                handleClose={() => setShow(false)}
             />
             {responseMessage && (<AlertMessage type="success" message={responseMessage}/>)}
             {errorMessage && (<AlertMessage type="danger" message={errorMessage}/>)}
@@ -49,8 +52,8 @@ function Register() {
                         <input type="password" name='password' value={formData.password} onChange={handleChange} placeholder='Enter Password' className={`form-control rounded-custom fs-6 ${passwordError ? 'invalid-input' : ''}`}/>
                     </div>
                     <div className={`d-flex align-items-start justify-content-center gap-1 mt-3 terms-condition ${!disagree ? 'error' : ''}`}>
-                        <input type="checkbox" onChange={handleCheckbox} name='agreement' className='custom-checkbox'/>
-                        <label htmlFor="agreement" className='terms-condition-label'>I agree to the Cassette Terms and Condition of use and Privacy Policy</label>
+                        <input type="checkbox" name='agreement' onChange={handleCheckbox} className='custom-checkbox'/>
+                        <label htmlFor="agreement" className='terms-condition-label'>I agree to the Cassette <span className='TermsConditionText' onClick={handleOpen}>Terms and Condition of use and Privacy Policy</span></label>
                     </div>
                     <FormButton text={'Register'} isLoading={isLoading} />
                 </form>

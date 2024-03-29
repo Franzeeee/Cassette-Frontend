@@ -25,19 +25,16 @@ function useHome() {
                 });
 
                 setName(response.data.user.name);
-                if(response.data.user.email_verified_at !== null){
-                    setIsVerified(true);
-                }
+                setIsVerified(response.data.user.email_verified_at !== null);
                 setId(response.data.user.id);
                 setEmail(response.data.user.email);
-                console.log(isVerified);
             } catch (error) {
                 console.error('Error fetching user data:', error);
             }
         };
 
         fetchUserData();
-    }, []); // Empty dependency array to run the effect only once
+    }, []);
 
     const handleResend = (e) => {
         e.preventDefault();
@@ -65,7 +62,7 @@ function useHome() {
     }
     
     // Return the state value you want to use in your component
-    return {name, isVerified, id, link, loadResend, email, handleResend};
+    return { name, isVerified, id, link, loadResend, email, handleResend };
 }
 
 export default useHome;

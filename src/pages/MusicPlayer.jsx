@@ -17,6 +17,7 @@ import Track1 from "../assets/img/artist-img.jpg";
 import track1lyrics from "../assets/lyrics/track1lyrics.txt";
 import track2lyrics from "../assets/lyrics/track2lyrics.txt";
 import cassete_api from "../api";
+import { useParams } from "react-router-dom";
 
 function MusicPlayer() {
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
@@ -31,23 +32,24 @@ function MusicPlayer() {
   const progressBarRef = useRef(null);
   const audioPlayerRef = useRef(null);
   const progressIntervalRef = useRef(null);
+  const { index } = useParams();
 
   useEffect(() => {
     // Fetch music data from the backend
     cassete_api
-      .get("/music")
+      .post("/fetchMusic", {"album_id": index})
       .then(async (response) => {
         // Transform the response data into the desired format
         const formattedTracks = await Promise.all(
           response.data.map(async (track, index) => {
-            const audioUrl = track.music_file_name; // Assuming this is the URL of the audio file
+            const audioUrl = track.file_name; // Assuming this is the URL of the audio file
             try {
               // Fetch duration for the audio file
               const duration = await getAudioDuration(audioUrl);
               // Return formatted track with duration
               return {
                 number: index + 1,
-                image: Track1, // Replace with the actual image
+                image: track.album_cover, // Replace with the actual image
                 title: track.title,
                 artist: track.artist,
                 duration: formatDuration(duration), // Format duration as needed
@@ -62,7 +64,7 @@ function MusicPlayer() {
               // If there's an error fetching duration, return the track without duration
               return {
                 number: index + 1,
-                image: Track1, // Replace with the actual image
+                image: track.album_cover, // Replace with the actual image
                 title: track.title,
                 artist: track.artist,
                 duration: "Unknown",
@@ -205,7 +207,7 @@ function MusicPlayer() {
   }, [showLyrics, currentTrackIndex, nextTracks]);
 
   return (
-    <LayoutMP activePage={"music-player"}>
+    <LayoutMP activePage={"Music"}>
       {/* Audio Element */}
       <audio
         ref={audioPlayerRef}
@@ -213,7 +215,7 @@ function MusicPlayer() {
         src={
           nextTracks.length > 0 && nextTracks[currentTrackIndex].audio_link
         }
-        autoPlay={false}
+        autoPlay={true}
         onEnded={handleNextTrack}
         id="audio"
         style={{ display: "none" }}
