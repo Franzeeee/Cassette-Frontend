@@ -10,6 +10,7 @@ import RequestForm from "./Artist/RequestForm";
 import LogoutButton from "./LogoutButton";
 import cassette_api from "../api";
 
+
 function HeaderMP({ verified }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const role = localStorage.getItem('user_type');
@@ -41,6 +42,13 @@ function HeaderMP({ verified }) {
     }
   }
 
+  const goBack = () => {
+    window.history.back()
+  }
+  const goForward = () => {
+    window.history.forward()
+  }
+
   return (
     <header className="w-100 p-2 row m-0 text-light bg-black">
       <RequestForm
@@ -56,10 +64,10 @@ function HeaderMP({ verified }) {
 
       <div className="col-lg-1 col-md-1 col-sm-2 d-flex justify-content-end">
         <button className="navigation-button">
-          <FontAwesomeIcon icon={faChevronLeft} />
+          <FontAwesomeIcon icon={faChevronLeft} onClick={() => goBack()}/>
         </button>
         <button className="navigation-button">
-          <FontAwesomeIcon icon={faChevronRight} />
+          <FontAwesomeIcon icon={faChevronRight} onClick={() => goForward()}/>
         </button>
       </div>
 

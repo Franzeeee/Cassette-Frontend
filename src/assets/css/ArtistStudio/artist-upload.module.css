@@ -40,3 +40,55 @@
     overflow: auto;
     max-height: 230px !important;
 }
+.contentContainer {
+    max-height: 540px !important;
+    overflow: auto;
+}
+.albumImage {
+    width: 100%;
+    max-width: 250px;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 5px;
+}
+.albumContainer {
+    display: flex;
+    gap: 10px;
+}
+.albumContainer div:last-child {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-block: 5px;
+    gap: 5px
+}
+.albumContainer div:last-child input, .albumContainer div:last-child textarea {
+    background-color: rgba(255, 255, 255, 0.127);
+    outline: none;
+    padding: 10px;
+    color: white !important;
+    font-size: .9rem;
+    border: 1px solid red;
+}
+
+.albumContainer div:last-child textarea {
+    height: 150px;
+    width: 100%;
+    resize: vertical;
+    max-height: 200px;
+}
+.albumImageContainer {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+.albumImageContainer input {
+    position: absolute;
+    height: 100%;
+    opacity: 0;
+}
+.albumImageContainer p {
+    color: rgba(255, 255, 255, 0.727);
+}
