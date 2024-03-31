@@ -57,9 +57,11 @@ const useRegister = () => {
                     // Store token to local storage
                     const token = response.data.token;
                     const user_type = response.data.user_type;
+                    const storedId = response.data.user_id
                     console.log(user_type);
                     localStorage.setItem('jwt_token', token);
                     localStorage.setItem('user_type', user_type);
+                    localStorage.setItem('ID', storedId);
                     window.location.reload()
                     // navigateTo('/');
                 }).catch(error => {

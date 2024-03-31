@@ -193,3 +193,60 @@
 .playlist-item:hover .duration {
   color: #fff; /* Change text color on hover */
 }
+
+.albumEditIcon, .albumDeleteIcon {
+  transition: all .3s ease;
+  font-size: 1.2rem;
+  width: 20px;
+  position: absolute;
+  top: 10px;
+  cursor: pointer;
+}
+.albumEditIcon {
+  right: 50px;
+}
+.albumDeleteIcon {
+  right: 15px;
+}
+
+.albumEditIcon:hover, .albumDeleteIcon:hover {
+  color: #eb0505;
+}
+.albumEdit-name {
+  width: 100%;
+  padding: 5px !important;
+  max-height: 30px;
+  color: white;
+  background-color: #ffffff3a;
+  border: 1px solid #e807079a;
+  outline: none;
+}
+.albumEdit-name:focus{
+  border: 1px solid #eb0505;
+}
+.albumMusicTitle {
+  background-color: #ffffff3c;
+  border: 1px solid red;
+  outline: none;
+  width: 80% !important;
+  color: white !important;
+}
+.albumMusicControl {
+  max-width: 35px !important;
+  min-width: 35px !important;
+  text-align: center !important;
+}
+.albumMusicDuration {
+  min-width: 30px !important;
+  max-width: 30px !important;
+}
+
+.albumMusicDelete {
+  text-align: center;
+  transition: all .3s ease;
+}
+
+.albumMusicDelete svg:hover {
+  color: red;
+  cursor: pointer;
+}

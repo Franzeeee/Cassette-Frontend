@@ -29,7 +29,6 @@ function MusicMP() {
   }, []);
 
   const viewAlbum = (id) => {
-
     navigate(`/album/${id} `);
   }
 

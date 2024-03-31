@@ -2,25 +2,69 @@ import React, { useEffect,useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import LayoutMP from "../Layout/LayoutMP";
 import "../assets/css/Playlist.css";
-import { faPlayCircle } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faPlayCircle, faTrashCan, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PlaylistImg from "../assets/img/artist-img.jpg";
 import AlbumImg from "../assets/img/Cassettelogosq.png";
 import cassette_api from "../api";
+import { Tooltip } from "@mui/material";
+import DeleteAlbumModal from "../Components/Artist/DeleteAlbumModal";
+import DeleteMusicModal from "../Components/Artist/DeleteMusicModal";
+import { toast, ToastContainer } from "react-toastify";
 
 function Album() {
 
-    const [playlistData, setPlaylistData] = useState({
-        type: "Album",
-        name: "My Album",
-        songs: "78",
-        image: AlbumImg,
+  const [role, setRole] = useState(localStorage.getItem('user_type'))
+  const [edit, setEdit] = useState(false)
+  const [canEdit, setCanEdit] = useState(false);
+  const userId = localStorage.getItem("ID")
+  const [showModal, setShowModal] = useState(false)
+  const { index } = useParams();
+  const [playlistTracks, setPlaylistTracks] = useState([]);
+  const navigate = useNavigate();
+
+  const [editTitle, setEditTitle] = useState(false);
+  const [newTitle, setNewTitle] = useState("");
+  const [musicId, setMusicId] = useState();
+
+  const handleDoubleClick = (e) => {
+    setEditTitle(true);
+    setNewTitle(e.target.textContent)
+  };
+
+  const handleMusicTitleChange = (e) => {
+    setPlaylistTracks(e.target.value);
+  };
+
+  const handleBlur = (id) => {
+    setEditTitle(false);
+    alert(id)
+  };
+
+  const [playlistData, setPlaylistData] = useState({
+      type: "Album",
+      name: "My Album",
+      songs: "78",
+      image: AlbumImg,
     });
 
-    const [playlistTracks, setPlaylistTracks] = useState([]);
-    const navigate = useNavigate();
+    
+  // Field for updated album
+  const [newAlbumData, setNewAlbumData] = useState({...playlistData, id: index});
 
-    const { index } = useParams();
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewAlbumData({ ...newAlbumData, [name]: value });
+    setPlaylistData({...playlistData, [name]: value})
+  };
+
+    const handleDeleteModal = (id) => {
+      setShowModal(true)
+    }
+
+    const handleClose = () => {
+      setShowModal(false)
+    }
 
     function formatDate(dateString) {
         const date = new Date(dateString);
@@ -40,6 +84,7 @@ function Album() {
             image: responseData.cover_image
             });
             setPlaylistTracks(response.data.music)
+            setCanEdit(userId == responseData.artist || role === "admin")
         })
         .catch(error => {
             console.log(error);
@@ -52,17 +97,71 @@ function Album() {
       navigate(`/player/${index}`);
     }
 
+    const handleEditClick = () => {
+      setEdit(true)
+    }
+    const handleSaveClick = (e) => {
+      e.preventDefault();
+
+      cassette_api.post('album/update/', newAlbumData)
+        .then(response => {
+          toast.success(response.data.message)
+        })
+        .catch(err => console.error("Error: " , err))
+
+      setPlaylistData({
+        ...playlistData,
+        name: newAlbumData.name,
+        });
+      setEdit(false)
+    }
+
+    // Music Delete modal
+    const [showMusicDelete, setShowMusicDelete] = useState(false);
+    const deleteMusicModal = (id) => {
+      setShowMusicDelete(true)
+      setMusicId(id)
+      console.log(id)
+    }
+    const handleCloseMusic = () => {
+      setShowMusicDelete(false)
+    }
   return (
     <LayoutMP activePage={"Music"}>
       <div className="playlist-container">
-        <div className="top-container">
+        <DeleteAlbumModal show={showModal} handleClose={handleClose} albumId={index}/>
+        <DeleteMusicModal show={showMusicDelete} musicId={musicId} handleClose={handleCloseMusic} albumId={index}/>
+        <div className="top-container position-relative ">
+          {
+            canEdit && (
+              <>
+                <Tooltip data-toggle="tooltip" data-html="true" title={`${edit ? 'Save' : 'Edit'}`}>
+                  <FontAwesomeIcon icon={edit ? faCheck : faEdit} className="albumEditIcon" onClick={edit ?(e) => handleSaveClick(e) : handleEditClick}/>
+                </Tooltip>
+                <Tooltip data-toggle="tooltip" data-html="true" title="Delete">
+                  <FontAwesomeIcon icon={faTrashCan} className="albumDeleteIcon" onClick={handleDeleteModal}/>
+                </Tooltip>
+              </>
+            )
+          }
+          <ToastContainer />
           <div className="top-mid-container">
             <div className="p-image">
               <img src={playlistData.image} alt="Playlist" />
             </div>
             <div className="p-info">
               <div className="type">{playlistData.type}</div>
-              <div className="p-name">{playlistData.name}</div>
+              {edit ? (
+                  <input
+                      type="text"
+                      name="name"
+                      value={playlistData.name}
+                      className="albumEdit-name"
+                      onChange={(e) => handleChange(e)}
+                  />
+              ) : (
+                  <div className="p-name">{playlistData.name}</div>
+              )}
               <div className="p-songs">{playlistData.songs} songs</div>
             </div>
             <button className="p-playbutton" onClick={playAlbum}>
@@ -77,8 +176,11 @@ function Album() {
                 <tr>
                   <th>#</th>
                   <th>Title</th>
-                  <th>Date Added</th>
-                  <th>Duration</th>
+                  <th className="albumMusicDate">Date Added</th>
+                  <th className="albumMusicDuration">Duration</th>
+                  {
+                    edit && (<th className="albumMusicControl">Control</th>)
+                  }
                 </tr>
               </thead>
               <tbody>
@@ -88,14 +190,34 @@ function Album() {
                     <td>
                       <div className="p-track-info">
                         <img src={playlistData.image} alt={`Track ${track.number}`} className="p-track-image" />
-                        <div className="p-track-details">
-                          <span className="p-track-title">{track.title}</span>
+                        <div className="p-track-details w-100">
+
+                          {edit ? (
+                            <input
+                              type="text"
+                              value={track.title}
+                              className="albumMusicTitle w-75"
+                              onChange={handleChange}
+                              onBlur={() => handleBlur(id)}
+                              autoFocus
+                            />
+                          ) : (
+                            <span className="p-track-title" onDoubleClick={e => handleDoubleClick(e)}>{track.title}</span>
+                          )}
+
                           <span className="p-track-singer">{track.singer}</span>
                         </div>
                       </div>
                     </td>
                     <td>{formatDate(track.updated_at)}</td>
                     <td>{track.duration}</td>
+                    {
+                      edit && (<td className="albumMusicDelete" >
+                        <Tooltip data-toggle="tooltip" data-html="true" title="Delete">
+                          <FontAwesomeIcon icon={faTrashCan} className="albumMusicDelete" onClick={(e) => deleteMusicModal(track.id)}/>
+                        </Tooltip></td>
+                    )
+                    }
                   </tr>
                 ))}
               </tbody>

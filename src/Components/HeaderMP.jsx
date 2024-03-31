@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../assets/css/headerMP.css";
 import logo from "../assets/img/Cassette-logo.png";
 
@@ -8,10 +8,13 @@ import { Menu, MenuItem } from '@mui/material';
 import { Link } from "react-router-dom";
 import RequestForm from "./Artist/RequestForm";
 import LogoutButton from "./LogoutButton";
+import cassette_api from "../api";
 
 function HeaderMP({ verified }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const role = localStorage.getItem('user_type');
+  const id = localStorage.getItem("ID")
+  const [requestStatus, setRequestStatus] = useState(false);
 
   const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -21,8 +24,22 @@ function HeaderMP({ verified }) {
     setAnchorEl(null);
   };
 
+  useEffect(() => {
+    cassette_api.post('/artist-status', {"id": id})
+      .then(response => setRequestStatus(response.data.found))
+      .catch(err => console.error("ERROR: ", err))
+  },[]);
+
   const [show, setShow] = useState(false)
-  const handleOpen = () => setShow(true)
+  const handleOpen = (e) => {
+    e.preventDefault()
+
+    if(e.target.classList.contains('btn-success')){
+      return;
+    }else {
+      setShow(true)
+    }
+  }
 
   return (
     <header className="w-100 p-2 row m-0 text-light bg-black">
@@ -63,7 +80,7 @@ function HeaderMP({ verified }) {
             <button className="icon-button" onClick={handleMenuClick} title="Upload Content">
               <FontAwesomeIcon icon={faPlusCircle} className="upload-icon" />
             </button> : 
-            <button className="btn btn-danger applyArtistBtn" onClick={handleOpen} disabled={!verified}>Become an Artist</button>
+            <button className={`btn applyArtistBtn ${requestStatus ? 'btn-success cursor-notAllowed' : "applyArtistBtn-red"}`} onClick={(e) => handleOpen(e)} disabled={!verified}>{requestStatus ? "Request Pending" : "Become an Artist"}</button>
         }
         <Menu
           anchorEl={anchorEl}
