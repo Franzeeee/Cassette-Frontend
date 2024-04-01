@@ -2,7 +2,7 @@ import React from 'react';
 import LayoutMP from '../../Layout/LayoutMP';
 import "../../assets/css/MusicCards/rock.css"; 
 import "../../assets/css/Circular.css"; 
-import DefImage from "/workspaces/Cassette-Frontend/src/assets/img/Cassettelogosq.png";
+import DefImage from "../../assets/img/Cassettelogosq.png";
 
 function RockPage() {
   const rockData = [

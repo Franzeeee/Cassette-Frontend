@@ -26,10 +26,10 @@ import RequestForm from './Components/Artist/RequestForm';
 
 // Pages for music categories
 import TopCharts from './pages/MusicBrowseCards/TopCharts';
-import NewReleases from './pages/MusicBrowseCards/NewReleases';
+import NewReleases from './pages/MusicBrowseCards/NewReleases'
 import Recommended from './pages/MusicBrowseCards/Recommended';
-import ArtistSpotlight from './pages/MusicBrowseCards/ArtistSpotlight';
-import Rock from './pages/MusicBrowseCards/Rock';
+import ArtistSpotlight from './pages/MusicBrowseCards/ArtistSpotlight'
+import Rock from './pages/MusicBrowseCards/Rock'
 // import Pop from './pages/music/Pop';
 // import HipHop from './pages/music/HipHop';
 // import Rap from './pages/music/Rap';
