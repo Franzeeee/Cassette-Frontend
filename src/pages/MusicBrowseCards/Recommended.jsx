@@ -2,7 +2,7 @@ import React from 'react';
 import LayoutMP from '../../Layout/LayoutMP';
 import "../../assets/css/MusicCards/recommended.css"; // Update CSS import path
 import "../../assets/css/Circular.css"; // Update CSS import path
-import DefImage from "/workspaces/Cassette-Frontend/src/assets/img/Cassettelogosq.png";
+import DefImage from "../../assets/img/Cassettelogosq.png";
 
 function Recommended() {
   const recommendedData = [

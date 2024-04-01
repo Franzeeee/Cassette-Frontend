@@ -31,9 +31,8 @@
     display: flex;
     flex-wrap: wrap; /* Allow flex items to wrap to the next line */
     gap: 20px;
-    justify-content: space-between; /* Distribute flex items evenly */
+    justify-content: space-evenly; /* Distribute flex items evenly */
     overflow-x: auto; /* Enable horizontal scrolling */
-    margin: 20px;
 }
 
 .mcard-image {

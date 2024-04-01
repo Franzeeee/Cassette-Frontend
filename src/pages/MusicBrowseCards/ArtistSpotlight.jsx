@@ -2,7 +2,7 @@ import React from 'react';
 import LayoutMP from '../../Layout/LayoutMP';
 import "../../assets/css/MusicCards/artist-spotlight.css"; 
 import "../../assets/css/Circular.css"; 
-import DefImage from "/workspaces/Cassette-Frontend/src/assets/img/Cassettelogosq.png";
+import DefImage from "../../assets/img/Cassettelogosq.png";
 
 function ArtistSpotlight() {
   const artistSpotlightData = [
