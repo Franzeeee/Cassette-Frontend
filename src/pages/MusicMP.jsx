@@ -5,7 +5,7 @@ import "../assets/css/musicMP.css";
 import {artists} from '../logic/musicMp.logic'
 import cassette_api from "../api";
 import RequestForm from "../Components/Artist/RequestForm";
-
+import "../assets/css/Circular.css"; 
 
 function MusicMP() {
   const [showArtistPlayButton, setShowArtistPlayButton] = useState(null); // State to control play button visibility for artist cards

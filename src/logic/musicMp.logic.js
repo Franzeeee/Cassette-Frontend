@@ -8,7 +8,9 @@ export const artists = [
     { id: 2, name: "J. Poole", description: "Artist", image: ArtistImg },
     { id: 3, name: "19 Savage", description: "Artist", image: ArtistImg },
     { id: 4, name: "Yoyoy", description: "Artist", image: ArtistImg },
-    { id: 5, name: "Hev Agi", description: "Artist", image: ArtistImg }
+    { id: 5, name: "Hev Agi", description: "Artist", image: ArtistImg },
+    { id: 6, name: "George", description: "Artist", image: ArtistImg }
+
   ];
 
 
