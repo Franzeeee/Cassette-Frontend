@@ -91,6 +91,9 @@ function SideNavMP({ activePage }) {
               </Link>
             ))
           }
+          {
+            playlist == false && <p className="text-white mb-0 playlist-reminder">You can create your own playlist.</p>
+          }
           {/* <Link to="/playlist">
             <button className="playlist-button">
               <img src={playlistImg} alt="Playlist 1" className="playlist-image" />
@@ -105,7 +108,7 @@ function SideNavMP({ activePage }) {
           </Link> */}
         </div>
         <div className="d-flex align-items-center justify-content-center gap-2 mt-2">
-          <button className="border-0 text-light view-playlist">View More</button>
+          <button className={`border-0 text-light view-playlist ${playlist == false && 'hide-viewMore'}`}>View More</button>
             <Tooltip title="Create Empty Playlist">
               <button className="create-playlist-button" onClick={handleShow}><FontAwesomeIcon icon={faPlus}/></button>
             </Tooltip>

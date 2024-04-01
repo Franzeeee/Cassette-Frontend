@@ -130,3 +130,10 @@
     bottom: -5px;
     left: 0;
   }
+  .playlist-reminder {
+    font-size: .8rem;
+    color: #d8d8d8 !important; 
+  }
+  .hide-viewMore {
+    display: none !important;
+  }
