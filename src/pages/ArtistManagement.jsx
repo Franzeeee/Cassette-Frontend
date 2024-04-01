@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Layout from "../Layout/Layout";
 import { Breadcrumbs, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -7,55 +7,57 @@ import "../assets/css/artist-management.css";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Tooltip } from "@mui/material";
+import fetchRequest from "../logic/artistiRequest.data";
+import RejectArtistModal from "../Components/Admin/RejectArtistModal";
 
 // Import FontAwesome icons here (assuming you've added them to your project)
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { faBan, faUndo } from "@fortawesome/free-solid-svg-icons";
 import artistProfilePicture from "../assets/img/artist-img.jpg";
+import cassette_api from "../api";
 
 function ArtistManagement() {
   const [globalFilterValue, setGlobalFilterValue] = useState("");
+  const [data, setData] = useState(null)
+  const [showModal, setShowModal] = useState(false);
 
-  const userData = [
-    {
-      name: "John Philips",
-      genre: "Rap",
-      Description: "",
-      status: "Pending Request",
-      youtubeLink: "https://www.youtube.com/",
-      twitterLink: "https://twitter.com/",
-      facebookLink: "https://www.facebook.com/",
-    },
-    {
-      name: "George Michelle",
-      genre: "Ballad",
-      Description: "",
-      status: "Banned",
-      youtubeLink: "https://www.youtube.com/",
-      twitterLink: "https://twitter.com/",
-      facebookLink: "https://www.facebook.com/",
-    },
-    {
-      name: "Rae Mond",
-      genre: "Rap",
-      Description: "",
-      status: "Active",
-      youtubeLink: "https://www.youtube.com/",
-      twitterLink: "https://twitter.com/",
-      facebookLink: "https://www.facebook.com/",
-    },
-    {
-      name: "Zrake",
-      genre: "Rap",
-      Description: "",
-      status: "Pending Request",
-      youtubeLink: "https://www.youtube.com/",
-      twitterLink: "https://twitter.com/",
-      facebookLink: "https://www.facebook.com/",
-    },
-    // Add more objects with social media links as needed
-  ];
+  // User data to pass to the modal
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const fetchedData = await fetchRequest();
+        setData(fetchedData);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+        // Handle the error if needed
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const removeDataById = (idToRemove) => {
+    if (data) {
+      const newData = data.filter(item => item.id !== idToRemove);
+      setData(newData);
+    }
+  };
+
+  // Static Dummy Data for testing
+  // const userData = [
+  //   {
+  //     name: "John Philips",
+  //     genre: "Rap",
+  //     Description: "",
+  //     status: "Pending Request",
+  //     youtubeLink: "https://www.youtube.com/",
+  //     twitterLink: "https://twitter.com/",
+  //     facebookLink: "https://www.facebook.com/",
+  //   }
+  // ];
 
   const renderHeader = () => {
     return (
@@ -74,14 +76,28 @@ function ArtistManagement() {
 
   // Function to handle approve action
   const handleApprove = (rowData) => {
-    // Add your logic here to handle approve action
-    console.log("Approving:", rowData.name);
+
+            cassette_api.post('/approve_artist_requests/', {"id": rowData.id})
+              .then(response => {
+                console.log(response.data.message)
+                // Update the status directly within the rowData
+                rowData.status = "Active";
+                // Force re-render by updating the state
+                setData([...data]);
+              })
+              .catch(err => console.error("Error: ", err))
+
   };
 
   // Function to handle deny action
   const handleDeny = (rowData) => {
-    // Add your logic here to handle deny action
-    console.log("Denying:", rowData.name);
+    setUserData(rowData)
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setUserData(null);
   };
 
   // Define the actions column header and body
@@ -170,6 +186,7 @@ function ArtistManagement() {
   return (
     <Layout activePage={"Artist Management"}>
       <div className="container w-100 h-100 m-0 p-3 py-2 dashboard-container overflow-hidden ">
+      <RejectArtistModal show={showModal} user={userData} removeData={removeDataById} handleClose={handleCloseModal} />
         <div className="row w-auto m-0 overflow-x-hidden overflow-y-auto">
           <div className="col p-2 m-0 mt-1 page-title d-flex align-items-center justify-content-between ">
             <h1 className="m-0">Artist Management</h1>
@@ -187,7 +204,7 @@ function ArtistManagement() {
           <div className="card w-100 table-container align-items-center d-flex justify-content-start">
             <DataTable
               scrollable
-              value={userData}
+              value={data}
               paginator
               rows={10}
               rowsPerPageOptions={[5, 10, 25, 50]}

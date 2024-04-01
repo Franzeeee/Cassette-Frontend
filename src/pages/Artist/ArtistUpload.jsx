@@ -8,6 +8,11 @@ import Select from 'react-select';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCloudArrowUp, faDeleteLeft, faTrash, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { customStyle } from '../../assets/css/select';
+import { Card } from 'react-bootstrap';
+
+import uploadImage from '../../assets/img/upload-image.jpg'
+import cassete from '../../assets/img/Cassettelogosq.png'
+import { useNavigate } from 'react-router';
 
 function ArtistUpload() {
     let toSubmit = true;
@@ -18,6 +23,8 @@ function ArtistUpload() {
         title: '',
         description: '',
     });
+    const [image, setImage] = useState(null)
+    const navigate = useNavigate()
 
     const musicGenres = [
     { value: 'rock', label: 'Rock' },
@@ -132,14 +139,27 @@ function ArtistUpload() {
         formData.append('albumCover', albumDetails.cover);
         formData.append('albumTitle', albumDetails.title);
         formData.append('albumDescription', albumDetails.description);
+        formData.append('id', localStorage.getItem("ID"))
 
 
         cassette_api.post('/music', formData)
             .then(response => {
-                toast.success(response.data.message)
+                toast.success(response.data.message, {autoClose: 1500});
+                setTimeout(() => {
+                    navigate(`/album/${response.data.albumId}`)
+                }, 1500);
             })
             .catch(error => {
-                toast.error(error)
+                if (error.response && error.response.data && error.response.data.errors) {
+                    const errors = error.response.data.errors;
+                    Object.keys(errors).forEach(field => {
+                        errors[field].forEach(errorMessage => {
+                            toast.error(`${errorMessage}`);
+                        });
+                    });
+                } else {
+                    toast.error('An error occurred while processing your request.');
+                }
             })
 
     };
@@ -166,27 +186,41 @@ function ArtistUpload() {
             }));
         };
     
-        // Function to handle file input change
         const handleFileInputChange = (e) => {
             const file = e.target.files[0];
-            setAlbumDetails(prevState => ({
-                ...prevState,
-                cover: file
-            }));
+            if (file && file.type.startsWith('image/')) {
+                // Check if the selected file is an image
+                const reader = new FileReader();
+                reader.onload = () => {
+                    setImage(reader.result);
+                };
+                reader.readAsDataURL(file);
+        
+                // Set the cover in albumDetails state
+                setAlbumDetails(prevState => ({
+                    ...prevState,
+                    cover: file
+                }));
+            } else {
+                // If the selected file is not an image, show an error message
+                toast.error("Please select a valid image file.");
+            }
         };
+        
 
     const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
     return (
         <ArtistLayout active={"Upload"}>
-            <div className="col-10 h-100 d-flex align-align-items-center justify-content-center p-5 text-light overflow-auto ">
+            <div className={`col-10 h-100 d-flex align-align-items-center justify-content-center p-5 text-light overflow-auto ${styles.contentContainer}`}>
                 <ToastContainer />
                 <form className={`w-75 d-flex flex-column gap-3 ${styles['upload-form']}`} onSubmit={handleSubmit} >
                     <div className="form-group d-flex flex-column">
                         <div {...getRootProps()} className={`dropzone ${styles.dropZone}`}>
                             <input {...getInputProps()} accept="audio/*" multiple />
-                            <p>Drag 'n' drop some audio files here, or click to select files</p>
+                            
                             <FontAwesomeIcon icon={faCloudArrowUp} className={`${styles.uploadIcon}`}/>
+                            <p className='m-0 mt-2'>Drag 'n' drop some audio files here, or click to select files</p>
                         </div>
                     </div>
 
@@ -199,7 +233,7 @@ function ArtistUpload() {
                                 audioFiles.map((file, index) => (
                                     <div key={index} className={`${styles.trackCard}`}>
                                         <p className='text-light mb-1'>Track #{index + 1}</p>
-                                        <div className="w-100 d-flex  align-items-center justify-content-between gap-2">
+                                        <div className="w-100 d-flex align-items-center justify-content-between gap-2">
                                             <input
                                                 type="text"
                                                 className="mb-1 w-100 bg-bg-dark-subtle"
@@ -236,30 +270,46 @@ function ArtistUpload() {
                     </div>
 
                     {/* Album Details */}
-                    <div>
-                        {/* File input for album cover */}
-                        <input 
-                            type="file" 
-                            onChange={handleFileInputChange}
-                            name="albumCover" 
-                        />
-                        {/* Input for album title */}
-                        <input 
-                            type="text" 
-                            placeholder="Album Title" 
-                            name="title"
-                            value={albumDetails.title}
-                            onChange={handleInputChange} 
-                        />
-                        {/* Input for album description */}
-                        <input 
-                            type="text" 
-                            placeholder="Album Description" 
-                            name="description"
-                            value={albumDetails.description}
-                            onChange={handleInputChange} 
-                        />
-                    </div>
+                    <Card style={{ width: '100%' }}>
+                    <Card.Header>
+                        <p className='mb-0'>Album Details</p>
+                    </Card.Header>
+                        <Card.Body>
+                            <div className={`${styles.albumContainer}`}>
+                                {/* File input for album cover */}
+                                <div className={`${styles.albumImageContainer}`}>
+                                    <input 
+                                        type="file" 
+                                        onChange={handleFileInputChange}
+                                        name="albumCover" 
+                                    />
+                                    <img src={albumDetails.cover != null ? image : uploadImage} 
+                                        alt=""
+                                        className={`${styles.albumImage}`} />
+                                    <p>Upload A Cover Photo</p>
+                                </div>
+                                {/* Input for album title */}
+                                <div>
+                                    <input 
+                                        type="text" 
+                                        placeholder="Album Title" 
+                                        name="title"
+                                        value={albumDetails.title}
+                                        onChange={handleInputChange} 
+                                    />
+                                    {/* Input for album description */}
+                                    <textarea
+                                    placeholder="Album Description"
+                                    name="description"
+                                    value={albumDetails.description}
+                                    onChange={handleInputChange}
+                                    />
+                                </div>
+                            </div>
+                        </Card.Body>
+                    </Card>
+
+                    
 
                     {toSubmit &&(
                         <button type="submit" className="btn btn-outline-danger">Upload</button>

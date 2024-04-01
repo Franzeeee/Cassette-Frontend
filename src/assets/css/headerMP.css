@@ -4,12 +4,19 @@
 }
 
 .applyArtistBtn {
-  background-color: rgba(255, 0, 0, 0.761) !important;
   margin-right: 10px;
   transition: all .3s ease;
 }
-.applyArtistBtn:hover {
+.applyArtistBtn-red {
+  background-color: rgba(255, 0, 0, 0.761) !important;
+  color: rgb(240, 240, 240)
+}
+.applyArtistBtn-red:hover {
   background: rgba(255, 0, 0, 0.926) !important;
+}
+
+.cursor-notAllowed {
+  cursor: wait !important;
 }
 
 .navigation-button {

@@ -1,0 +1,102 @@
+.createPlaylistModal-PlaylistName, .createPlaylistModal-PlaylistName:focus {
+    background: transparent;
+    color: white !important;
+    border: 1px solid red;
+    border-radius: 5px;
+}
+.createPlaylistModal-PlaylistName::placeholder {
+    color: white !important;
+}
+.createPlaylistModal-PlaylistName:focus {
+    outline: none !important;
+    box-shadow: 0 0 .35rem red !important;
+}
+.createPlaylist-modalContainer .modal-content{
+    border: 1px solid rgb(113, 0, 0) !important;
+
+}
+.createPlaylist-modalContainer {
+    gap: 0 !important;
+}
+.createPlaylistModal-searchResult {
+    max-height: 200px !important;
+    overflow-y: auto;
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+}
+.createPlaylistModal-selectedMusic {
+    min-height: 150px !important;
+    max-height: 150px !important;
+    overflow: auto;
+    gap: 10px;
+    border-radius: 0 !important;
+}
+.createPlaylistModal-selectedMusic > * {
+    color: white !important;
+    background-color: transparent;
+    border: 1px solid rgb(71, 71, 71) !important;
+    box-shadow: none !important;
+
+}
+.no-song-alert {
+    border: none !important;
+    text-align: center;
+    width: 100%;
+    height: 100% !important;
+    min-height: 150px !important; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.createPlaylistModal-clearSearch, .createPlaylistModal-hideSearch {
+    color: rgb(175, 175, 175) !important;
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 1.2rem;
+    transform: translateY(50%) translateX(-50%);
+    cursor: pointer;
+    transition: color .3s ease;
+}
+.createPlaylistModal-clearSearch:hover, .createPlaylistModal-hideSearch:hover {
+    color: rgb(255, 255, 255) !important;
+}
+.createPlaylistModal-clearSearch {
+    right: 1.9rem;
+}
+.createPlaylistModal-hideSearch {
+    font-size: 1rem;
+    transform: translateY(70%);
+    right: 10px;
+}
+.createPlaylistModal-selectedMusic-item {
+    display: grid;
+    grid-template-columns: 1fr 30px;
+    padding-inline: 10px;
+    padding-block: 5px;
+}
+.createPlaylistModal-selectedMusic-item p {
+    margin: 0 !important;
+}
+.createPlaylistModal-selectedMusic-item button {
+   background: none;
+   border: none;
+   color: red;
+   font-size: 1.1rem;
+}
+.createPlaylistModal-selectedMusic-item p:first-child {
+    font-size: 1rem;
+}
+.createPlaylistModal-selectedMusic-item p:last-child {
+    font-size: .8rem;
+}
+.createPlaylistModal-selectedMusic > * {
+    padding: 0;
+}
+.hiddenSearchResult {
+    color: red !important;
+}
+.showSearchResult {
+    color: white !important;
+}
