@@ -13,6 +13,7 @@ import ContentManagement from './pages/Admin/ContentManagement';
 import HomeMP from './pages/HomeMP';
 import MusicMP from './pages/MusicMP';
 import Music from './pages/Music';  //New page for Music
+import Playlists from './pages/Playlists'; //New page for Playlists
 import Playlist from './pages/Playlist';
 import Artist from './pages/Artist';
 import AdminRoutes from './routes/AdminRoutes';
@@ -86,7 +87,8 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/home_mp" element={<HomeMP />} />
           <Route path="/music" element={<Music />} />
-
+          <Route path="/playlists" element={<Playlists />} /> 
+          
           {/* Rooutes for Music Cards Categories */}
           <Route path="/music/top-charts" element={<TopCharts />} />
           <Route path="/music/new-releases" element={<NewReleases />} />
