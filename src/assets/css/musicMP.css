@@ -55,6 +55,14 @@
   background-color: transparent !important;
 }
 
+.album-cards-container::-webkit-scrollbar, .artist-cards-container::-webkit-scrollbar {
+  height: 10px;
+}
+.album-cards-container::-webkit-scrollbar-thumb {
+  cursor: grab;
+}
+
+
 .album-card {
   max-width: 180px;
   min-width: 170px;
