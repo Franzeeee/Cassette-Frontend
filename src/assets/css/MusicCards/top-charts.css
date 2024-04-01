@@ -1,0 +1,124 @@
+.tp-grid-container {
+  display: grid;
+  grid-template-rows: auto auto; /* Two rows with automatic height */
+  gap: 10px; /* Spacing between the rows */
+}
+
+.tph {
+  position: relative;
+  top: 70px;
+  color: white;
+  font-weight: 1000;
+  font-size: 70px;
+  letter-spacing: -1px;
+}
+
+.tptop-container {
+  background: linear-gradient(#c47e16, #c43509, #b81717, #bd1627);
+  border-radius: 15px;
+  padding: 20px; /* Padding for the containers */
+  margin: 10px 10px 0px 10px;
+  height: 15vw;
+}
+
+.tpbottom-container {
+  background: linear-gradient(to bottom, #bd1627 , rgb(17, 16, 16));
+  margin: 0px 10px 0px 10px;
+  padding: 20px; /* Padding for the containers */
+  border-radius: 15px;
+  height: 24vw;
+  background-blend-mode: overlay; /* Blend mode to blend the backgrounds */
+}
+
+
+/* Add this to your top-charts.css file */
+
+.topcharts-cards-container {
+  display: flex;
+  gap: 25px;
+  /* margin: 0px 20px 0px 20px; */
+  overflow: hidden;
+}
+
+.topcharts-card {
+  max-width: 210;
+  min-width: 210px;
+  max-height: 270px;
+  min-height: 270px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  background-color: #0808085d; 
+  border-radius: 10px;
+}
+
+.tp-image-container {
+  position: relative; 
+  top: 10px;
+  left: 15px;
+}
+
+.topcharts-image {
+  max-width: 180px !important;
+  min-width: 180px !important;
+  max-height: 170px !important;
+  min-height: 170px !important;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.topcharts-name-container {
+  text-align: left;
+  margin-left: 20px;
+  margin-top: 30px;
+}
+
+.topcharts-name {
+  color: rgb(199, 197, 197);
+  font-size: 16px;
+}
+
+.topcharts-description {
+  font-size: 12px;
+  color: #a8a8a8; 
+  margin-top: 5px; 
+}
+
+/* Custom scrollbar styling */
+.topcharts-container::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.topcharts-card:hover {
+  background-color: rgb(15, 15, 15); /* Adjust hover background color */
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.tp-play-button {
+  position: absolute;
+  right: 25px;
+  bottom: 0;
+  display: none;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(219, 8, 8, 1);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  cursor: pointer;
+  opacity: 0;
+  transition: 320ms;
+}
+
+.topcharts-card:hover .play-button {
+  bottom: -5px; /* Adjust to original position */
+  opacity: 1; /* Set opacity to 1 */
+}
+
+.tp-play-button svg {
+  width: 24px;
+  height: 24px;
+}
