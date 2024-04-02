@@ -83,7 +83,7 @@ function SideNavMP({ activePage }) {
         <div className="playlist-container">
           {playlist !== null &&
             playlist.map((item, index) => ( // Added parentheses for arrow function
-              <Link to="/playlist" key={index}> {/* Ensure each mapped element has a unique key */}
+              <Link to={`/playlist/${item.id}`} key={index}> {/* Ensure each mapped element has a unique key */}
                 <button className="playlist-button">
                   <img src={playlistImg} alt={`Playlist ${index + 1}`} className="playlist-image" /> {/* Use index for alt text */}
                   <span className="playlist-name">{item.name}</span>

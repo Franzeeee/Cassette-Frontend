@@ -2,6 +2,7 @@
   display: grid;
   grid-template-rows: auto auto; /* Two rows with automatic height */
   gap: 10px; /* Spacing between the rows */
+  
 }
 
 .tph {

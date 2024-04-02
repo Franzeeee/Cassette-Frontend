@@ -32,51 +32,108 @@ function MusicPlayer() {
   const progressBarRef = useRef(null);
   const audioPlayerRef = useRef(null);
   const progressIntervalRef = useRef(null);
-  const { index } = useParams();
+  const { type, index } = useParams();
+
+  // Define the API endpoint based on the type
+  let endpoint;
+  let requestData = {};
+  if (type === 'playlist') {
+    endpoint = '/playlist/fetchMusic';
+    requestData = { id: index };
+  } else if (type === 'album') {
+    endpoint = '/fetchMusic';
+    requestData = { album_id: index };
+  } else {
+    // Handle other types or invalid type
+    console.error('Invalid type:', type);
+    return null; // or render an error message
+  }
 
   useEffect(() => {
     // Fetch music data from the backend
     cassete_api
-      .post("/fetchMusic", {"album_id": index})
+      .post(endpoint,requestData)
       .then(async (response) => {
         // Transform the response data into the desired format
-        const formattedTracks = await Promise.all(
-          response.data.map(async (track, index) => {
-            const audioUrl = track.file_name; // Assuming this is the URL of the audio file
-            try {
-              // Fetch duration for the audio file
-              const duration = await getAudioDuration(audioUrl);
-              // Return formatted track with duration
-              return {
-                number: index + 1,
-                image: track.album_cover, // Replace with the actual image
-                title: track.title,
-                artist: track.artist,
-                duration: formatDuration(duration), // Format duration as needed
-                listens: 1000, // Sample listens count
-                likes: 500, // Sample likes count
-                lyrics: track1lyrics, // Sample lyrics
-                audio_link: audioUrl,
-                durationInSeconds: duration, // Store duration in seconds for progress calculation
-              };
-            } catch (error) {
-              console.error("Error fetching duration for track:", error);
-              // If there's an error fetching duration, return the track without duration
-              return {
-                number: index + 1,
-                image: track.album_cover, // Replace with the actual image
-                title: track.title,
-                artist: track.artist,
-                duration: "Unknown",
-                listens: 1000, // Sample listens count
-                likes: 500, // Sample likes count
-                lyrics: track1lyrics, // Sample lyrics
-                audio_link: audioUrl,
-                durationInSeconds: 0,
-              };
-            }
-          })
-        );
+        let formattedTracks;
+        if (type === 'playlist') {
+          formattedTracks = await Promise.all(
+            response.data.music.map(async (track, index) => {
+              const audioUrl = track.file_name; // Assuming this is the URL of the audio file
+              try {
+                // Fetch duration for the audio file
+                const duration = await getAudioDuration(audioUrl);
+                // Return formatted track with duration
+                return {
+                  number: index + 1,
+                  image: track.album_cover, // Replace with the actual image
+                  title: track.title,
+                  artist: track.artist,
+                  duration: formatDuration(duration), // Format duration as needed
+                  listens: 1000, // Sample listens count
+                  likes: 500, // Sample likes count
+                  lyrics: track1lyrics, // Sample lyrics
+                  audio_link: audioUrl,
+                  durationInSeconds: duration, // Store duration in seconds for progress calculation
+                };
+              } catch (error) {
+                console.error("Error fetching duration for track:", error);
+                // If there's an error fetching duration, return the track without duration
+                return {
+                  number: index + 1,
+                  image: track.album_cover, // Replace with the actual image
+                  title: track.title,
+                  artist: track.artist,
+                  duration: "Unknown",
+                  listens: 1000, // Sample listens count
+                  likes: 500, // Sample likes count
+                  lyrics: track1lyrics, // Sample lyrics
+                  audio_link: audioUrl,
+                  durationInSeconds: 0,
+                };
+              }
+            })
+          );
+        } else {
+          // Assume the response format is the same for other types
+          formattedTracks = await Promise.all(
+            response.data.map(async (track, index) => {
+              const audioUrl = track.file_name; // Assuming this is the URL of the audio file
+              try {
+                // Fetch duration for the audio file
+                const duration = await getAudioDuration(audioUrl);
+                // Return formatted track with duration
+                return {
+                  number: index + 1,
+                  image: track.album_cover, // Replace with the actual image
+                  title: track.title,
+                  artist: track.artist,
+                  duration: formatDuration(duration), // Format duration as needed
+                  listens: 1000, // Sample listens count
+                  likes: 500, // Sample likes count
+                  lyrics: track1lyrics, // Sample lyrics
+                  audio_link: audioUrl,
+                  durationInSeconds: duration, // Store duration in seconds for progress calculation
+                };
+              } catch (error) {
+                console.error("Error fetching duration for track:", error);
+                // If there's an error fetching duration, return the track without duration
+                return {
+                  number: index + 1,
+                  image: track.album_cover, // Replace with the actual image
+                  title: track.title,
+                  artist: track.artist,
+                  duration: "Unknown",
+                  listens: 1000, // Sample listens count
+                  likes: 500, // Sample likes count
+                  lyrics: track1lyrics, // Sample lyrics
+                  audio_link: audioUrl,
+                  durationInSeconds: 0,
+                };
+              }
+            })
+          );
+        }
         setNextTracks(formattedTracks);
         // Set the formatted tracks to the state
       })

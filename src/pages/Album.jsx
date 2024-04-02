@@ -2,7 +2,7 @@ import React, { useEffect,useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import LayoutMP from "../Layout/LayoutMP";
 import "../assets/css/Playlist.css";
-import { faEdit, faPlayCircle, faTrashCan, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faPlayCircle, faTrashCan, faCheck, faAdd} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PlaylistImg from "../assets/img/artist-img.jpg";
 import AlbumImg from "../assets/img/Cassettelogosq.png";
@@ -11,6 +11,7 @@ import { Tooltip } from "@mui/material";
 import DeleteAlbumModal from "../Components/Artist/DeleteAlbumModal";
 import DeleteMusicModal from "../Components/Artist/DeleteMusicModal";
 import { toast, ToastContainer } from "react-toastify";
+import AddToPlaylistModal from "../Components/AddToPlaylistModal";
 
 function Album() {
 
@@ -94,7 +95,7 @@ function Album() {
 
     const playAlbum = () => {
 
-      navigate(`/player/${index}`);
+      navigate(`/player/album/${index}`);
     }
 
     const handleEditClick = () => {
@@ -126,11 +127,27 @@ function Album() {
     const handleCloseMusic = () => {
       setShowMusicDelete(false)
     }
+
+    // Adding to playlist
+    const [showAddToPlaylist, setShowAddToPlaylist] = useState(false)
+    const [musicToAdd, setMusicToAdd] = useState()
+
+    const closeAddToPlaylist = () => {
+      setShowAddToPlaylist(false)
+    }
+
+    const handleAddClick = (id) => {
+      setShowAddToPlaylist(true)
+      setMusicToAdd(id)
+    }
+    
+
   return (
     <LayoutMP activePage={"Music"}>
       <div className="playlist-container">
         <DeleteAlbumModal show={showModal} handleClose={handleClose} albumId={index}/>
         <DeleteMusicModal show={showMusicDelete} musicId={musicId} handleClose={handleCloseMusic} albumId={index}/>
+        <AddToPlaylistModal show={showAddToPlaylist} handleClose={closeAddToPlaylist} musicId={musicToAdd}/>
         <div className="top-container position-relative ">
           {
             canEdit && (
@@ -179,7 +196,7 @@ function Album() {
                   <th className="albumMusicDate">Date Added</th>
                   <th className="albumMusicDuration">Duration</th>
                   {
-                    edit && (<th className="albumMusicControl">Control</th>)
+                    edit ? (<th className="albumMusicControl">Control</th>) : <th className="albumMusicControl addToPlaylist">Add to Playlist</th>
                   }
                 </tr>
               </thead>
@@ -212,11 +229,17 @@ function Album() {
                     <td>{formatDate(track.updated_at)}</td>
                     <td>{track.duration}</td>
                     {
-                      edit && (<td className="albumMusicDelete" >
+                      edit ? (<td className="albumMusicDelete" >
                         <Tooltip data-toggle="tooltip" data-html="true" title="Delete">
                           <FontAwesomeIcon icon={faTrashCan} className="albumMusicDelete" onClick={(e) => deleteMusicModal(track.id)}/>
-                        </Tooltip></td>
-                    )
+                        </Tooltip></td>)
+                        :
+                        <td className="text-center">
+                        <Tooltip data-toggle="tooltip" data-html="true" title="Add">
+                          <FontAwesomeIcon icon={faAdd} className="addToPlaylistIcon" onClick={() => handleAddClick(track.id)}/>
+                        </Tooltip>
+                        </td>
+                    
                     }
                   </tr>
                 ))}

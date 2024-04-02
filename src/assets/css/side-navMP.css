@@ -137,3 +137,11 @@
   .hide-viewMore {
     display: none !important;
   }
+  .playlist-container a {
+    padding: 5px;
+    transition: all .3s ease;
+  }
+  .playlist-container a:hover {
+    background-color: rgb(32, 32, 32);
+    width: 100%;
+  }

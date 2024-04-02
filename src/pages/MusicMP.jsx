@@ -6,6 +6,7 @@ import {artists} from '../logic/musicMp.logic'
 import cassette_api from "../api";
 import RequestForm from "../Components/Artist/RequestForm";
 import "../assets/css/Circular.css"; 
+import ArtistImg from "../assets/img/artist-img.jpg";
 
 function MusicMP() {
   const [showArtistPlayButton, setShowArtistPlayButton] = useState(null); // State to control play button visibility for artist cards
@@ -14,6 +15,7 @@ function MusicMP() {
 
   //Album data
   const [albums, setAlbums] = useState([])
+  const [artists, setArtists] = useState([])
 
   useEffect(() => {
     const fetchAlbums = async () => {
@@ -25,6 +27,21 @@ function MusicMP() {
       }
     };
 
+    const fetchArtist = async () => {
+      try {
+        const response = await cassette_api.get('/user/artist');
+        setArtists(response.data.artists.map(artist => ({
+          id: artist.id,
+          name: artist.name,
+          description: "Artist",
+          image: ArtistImg // You need to import the ArtistImg here
+        })));
+      } catch (error) {
+        console.error("Error fetching artists:", error);
+      }
+    };
+
+    fetchArtist();
     fetchAlbums();
   }, []);
 
@@ -48,19 +65,19 @@ function MusicMP() {
         </div>
         <div className="artists-container">
           <div className="artist-cards-container">
-            {artists.map(artist => (
+            {artists.map(item => (
               <div
-                key={artist.id}
+                key={item.id}
                 className="artist-card"
-                onMouseEnter={() => setShowArtistPlayButton(artist.id)}
+                onMouseEnter={() => setShowArtistPlayButton(item.id)}
                 onMouseLeave={() => setShowArtistPlayButton(null)}
               >
                 <div className="image-container">
-                  <img src={artist.image} alt={artist.name} className="artist-image" />
+                  <img src={item.image} alt={item.name} className="artist-image" />
                 </div>
                 <div className="artist-name-container">
-                  <h4 className="artist-name">{artist.name}</h4>
-                  <p className="artist-description">{artist.description}</p>
+                  <h4 className="artist-name">{item.name}</h4>
+                  <p className="artist-description">{item.description}</p>
                 </div>
               </div>
             ))}

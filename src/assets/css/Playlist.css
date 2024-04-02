@@ -250,3 +250,32 @@
   color: red;
   cursor: pointer;
 }
+
+.addToPlaylist {
+  min-width: 60px !important;
+}
+
+.addToPlaylistIcon {
+  transition: color .3s ease;
+  cursor: pointer;
+}
+.addToPlaylistIcon:hover {
+  color: rgba(255, 0, 0, 0.95)
+}
+.Playlist-ControlContainer {
+  color: rgb(255, 255, 255);
+  position: absolute;
+  right: 0;
+  font-size: 1.1rem;
+  padding-inline: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.Playlist-ControlContainer .PlaylistControlDelete {
+  color: #ff0000 !important;
+}
+.Playlist-ControlContainer > * {
+  cursor: pointer;
+}

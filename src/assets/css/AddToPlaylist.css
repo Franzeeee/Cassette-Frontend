@@ -1,0 +1,24 @@
+.AddToPlaylist-checkbox {
+    display: flex;
+    cursor: pointer;
+    transition: all .3s ease;
+    padding: 10px;
+}
+
+.AddToPlaylist-checkbox:hover {
+    background-color: #474747;
+}
+.AddToPlaylist-checkbox :first-child {
+    margin-left: 0px;
+    margin-right: 10px;
+}
+.AddToPlaylist-selected {
+    background-color: #0000005e;
+}
+.AddToPlaylist-body {
+    max-height: 400px !important;
+    overflow: auto;
+}
+.AddToPlaylist-checkbox label{
+    width: 100% !important;
+}

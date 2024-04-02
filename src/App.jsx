@@ -109,12 +109,10 @@ function App() {
           <Route path="/music/music-discovery" element={<MusicDiscovery />} />
           <Route path="/music/music-recommendations" element={<MusicRecommendations />} />  */}
 
-
-
           <Route path="/album/:index" element={<Album />} />
           <Route path="/" element={<MusicMP />} />
-          <Route path="/player/:index" element={<MusicPlayer />} />
-          <Route path="/playlist" element={<Playlist />} />
+          <Route path="/player/:type/:index" element={<MusicPlayer />} />
+          <Route path="/playlist/:index" element={<Playlist />} />
           <Route path="/artist" element={<Artist />} />
         </Route>
 

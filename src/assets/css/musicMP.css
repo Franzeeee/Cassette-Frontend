@@ -45,7 +45,7 @@
   display: flex;
   gap: 25px;
   margin: 0px 20px 0px 20px;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .css-bhp9pd-MuiPaper-root-MuiCard-root {
