@@ -99,6 +99,53 @@
   .menu-item:hover {
     background-color: #c20000; /* Highlight color on hover */
   }
+
+  .user-logo {
+    width: 30px; /* Adjust the width according to your preference */
+    height: 30px; /* Adjust the height according to your preference */
+    border-radius: 50%; /* Optionally, add border radius for rounded shape */
+  }
+
+/* .profile-menu-item {
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 16px;
+}
+.profile-menu-item:hover {
+  background-color: #c20000;
+} */
+
+/* Styles for profile dropdown menu items */
+.css-6hp17o-MuiList-root-MuiMenu-list .profile-menu-item {
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 14px;
+}
+
+/* Style for profile dropdown menu items on hover */
+.css-6hp17o-MuiList-root-MuiMenu-list .profile-menu-item:hover {
+  background-color: #c20000;
+}
+
+/* Style for profile dropdown menu divider */
+.css-6hp17o-MuiList-root-MuiMenu-list .profile-menu-divider {
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  margin: 5px 0;
+}
+
+.logout-button {
+  margin-left: 30px;
+}
+
+
+/* Styles for menu icons */
+.menu-icon {
   
-  
-  
+  margin-right: 5px; /* Adjust the margin as needed */
+}
+
+/* Styles for menu text */
+.menu-text {
+  vertical-align: middle; /* Align text vertically in the middle */
+}
