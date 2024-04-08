@@ -2,24 +2,19 @@
   display: flex;
 }
 
-.SidePanelContainer {
-  width: 26vw; /* Adjust width as needed */
-  height: 85vh;
-  border: 1px solid lightblue; /* Example background color */
-}
-
 .MainContainer {
   height: 86vh; 
   width: 60vw;
   display: flex;
   flex: 1;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .TopContainer,
 .BottomContainer {
   flex-grow: 1; 
-  border-radius: 5px;
+  border-radius: 10px;
   overflow: hidden;
 }
 
@@ -30,11 +25,43 @@
   width: 60vw ;
 }
 
+.AlbumImage {
+  display: flex;
+  width: 30vw; /* Adjust size as needed */
+  height: 52vh; /* Adjust size as needed */
+  margin: auto; /* Center the image */
+  justify-content: center;
+  align-items: center;
+}
+
 .AudioPlayerWrapper {
+  display: none;
   position: absolute;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
+}
+
+.AudioPlayerWrapper {
+  opacity: 0; /* Initially hide the audio player */
+  visibility: hidden;
+  transition: opacity 0.9s ease-in-out, visibility 0.8s ease-in-out;
+}
+
+.AudioPlayerWrapper.Show {
+  opacity: 1; /* Show the audio player */
+  visibility: visible;
+}
+
+.AudioPlayerWrapper.Hide {
+  opacity: 0; /* Hide the audio player */
+  visibility: hidden;
+  transition: opacity 0.6s ease-in-out, visibility 0.9s ease-in-out;
+}
+
+.TopContainer:hover .AudioPlayerWrapper,
+.AudioPlayerWrapper:hover {
+  display: block; /* Show the audio player when hovering over TopContainer or AudioPlayerWrapper */
 }
 
 .react-audio-player {
@@ -67,9 +94,10 @@
 .PlaylistContainer {
   display: flex;
   flex-direction: column;
-  height: 60vh;
+  height: 90vh;
   width: 60vw;
-  overflow:  auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   padding: 0px;
 }
 
@@ -81,11 +109,15 @@
   border-bottom: 0.5px solid gray;
   color: #cccccc;
   font-size: smaller;
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide overflowing content */
 }
 
 .TrackInfo {
   display: flex;
   align-items: center;
+  flex-grow: 0; /* Allow TrackTitle and Album to take remaining space */
+  min-width: 0; /* Allow contents to shrink if necessary */
 }
 
 .TrackImage img {
@@ -93,13 +125,96 @@
   height: 50px;
   border-radius: 50%;
   margin-right: 10px;
+  flex-shrink: 0; /* Prevent image from shrinking */
 }
 
 .TrackTitle p {
   margin: 0;
 }
 
+.Track:hover {
+  background-color: #1f1e1e; 
+  cursor: pointer;
+}
+
 .Album p,
 .Duration p {
   margin: 0;
+}
+
+.SidePanelContainer {
+  width: 26.5vw; /* Adjust width as needed */
+  height: 86vh;
+  background-color: #080808; /* Example background color */
+  border-radius: 10px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.SidePanelContent {
+  display: flex;
+  flex-direction: column;
+  align-items:start;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 15px;
+}
+
+.AlbumImageContainer img {
+  width: 330px; /* Adjust size as needed */
+  height: 330px; /* Adjust size as needed */
+  box-shadow: #292828;
+  border-radius: 8px;
+}
+
+.TitleArtistContainer {
+  text-align: left;
+  margin-top: 10px;
+  color: #fff;
+}
+
+.ArtistInfoContainer {
+  margin-top: 10px;
+}
+
+.ArtistImageContainer img {
+  width: 330px; /* Adjust size as needed */
+  height: 330px; /* Adjust size as needed */
+  margin: 0px 15px 0px 15px;
+  border-radius: 10px;
+}
+
+.ArtistDetailsContainer {
+  margin: 0px 0px 10px 10px;
+  text-align: left;
+}
+
+.ArtistDetailsContainer h3 {
+  position: relative;
+  bottom: 320px;
+  left: 20px;
+  color: white;
+  text-shadow: #464646;
+  font-size: 15px;
+  font-weight: bolder;
+}
+
+.ArtistDetailsContainer h2 {
+  margin: 0px 0px 0px 10px;
+}
+
+.ArtistDetailsContainer button {
+  position: relative;
+  top:-45px;
+  left: 230px;
+  background-color: #c20000; 
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.ArtistDetailsContainer button:hover {
+  background-color: #a71313; 
 }
