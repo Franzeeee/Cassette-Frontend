@@ -1,6 +1,6 @@
 .bg-black {
   --bs-bg-opacity: 1;
-  background-color: #080808 !important;
+  background-color: #0f0f0f !important;
 }
 
 .applyArtistBtn {
@@ -106,20 +106,22 @@
     border-radius: 50%; /* Optionally, add border radius for rounded shape */
   }
 
-/* .profile-menu-item {
-  color: #fff;
-  padding: 10px 20px;
-  font-size: 16px;
-}
+
 .profile-menu-item:hover {
   background-color: #c20000;
-} */
+} 
+
+
 
 /* Styles for profile dropdown menu items */
 .css-6hp17o-MuiList-root-MuiMenu-list .profile-menu-item {
   color: #fff;
   padding: 10px 20px;
   font-size: 14px;
+}
+
+.css-6hp17o-MuiList-root-MuiMenu-list {
+  background-color: #171616;
 }
 
 /* Style for profile dropdown menu items on hover */

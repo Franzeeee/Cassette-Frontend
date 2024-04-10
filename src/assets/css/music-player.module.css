@@ -1,370 +1,220 @@
-/* MusicPlayer.module.css */
+.Container {
+  display: flex;
+}
 
-.mainContainer {
-    height: 100%;
-    margin: 0;
-    background-color: #000000ec;
-  }
-  
-  .player {
-    grid-area: menu;
-    max-height: 500px;
-    min-height: 50px;
-    max-width: 100%;
-    min-width: 50px;
-  }
-  
-  .rightPanel {
-    grid-area: right;
-    min-width: 350px;
-  }
-  
-  .tracks {
-    grid-area: footer;
-  }
-  
-  .gridContainer {
-    display: grid;
-    grid-template-areas:
-      'menu menu right'
-      'footer footer right';
-    gap: 10px;
-    padding: 10px;
-    overflow: hidden;
-    margin: 0;
-  }
-  
-  .gridContainer > div {
-    font-size: 20px;
-  }
-  
-  .tracks {
-    height: 50vh;
-    max-height: 200px;
-    min-height: 50px;
-  }
-  
-  /* Track section */
-  .nextTracksTitle {
-    color: white;
-  }
-  
-  .nextTracksContainer {
-    margin-top: 7px;
-    max-width: 100%;
-    min-width: 100px;
-    margin-left: 10px;
-    max-height: 200px;
-    min-height: 100px;
-    width: 100% !important;
-    overflow-y: auto;
-  }
-  
-  .nextTrack {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    padding: 10px;
-  }
-  
-  .nextTrackNumber {
-    flex: 0 0 50px;
-    color: white;
-  }
-  
-  .nTrackImage {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    margin-right: 10px;
-  }
-  
-  .nTrackInfo {
-    flex: 1;
-    display: flex;
-    flex-direction: row;
-  }
-  
-  .stickyTitle {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-  }
-  
-  .nTrackTitle,
-  .nTrackArtist,
-  .nTrackPlaytime,
-  .nTrackListens,
-  .nTrackLikes {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 65px;
-    min-width: 60px;
-    font-size: 12px;
-    color: #ababab;
-  }
-  
-  .trackDetailsContainer {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-  }
-  
-  .nTrackInfo > div {
-    margin-right: 50px;
-  }
-  
-  .nTrackTitle {
-    font-weight: bold;
-  }
-  
-  .nTrackPlaytime,
-  .nTrackListens,
-  .nTrackLikes {
-    display: flex;
-    align-items: center;
-  }
-  
-  .nTrackPlaytime .icon,
-  .nTrackListens .icon,
-  .nTrackLikes .icon {
-    margin-right: 5px;
-  }
-  
-  .nPlayButton {
-    background-color: #c20000 !important;
-    border-radius: 50% !important;
-    width: 40px !important;
-    height: 40px !important;
-    padding: 0 !important;
-    color: white !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-  }
-  
-  .nPlayButton:hover {
-    background-color: darkred !important;
-  }
-  
-  /* Hide scrollbar */
-  .nextTracksContainer::-webkit-scrollbar {
-    width: 0px; 
-  }
-  
-  /* Optional: Customize scrollbar appearance */
-  .nextTracksContainer::-webkit-scrollbar-track {
-    background: #d10000; /* Set track color */
-  }
-  
-  .nextTracksContainer::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 10px; 
-  }
-  
-  /* Music Player */
-  .player {
-    grid-area: menu;
-    display: flex;
-    position: relative;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    height: 100%;
-  }
-  
-  .musicPlayerBox {
-    grid-area: menu;
-    background-color: transparent; /* Box background color */
-    border: 2px solid #c20000; /* Box border */
-    border-radius: 15px; /* Rounded corners */
-    padding: 20px; /* Padding inside the box */
-    margin: 10px 10px 10px 10px;
-    max-height: 330px; /* Fixed height for the player */
-    min-height: 310px;
-    overflow: hidden; /* Hide overflow content */
-  }
-  .musicPlayerBox button {
-    color: #fff;
-  }
-  
-  .songInfo {
-    text-align: center;
-    color: #d4d4d4;
-    max-height: 80px; /* Limit the height of the song information section */
-    overflow: hidden; /* Hide overflow content */
-    text-overflow: ellipsis; /* Add ellipsis for overflow text */
-  }
-  
-  .controls {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  
-  .controls .MuiButtonBase-root {
-    border-radius: 50%; /* Make the buttons circular */
-    background-color: #c20000; /* Set the accent color */
-    color: white; /* Set text color to white */
-    margin: 0 10px;
-  }
-  
-  /* Optional: Add hover effect */
-  .controls .MuiButtonBase-root:hover {
-    background-color: #aa0000; /* Darker accent color on hover */
-  }
-  
-  .controls {
-    position: absolute;
-    bottom: 10px; /* Adjust as needed */
-    left: 50%; /* Center horizontally */
-    transform: translateX(-50%);
-  }
-  
-.progressContainer {
+.MainContainer {
+  height: 86vh; 
+  width: 60vw;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.TopContainer,
+.BottomContainer {
+  flex-grow: 1; 
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.TopContainer {
   position: relative;
-  width: 100%;
-  height: 4px; 
-  background-color: #f0f0f0;
-  border-radius: 2px;
+  background-color: rgb(0, 0, 0);
+  height: 60vh; 
+  width: 60vw ;
 }
 
-.progressBarTrack {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  background-color: #0078f0;
-  border-radius: 2px;
-  transition: width 0.1s linear;
+.AlbumImage {
+  display: flex;
+  width: 30vw; /* Adjust size as needed */
+  height: 52vh; /* Adjust size as needed */
+  margin: auto; /* Center the image */
+  justify-content: center;
+  align-items: center;
 }
 
-.progressBarThumb {
+.AudioPlayerWrapper {
+  display: none;
   position: absolute;
-  top: -6px;
-  left: 0;
-  width: 12px;
-  height: 12px;
-  background-color: #d21919;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.AudioPlayerWrapper {
+  opacity: 0; /* Initially hide the audio player */
+  visibility: hidden;
+  transition: opacity 0.9s ease-in-out, visibility 0.8s ease-in-out;
+}
+
+.AudioPlayerWrapper.Show {
+  opacity: 1; /* Show the audio player */
+  visibility: visible;
+}
+
+.AudioPlayerWrapper.Hide {
+  opacity: 0; /* Hide the audio player */
+  visibility: hidden;
+  transition: opacity 0.6s ease-in-out, visibility 0.9s ease-in-out;
+}
+
+.TopContainer:hover .AudioPlayerWrapper,
+.AudioPlayerWrapper:hover {
+  display: block; /* Show the audio player when hovering over TopContainer or AudioPlayerWrapper */
+}
+
+.react-audio-player {
+  background-color: #000;
+}
+
+.react-audio-player .rhap_progress-container {
+  background-color: #333; /* Change progress bar background color */
+}
+
+.react-audio-player .rhap_progress-bar {
+  background-color: #fff; /* Change progress bar color */
+}
+
+.react-audio-player .rhap_button {
+  color: #fff; /* Change button color */
+}
+
+.react-audio-player .rhap_button-clear {
+  color: #fff; /* Change button color on hover */
+}
+
+/* New CSS styles for playlist container and tracks */
+
+.BottomContainer {
+  height: 40vh; /* Set the height to 70% of the viewport height */
+  width: 60vw;
+}
+
+.PlaylistContainer {
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+  width: 60vw;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0px;
+}
+
+.Track {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px 10px 10px;
+  border-bottom: 0.5px solid gray;
+  color: #cccccc;
+  font-size: smaller;
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide overflowing content */
+}
+
+.TrackInfo {
+  display: flex;
+  align-items: center;
+  flex-grow: 0; /* Allow TrackTitle and Album to take remaining space */
+  min-width: 0; /* Allow contents to shrink if necessary */
+}
+
+.TrackImage img {
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
+  margin-right: 10px;
+  flex-shrink: 0; /* Prevent image from shrinking */
+}
+
+.TrackTitle p {
+  margin: 0;
+}
+
+.Track:hover {
+  background-color: #1f1e1e; 
   cursor: pointer;
-  transition: left 0.1s linear;
-  z-index: 1;
 }
 
-.progressBarThumb:hover {
-  background-color: #135ba2;
+.Album p,
+.Duration p {
+  margin: 0;
 }
 
-  
-  /* Right Panel */
-  .rightPanel {
-    margin-top: 20px;
-  }
-  
-  .buttonsContainer {
-    display: flex;
-    gap: 10px; /* Adjust the gap between buttons */
-    justify-content: space-evenly;
-    font-size: 14px;
-  }
-  
-  .buttonsContainer button {
-    /* Each button takes up an equal portion of the available space */
-    background-color: transparent;
-    border: 1px solid #918888; /* Border color for inactive buttons */
-    border-radius: 5px; /* Border radius */
-    color: white;
-    cursor: pointer;
-    height: 40px; /* Adjust the height of the buttons */
-    width: 90px;
-  }
-  
-  .buttonsContainer button.active {
-    background-color: #c20000;
-    border-color: #c20000;
-  }
-  
-  .buttonsContainer button.active:hover {
-    background-color: #aa0000;
-    border-color: #aa0000;
-  }
-  
-  .playlistContainer {
-    margin-top: 10px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-    grid-gap: 10px;
-  }
-  
-  .lyricsContainer,
-  .playlistContainer {
-    color: #c2c2c2;
-    margin-top: 10px;
-    max-height: 450px;
-    max-width: 350px;
-    width: 100%;
-    overflow-y: auto;
-  }
-  
-  .lyricsContainer {
-    max-width: 350px;
-  }
-  
-  .lyricsContainer::-webkit-scrollbar {
-    width: 0px;
-  }
-  
-  .playlistContainer::-webkit-scrollbar {
-    width: 0px; 
-  }
-  
-  .playlistTrack .playlistTrackPlayButton {
-    margin-left: auto; /* Pushes the play button to the far right */
-    color: #c20000;
-  }
-  
-  .playlistTrackPlayButton:hover {
-    color: #660000; /* Darker accent color on hover */
-  }
-  
-  .lyricsContent {
-    white-space: pre-line; /* Preserve line breaks and wrap text */
-  }
-  
-  .playlistTrackInfo {
-    color: #a1a1a1;
-  }
-  
-  .playlistTrack {
-    position: relative;
-    display: flex;
-    align-items: center;
-    margin-bottom: 5px;
-  }
-  
-  .playlistTrackNumber {
-    margin-right: 10px;
-  }
-  
-  .playlistTrackImage {
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
-    margin-right: 10px;
-  }
-  
-  .playlistTrackArtist {
-    font-size: 14px;
-  }
-  
-  @keyframes rotate {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  
+.SidePanelContainer {
+  width: 26.5vw; /* Adjust width as needed */
+  height: 86vh;
+  background-color: #080808; /* Example background color */
+  border-radius: 10px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.SidePanelContent {
+  display: flex;
+  flex-direction: column;
+  align-items:start;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 15px;
+}
+
+.AlbumImageContainer img {
+  width: 330px; /* Adjust size as needed */
+  height: 330px; /* Adjust size as needed */
+  box-shadow: #292828;
+  border-radius: 8px;
+}
+
+.TitleArtistContainer {
+  text-align: left;
+  margin-top: 10px;
+  color: #fff;
+}
+
+.ArtistInfoContainer {
+  margin-top: 10px;
+}
+
+.ArtistImageContainer img {
+  width: 330px; /* Adjust size as needed */
+  height: 330px; /* Adjust size as needed */
+  margin: 0px 15px 0px 15px;
+  border-radius: 10px;
+}
+
+.ArtistDetailsContainer {
+  margin: 0px 0px 10px 10px;
+  text-align: left;
+}
+
+.ArtistDetailsContainer h3 {
+  position: relative;
+  bottom: 320px;
+  left: 20px;
+  color: white;
+  text-shadow: #464646;
+  font-size: 15px;
+  font-weight: bolder;
+}
+
+.ArtistDetailsContainer h2 {
+  margin: 0px 0px 0px 10px;
+}
+
+.ArtistDetailsContainer button {
+  position: relative;
+  top:-45px;
+  left: 230px;
+  background-color: #c20000; 
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.ArtistDetailsContainer button:hover {
+  background-color: #a71313; 
+}
