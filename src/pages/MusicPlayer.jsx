@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import LayoutMP from '../Layout/LayoutMP';
 import ReactAudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css'; 
-import AlekOlsen from "/workspaces/Cassette-Frontend/src/assets/mp3/AlekOlsen.mp3";
-import TrackImg from "/workspaces/Cassette-Frontend/src/assets/img/Cassettelogosq.png";
-import ArtistImg from "/workspaces/Cassette-Frontend/src/assets/img/artist-img.jpg";
+import AlekOlsen from "../assets/mp3/AlekOlsen.mp3";
+import TrackImg from "../assets/img/Cassettelogosq.png";
+import ArtistImg from "../assets/img/artist-img.jpg";
 import styles from '../assets/css/music-player.module.css';
 
 const Tracks = [
