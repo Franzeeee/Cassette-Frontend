@@ -24,9 +24,23 @@
     position: absolute;
     width: 100%;
     z-index: 2;
+    border-radius: 0 !important;
 }
+
+.createPlaylistModal-searchResult .list-group-item{
+    border-radius: none !important;
+    color: white;
+    background-color: rgb(42, 42, 42);
+    padding: 5px;
+}
+
+.createPlaylistModal-searchResult .list-group-item .artistName {
+    color: hsl(0, 100%, 44%);
+    font-size: .8rem;
+}
+
 .createPlaylistModal-selectedMusic {
-    min-height: 150px !important;
+    min-height: 110px !important;
     max-height: 150px !important;
     overflow: auto;
     gap: 10px;
