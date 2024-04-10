@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // Import Link from React Router
 import LayoutMP from '../Layout/LayoutMP';
-import '/workspaces/Cassette-Frontend/src/assets/css/playlists.css';
-import '/workspaces/Cassette-Frontend/src/assets/css/Circular.css';
+import '../assets/css/playlists.css';
+import '../assets/css/Circular.css';
 import DefImage from "../assets/img/Cassettelogosq.png";
 
 function Playlists() {

@@ -7,7 +7,7 @@ import RequestForm from "./Artist/RequestForm";
 import LogoutButton from "./LogoutButton";
 import cassette_api from "../api";
 import logo from "../assets/img/Cassette-logo.png";
-import userlogo from "/workspaces/Cassette-Frontend/src/assets/img/cassete-man.png";
+import userlogo from "../assets/img/cassete-man.png";
 import "../assets/css/headerMP.css";
 
 function HeaderMP({ verified }) {
