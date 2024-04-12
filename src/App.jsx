@@ -31,21 +31,8 @@ import NewReleases from './pages/MusicBrowseCards/NewReleases'
 import Recommended from './pages/MusicBrowseCards/Recommended';
 import ArtistSpotlight from './pages/MusicBrowseCards/ArtistSpotlight'
 import Rock from './pages/MusicBrowseCards/Rock'
-// import Pop from './pages/music/Pop';
-// import HipHop from './pages/music/HipHop';
-// import Rap from './pages/music/Rap';
-// import Electronic from './pages/music/Electronic';
-// import Jazz from './pages/music/Jazz';
-// import Blues from './pages/music/Blues';
-// import MusicHistory from './pages/music/MusicHistory';
-// import MusicEducation from './pages/music/MusicEducation';
-// import FeaturedLabels from './pages/music/FeaturedLabels';
-// import Collaborations from './pages/music/Collaborations';
-// import MusicChallenges from './pages/music/MusicChallenges';
-// import MusicNews from './pages/music/MusicNews';
-// import MusicReviews from './pages/music/MusicReviews';
-// import MusicDiscovery from './pages/music/MusicDiscovery';
-// import MusicRecommendations from './pages/music/MusicRecommendations';
+import ArtistUploads from './pages/Artist/ArtistUploads';
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('jwt_token'));
@@ -95,21 +82,7 @@ function App() {
           <Route path="/music/recommended-for-you" element={<Recommended />} />
           <Route path="/music/artist-spotlight" element={<ArtistSpotlight />} />
           <Route path="/music/rock" element={<Rock />} />
-          {/* <Route path="/music/pop" element={<Pop />} />
-          <Route path="/music/hip-hop" element={<HipHop />} />
-          <Route path="/music/rap" element={<Rap />} />
-          <Route path="/music/electronic" element={<Electronic />} />
-          <Route path="/music/jazz" element={<Jazz />} />
-          <Route path="/music/blues" element={<Blues />} />
-          <Route path="/music/music-history" element={<MusicHistory />} />
-          <Route path="/music/music-education" element={<MusicEducation />} />
-          <Route path="/music/featured-labels" element={<FeaturedLabels />} />
-          <Route path="/music/collaborations" element={<Collaborations />} />
-          <Route path="/music/music-challenges" element={<MusicChallenges />} />
-          <Route path="/music/music-news" element={<MusicNews />} />
-          <Route path="/music/music-reviews" element={<MusicReviews />} />
-          <Route path="/music/music-discovery" element={<MusicDiscovery />} />
-          <Route path="/music/music-recommendations" element={<MusicRecommendations />} />  */}
+
 
           <Route path="/album/:index" element={<Album />} />
           <Route path="/" element={<MusicMP />} />
@@ -119,7 +92,8 @@ function App() {
         </Route>
 
         <Route element={<StudioRoutes role={role} />} >
-          <Route path="/studio/content" element={<ArtistUpload />} />
+          <Route path="/studio/upload" element={<ArtistUpload />} />
+          <Route path='/studio/content' element={<ArtistUploads />}/>
         </Route>
 
         <Route path="*" element={<NotFound />} />
