@@ -123,7 +123,7 @@ function HeaderMP({ verified }) {
             },
           }}
         >
-          <Link to={'/studio/content'}>
+          <Link to={'/studio/upload'}>
             <MenuItem onClick={handleMenuClose} sx={{ '&:hover': { backgroundColor: '#c20000' }, color: 'white' }}>
               <FontAwesomeIcon icon={faMusic} style={{ marginRight: '10px' }} />
               Music

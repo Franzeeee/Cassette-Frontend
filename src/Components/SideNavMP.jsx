@@ -37,7 +37,7 @@ function SideNavMP({ activePage }) {
         setPlaylistUpdated(false);
       })
       .catch(err => {
-        toast.error("Error: ", err.message)
+        
       })
   }, [playlistUpdated, setPlaylistUpdated])
   
