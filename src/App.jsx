@@ -31,7 +31,7 @@ import NewReleases from './pages/MusicBrowseCards/NewReleases'
 import Recommended from './pages/MusicBrowseCards/Recommended';
 import ArtistSpotlight from './pages/MusicBrowseCards/ArtistSpotlight'
 import Rock from './pages/MusicBrowseCards/Rock'
-import ArtistUploads from './pages/Artist/ArtistUploads';
+import ArtistContents from './pages/Artist/ArtistContents';
 import ArtistDashboard from './pages/Artist/ArtistDashboard';
 
 
@@ -95,7 +95,7 @@ function App() {
         <Route element={<StudioRoutes role={role} />} >
           <Route path='/studio/dashboard' element={<ArtistDashboard />}/>
           <Route path="/studio/upload" element={<ArtistUpload />} />
-          <Route path='/studio/content' element={<ArtistUploads />}/>
+          <Route path='/studio/content' element={<ArtistContents />}/>
         </Route>
 
         <Route path="*" element={<NotFound />} />
