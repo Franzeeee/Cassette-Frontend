@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMusic, faPodcast, faVideo, faSearch, faChevronLeft, faChevronRight, faPlusCircle, faBell, faUser, faUserShield, faMicrophone, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { Menu, MenuItem } from '@mui/material';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import RequestForm from "./Artist/RequestForm";
 import LogoutButton from "./LogoutButton";
 import cassette_api from "../api";
@@ -16,6 +16,7 @@ function HeaderMP({ verified }) {
   const role = localStorage.getItem('user_type');
   const id = localStorage.getItem("ID")
   const [requestStatus, setRequestStatus] = useState(false);
+  const navigate = useNavigate();
 
   // Function to handle menu click
   const handleMenuClick = (event) => {
@@ -64,6 +65,33 @@ function HeaderMP({ verified }) {
   const goForward = () => {
     window.history.forward()
   }
+
+  const handleLogout = async () => {
+    try {
+      const token = localStorage.getItem('jwt_token');
+      if (!token) {
+        console.log("User is not logged in");
+        return;
+      }
+      
+      await cassette_api.post('/logout', null, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      
+      // Clear token from local storage
+      localStorage.removeItem('jwt_token');
+      localStorage.removeItem('user_type');
+      localStorage.removeItem('ID');
+      // Redirect or display success message
+      console.log("Logout successful");
+      window.location.reload();
+    } catch (error) {
+      console.error("Logout failed", error);
+      // Handle error, such as displaying an error message
+    }
+  };
 
   return (
     <header className="w-100 p-2 row m-0 text-light bg-black">
@@ -159,20 +187,24 @@ function HeaderMP({ verified }) {
             },
           }}
         >
-          <MenuItem onClick={handleProfileMenuClose} className="profile-menu-item">
-            <FontAwesomeIcon icon={faUserShield} className="menu-icon" />
-            <span className="menu-text">Go to Admin Page</span>
-          </MenuItem>
-          <MenuItem onClick={handleProfileMenuClose} className="profile-menu-item">
-            <FontAwesomeIcon icon={faMicrophone} className="menu-icon" />
-            <span className="menu-text">Go to Studio</span>
-          </MenuItem>
+          {role == 'admin' && (
+            <MenuItem onClick={() => navigate('/dashboard')} className="profile-menu-item">
+              <FontAwesomeIcon icon={faUserShield} className="menu-icon" />
+              <span className="menu-text">Go to Admin Page</span>
+            </MenuItem>
+          )}
+          {role !== 'listener' && (
+            <MenuItem onClick={() => navigate('/studio/dashboard')} className="profile-menu-item">
+              <FontAwesomeIcon icon={faMicrophone} className="menu-icon" />
+              <span className="menu-text">Go to Studio</span>
+            </MenuItem>
+          )}
           <hr className="profile-menu-divider" />
           <MenuItem onClick={handleProfileMenuClose} className="profile-menu-item">
             <FontAwesomeIcon icon={faUser} className="menu-icon" />
             <span className="menu-text">Profile</span>
           </MenuItem>
-          <MenuItem onClick={handleProfileMenuClose} className="profile-menu-item">
+          <MenuItem onClick={handleLogout} className="profile-menu-item">
             <FontAwesomeIcon icon={faSignOutAlt} className="menu-icon" />
             <span className="menu-text">Logout</span>
           </MenuItem>
