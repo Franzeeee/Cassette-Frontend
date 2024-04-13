@@ -34,7 +34,7 @@ function LogoutButton() {
   };
 
   return (
-    <div style={{ position: 'relative', display: 'inline-block' }}>
+    <div style={{ position: 'relative', display: 'none' }}>
       <FontAwesomeIcon 
         icon={faPowerOff} 
         onClick={handleLogout} 

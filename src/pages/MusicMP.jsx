@@ -84,8 +84,8 @@ function MusicMP() {
           </div>
         </div>
         <div className="albums-title-viewmore">
-          <h5 className="albums-title">Popular Albums</h5>
-          <Link to="/albums" className="view-morebtn">Show all</Link>
+          <h5 className="albums-title">Recommended Albums</h5>
+          <Link to="/music" className="view-morebtn">Show all</Link>
         </div>
         <div className="albums-container">
           <div className="album-cards-container">

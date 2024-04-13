@@ -17,14 +17,14 @@ function SideBar({ active }) {
         </div>
         <div className="col-3 h-50 w-100">
           <div className="row h-100 d-flex flex-column justify-content-start pt-3 align-items-start ">
+            <div className={`col ${styles['sidenav-links']} ${active === 'Playlists' ? styles['active'] : ''}`} onClick={() => navigate('/studio/dashboard')}>
+              <div>Dashboard</div>
+            </div>
             <div className={`col ${styles['sidenav-links']} ${active === 'Upload' ? styles['active'] : ''}`} onClick={() => navigate('/studio/upload')}>
               <div>Upload</div>
             </div>
             <div className={`col ${styles['sidenav-links']} ${active === 'Content' ? styles['active'] : ''}`} onClick={() => navigate('/studio/content')}>
               <div>Content</div>
-            </div>
-            <div className={`col ${styles['sidenav-links']} ${active === 'Playlists' ? styles['active'] : ''}`}>
-              <div>Playlists</div>
             </div>
             <div className={`col ${styles['sidenav-links']} ${active === 'Earn' ? styles['active'] : ''}`}>
               <div>Earn</div>

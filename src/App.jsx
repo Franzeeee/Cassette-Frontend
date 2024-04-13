@@ -32,6 +32,7 @@ import Recommended from './pages/MusicBrowseCards/Recommended';
 import ArtistSpotlight from './pages/MusicBrowseCards/ArtistSpotlight'
 import Rock from './pages/MusicBrowseCards/Rock'
 import ArtistUploads from './pages/Artist/ArtistUploads';
+import ArtistDashboard from './pages/Artist/ArtistDashboard';
 
 
 function App() {
@@ -92,6 +93,7 @@ function App() {
         </Route>
 
         <Route element={<StudioRoutes role={role} />} >
+          <Route path='/studio/dashboard' element={<ArtistDashboard />}/>
           <Route path="/studio/upload" element={<ArtistUpload />} />
           <Route path='/studio/content' element={<ArtistUploads />}/>
         </Route>

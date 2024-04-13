@@ -9,7 +9,7 @@ import {
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import "../assets/css/side-navMP.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import playlistImg from "../assets/img/default-playlilst.jpg";
 import { Tooltip } from "@mui/material";
 import CreatePlaylistModal from "./CreatePlaylistModal";
@@ -17,6 +17,7 @@ import { toast, ToastContainer } from "react-toastify";
 import cassette_api from "../api";
 
 function SideNavMP({ activePage }) {
+  const navigate = useNavigate()
   const active = activePage;
   const navItems = [
     { text: "Home", icon: faHome, link: "/" },
@@ -108,7 +109,7 @@ function SideNavMP({ activePage }) {
           </Link> */}
         </div>
         <div className="d-flex align-items-center justify-content-center gap-2 mt-2">
-          <button className={`border-0 text-light view-playlist ${playlist == false && 'hide-viewMore'}`}>View More</button>
+          <button className={`border-0 text-light view-playlist ${playlist == false && 'hide-viewMore'}`} onClick={() => navigate('playlists')}>View More</button>
             <Tooltip title="Create Empty Playlist">
               <button className="create-playlist-button" onClick={handleShow}><FontAwesomeIcon icon={faPlus}/></button>
             </Tooltip>

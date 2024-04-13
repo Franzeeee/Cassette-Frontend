@@ -7,7 +7,6 @@ import styles from '../assets/css/music-player.module.css';
 import { useParams } from "react-router-dom"
 import cassette_api from '../api';
 
-
 function MusicPlayer() {
   const [tracks, setTracks] = useState([]);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
@@ -15,76 +14,92 @@ function MusicPlayer() {
   const [totalPoints, setTotalPoints] = useState(0);
   const { type, index } = useParams()
 
+  useEffect( () => {
+
+    if(totalPoints === 0 && tracks.length > 0){
+      
+      cassette_api.post('/listen/record', { music_id: tracks[currentTrackIndex].id, points: 0 })
+      .then(response => {
+        console.log('Points recorded:', response.data);
+      })
+      .catch(error => {
+        console.error('Error recording points:', error);
+      });
+
+    }else if(totalPoints > 0 && tracks.length > 0){
+      cassette_api.post('/listen/record', { music_id: tracks[currentTrackIndex].id, points: totalPoints })
+      .then(response => {
+        console.log('Points recorded:', response.data);
+      })
+      .catch(error => {
+        console.error('Error recording points:', error);
+      });
+    }
+
+    setTimeout(() => {
+      setTotalPoints(prev => (prev + 1))
+    },10000)
+  } ,[totalPoints])
+
   useEffect(() => {
-  // Define the API endpoint based on the type
-  let endpoint;
-  let requestData = {};
-  if (type === 'playlist') {
-    endpoint = '/playlist/fetchMusic';
-    requestData = { id: index };
-  } else if (type === 'album') {
-    endpoint = '/fetchMusic';
-    requestData = { album_id: index };
-  } else {
-    // Handle other types or invalid type
-    console.error('Invalid type:', type);
-    return null; // or render an error message
-  }
+    // Define the API endpoint based on the type
+    let endpoint;
+    let requestData = {};
+    if (type === 'playlist') {
+      endpoint = '/playlist/fetchMusic';
+      requestData = { id: index };
+    } else if (type === 'album') {
+      endpoint = '/fetchMusic';
+      requestData = { album_id: index };
+    } else {
+      // Handle other types or invalid type
+      console.error('Invalid type:', type);
+      return null; // or render an error message
+    }
 
     // Fetch music data from the backend
     cassette_api
-      .post(endpoint, requestData) // Adjust request data based on endpoint requirements
+      .post(endpoint, requestData)
       .then(response => {
         // Set the fetched tracks to the state
-        if(type == 'playlist'){
-          setTracks(response.data.music)
-        }else{
+        if (type === 'playlist') {
+          setTracks(response.data.music);
+        } else {
           setTracks(response.data);
-        console.log(response.data)
-
         }
-              })
+      })
       .catch(error => console.error('Error fetching tracks:', error));
-  }, [type, index]); // Include type and index in the dependency array
-
-  useEffect(() => {
-
-  }, [])
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      // Increment points every second while music is playing
-      if (showAudioPlayer) {
-        setTotalPoints(prevPoints => prevPoints + 1);
-      }
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [showAudioPlayer]);
-
+  }, [type, index]);
 
   const handleTrackChange = (index) => {
     setCurrentTrackIndex(index);
-    setCurrentAlbumImage(tracks[index].image);
     setTotalPoints(0); // Reset points when changing tracks
   };
 
   const handleNextTrack = () => {
-    console.log(currentTrackIndex)
-    if(currentTrackIndex === tracks.length - 1){
-      setCurrentTrackIndex(0)
-    }else {
-      setCurrentTrackIndex(currentTrackIndex + 1)
+    if (currentTrackIndex === tracks.length - 1) {
+      setCurrentTrackIndex(0);
+    } else {
+      setCurrentTrackIndex(currentTrackIndex + 1);
     }
   }
-  
+  const handlePrevTrack = () => {
+    if( currentTrackIndex > 0){
+      setCurrentTrackIndex(currentTrackIndex - 1);
+    }
+  }
+
+  const handleSeek = (event) => {
+    const seekTime = event.target.currentTime; // Get the current playback position
+    console.log('Seek time:', seekTime);
+  };
 
   return (
     <LayoutMP activePage={"Music"}>
       <div className={styles.Container}>
         <div className={styles.MainContainer}>
           <div className={styles.TopContainer} onMouseEnter={() => setShowAudioPlayer(true)} onMouseLeave={() => setShowAudioPlayer(false)}>
-            <h5 className='position-absolute text-light' style={{top: '15px', left: '15px'}}>{tracks.length > 0 ? tracks[currentTrackIndex].title : "Loading"}</h5>
+            <h5 className='position-absolute text-light' style={{ top: '15px', left: '15px' }}>{tracks.length > 0 ? tracks[currentTrackIndex].title : "Loading"}</h5>
             <img src={tracks.length > 0 ? tracks[currentTrackIndex].album_cover : ArtistImg} alt="Album Image" className={styles.AlbumImage} />
             <div className={`${styles.AudioPlayerWrapper} ${showAudioPlayer ? styles.Show : styles.Hide}`}>
               <ReactAudioPlayer
@@ -100,12 +115,27 @@ function MusicPlayer() {
                   padding: '10px',
                   boxSizing: 'border-box',
                 }}
+                onSeeked={(e) => handleSeek(e)}
+                onClickNext={handleNextTrack}
+                onClickPrevious={handlePrevTrack}
+                showJumpControls
                 className="react-audio-player"
                 onEnded={handleNextTrack}
+                onPlay={() => setTotalPoints(0)}
+                // Add this prop to enable byte range requests
+                config={{
+                  file: {
+                    forceAudio: true, // Treat it as an audio file
+                    attributes: {
+                      controlsList: 'nodownload', // Disable downloading
+                      controls: true, // Show the default controls
+                    }
+                  }
+                }}
               />
             </div>
           </div>
-        
+
           <div className={styles.BottomContainer}>
             <div className={styles.PlaylistContainer}>
               {tracks.length > 0 && tracks.map((track, index) => (
@@ -131,7 +161,7 @@ function MusicPlayer() {
             </div>
           </div>
         </div>
-        
+
         {/* Side Panel Container */}
         <div className={styles.SidePanelContainer}>
           {/* Container for Album Image, Title, and Artist */}
@@ -144,7 +174,7 @@ function MusicPlayer() {
               <p style={{ color: 'gray', marginLeft: '5px' }}>{tracks.length > 0 ? tracks[currentTrackIndex].artist : "Loading..."}</p>
             </div>
           </div>
-          
+
           {/* Container for Artist Info */}
           <div className={styles.ArtistInfoContainer}>
             <div className={styles.ArtistImageContainer}>
@@ -154,7 +184,7 @@ function MusicPlayer() {
               <h3>About the artist</h3>
               <h2 style={{ color: 'lightgray' }}>{tracks.length > 0 ? tracks[currentTrackIndex].artist : "Loading..."}</h2>
               <button>Follow</button>
-              <p style={{margin: '0px 10px 0px 10px'}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sed viverra tellus in hac habitasse platea dictumst vestibulum. Eu sem integer vitae justo eget magna fermentum iaculis. Quam elementum pulvinar etiam non quam lacus suspendisse faucibus. Penatibus et magnis dis parturient. </p>
+              <p style={{ margin: '0px 10px 0px 10px' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sed viverra tellus in hac habitasse platea dictumst vestibulum. Eu sem integer vitae justo eget magna fermentum iaculis. Quam elementum pulvinar etiam non quam lacus suspendisse faucibus. Penatibus et magnis dis parturient. </p>
             </div>
           </div>
         </div>
