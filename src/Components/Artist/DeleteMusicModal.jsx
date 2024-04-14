@@ -6,11 +6,11 @@ import { ToastContainer, toast } from 'react-toastify';
 
 function DeleteMusicModal({ show, handleClose, musicId }) {
 
-    const id = musicId;
+    const formData = {id: musicId};
     const navigate = useNavigate();
 
     const handleConfirm = () => {
-        cassette_api.get(`/music/delete/${id}`)
+        cassette_api.post(`/music/delete`, formData)
             .then(response => {
                 toast.success("Album Deleted Sucessfully!");
             })

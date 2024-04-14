@@ -89,7 +89,7 @@ function ArtistContents() {
                         #{row.id}
                     </div>
                 </TableCell>
-                <TableCell><Image src={row.albumCover} alt="Album Cover" style={{ width: '30px', height: '20px' }} /></TableCell>
+                <TableCell><img src={row.albumCover} alt="Album Cover" style={{ width: '80px', height: 'auto' }} /></TableCell>
                 <TableCell onClick={() => requestSort('title')} className={getClassNamesFor('title')}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100px' }}>
                         {row.title}
@@ -202,7 +202,7 @@ function ArtistContents() {
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                            {renderTableRows(filteredData)} {/* Use filteredData here */}
+                                            {renderTableRows(sortedData())} {/* Use filteredData here */}
                                         </TableBody>
                                     </Table>
                                 </TableContainer>
