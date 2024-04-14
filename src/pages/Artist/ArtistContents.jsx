@@ -3,51 +3,136 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import ArtistLayout from '../../Layout/ArtistLayout';
 import { Image } from 'primereact/image';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material';
-import '../../assets/css/ArtistStudio/artist-contents.module.css';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Menu, MenuItem, TextField } from '@mui/material';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 function ArtistContents() {
     const [selectedTab, setSelectedTab] = useState(0);
     const [musicData, setMusicData] = useState([
         { id: 1, albumCover: 'album1.jpg', title: 'Song 1', dateUploaded: '2024-04-13', totalListens: 100, status: 'Active' },
-        { id: 2, albumCover: 'album2.jpg', title: 'Song 2', dateUploaded: '2024-04-12', totalListens: 200, status: 'Inactive' },
-        { id: 3, albumCover: 'album3.jpg', title: 'Song 3', dateUploaded: '2024-04-11', totalListens: 550, status: 'Active' },
-        { id: 4, albumCover: 'album4.jpg', title: 'Song 4', dateUploaded: '2024-04-11', totalListens: 450, status: 'Active' },
+        { id: 2, albumCover: 'album2.jpg', title: 'yawa', dateUploaded: '2024-04-12', totalListens: 200, status: 'Inactive' },
+        { id: 3, albumCover: 'album3.jpg', title: 'sili', dateUploaded: '2024-04-11', totalListens: 550, status: 'Active' },
+        { id: 4, albumCover: 'album4.jpg', title: 'gague', dateUploaded: '2024-04-11', totalListens: 450, status: 'Active' },
         { id: 5, albumCover: 'album5.jpg', title: 'Song 5', dateUploaded: '2024-04-11', totalListens: 150, status: 'Active' },
-        { id: 6, albumCover: 'album5.jpg', title: 'Song 5', dateUploaded: '2024-04-11', totalListens: 150, status: 'Active' },
-        { id: 7, albumCover: 'album5.jpg', title: 'Song 5', dateUploaded: '2024-04-11', totalListens: 150, status: 'Active' },
-
+        { id: 6, albumCover: 'album6.jpg', title: 'Song 6', dateUploaded: '2024-04-11', totalListens: 850, status: 'Active' },
     ]);
-    const [podcastData, setPodcastData] = useState([]); 
-    const [videocastData, setVideocastData] = useState([]); 
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [deleteId, setDeleteId] = useState(null); // Store the ID of the item to be deleted
+    const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' }); // State for sorting configuration
+    const [searchQuery, setSearchQuery] = useState('');
 
-    const handleDelete = (id, dataType) => {
-        switch (dataType) {
-            case 'music':
-                setMusicData(prevMusicData => prevMusicData.filter(item => item.id !== id).map((item, index) => ({ ...item, id: index + 1 })));
-                break;
-            case 'podcast':
-                setPodcastData(prevPodcastData => prevPodcastData.filter(item => item.id !== id).map((item, index) => ({ ...item, id: index + 1 })));
-                break;
-            case 'videocast':
-                setVideocastData(prevVideocastData => prevVideocastData.filter(item => item.id !== id).map((item, index) => ({ ...item, id: index + 1 })));
-                break;
-            default:
-                break;
-        }
+    const handleClick = (event, id) => { // Pass the id as argument
+        setAnchorEl(event.currentTarget);
+        setDeleteId(id); // Set the ID of the item to be deleted
     };
 
-    const renderTableRows = (data, dataType) => {
+    const handleClose = () => {
+        setAnchorEl(null);
+        setDeleteId(null); // Reset the deleteId state
+    };
+
+    const handleDelete = (id) => { // Only 
+        setMusicData(prevMusicData => {
+            // Filter based on the id and update the IDs of the remaining rows
+            const updatedData = prevMusicData.filter(item => item.id !== id).map((item, index) => ({ ...item, id: index + 1 }));
+            return updatedData;
+        });
+        handleClose();
+    };
+
+    const requestSort = (key) => {
+        let direction = 'ascending';
+        if (sortConfig.key === key && sortConfig.direction === 'ascending') {
+            direction = 'descending';
+        }
+        setSortConfig({ key, direction });
+    };
+
+    const getClassNamesFor = (name) => {
+        if (!sortConfig) {
+            return;
+        }
+        return sortConfig.key === name ? sortConfig.direction : undefined;
+    };
+
+    const sortedData = () => {
+        const sortableItems = [...musicData];
+        if (sortConfig !== null) {
+            sortableItems.sort((a, b) => {
+                if (a[sortConfig.key] < b[sortConfig.key]) {
+                    return sortConfig.direction === 'ascending' ? -1 : 1;
+                }
+                if (a[sortConfig.key] > b[sortConfig.key]) {
+                    return sortConfig.direction === 'ascending' ? 1 : -1;
+                }
+                return 0;
+            });
+        }
+        return sortableItems;
+    };
+
+    const handleSearchInputChange = (event) => {
+        const value = event.target.value.toLowerCase(); // Convert search query to lowercase
+        setSearchQuery(value); // Update search query state
+    };
+
+    const filteredData = musicData.filter(item =>
+        item.title.toLowerCase().includes(searchQuery)
+    );
+
+    const renderTableRows = (data) => { // Remove dataType parameter since it's specific to musicData
         return data.map((row, index) => (
             <TableRow key={row.id} style={{ backgroundColor: index % 2 === 0 ? '#f2f2f2' : 'white' }}>
-                <TableCell>{row.id}</TableCell>
-                <TableCell><Image src={row[dataType === 'music' ? 'albumCover' : 'thumbnail']} alt={dataType === 'music' ? 'Album Cover' : 'Thumbnail'} style={{ width: dataType === 'music' ? '30px' : '50px', height: dataType === 'music' ? '20px' : '50px' }} /></TableCell>
-                <TableCell>{row.title}</TableCell>
-                <TableCell>{row.dateUploaded}</TableCell>
-                <TableCell>{dataType === 'music' ? row.totalListens : row.totalViews}</TableCell>
+                <TableCell onClick={() => requestSort('id')} className={getClassNamesFor('id')}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '50px' }}>
+                        #{row.id}
+                    </div>
+                </TableCell>
+                <TableCell><Image src={row.albumCover} alt="Album Cover" style={{ width: '30px', height: '20px' }} /></TableCell>
+                <TableCell onClick={() => requestSort('title')} className={getClassNamesFor('title')}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100px' }}>
+                        {row.title}
+                    </div>
+                </TableCell>
+                <TableCell onClick={() => requestSort('dateUploaded')} className={getClassNamesFor('dateUploaded')}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '150px' }}>
+                        {row.dateUploaded}
+                    </div>
+                </TableCell>
+                <TableCell onClick={() => requestSort('totalListens')} className={getClassNamesFor('totalListens')}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100px' }}>
+                        {row.totalListens}
+                    </div>
+                </TableCell>
                 <TableCell>{row.status}</TableCell>
                 <TableCell>
-                    <Button onClick={() => handleDelete(row.id, dataType)} style={{ color: 'red' }}>DELETE</Button>
+                    <IconButton onClick={(event) => handleClick(event, row.id)}> {/* Pass the id here */}
+                        <MoreVertIcon style={{ fontSize: '20px' }} /> 
+                    </IconButton>
+                    <Menu
+                        anchorEl={anchorEl}
+                        open={Boolean(anchorEl)}
+                        onClose={handleClose}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'right',
+                        }}
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}
+                        getContentAnchorEl={null}
+                        MenuProps={{ 
+                            PaperProps: {
+                                style: {
+                                    backgroundColor: '#ffffff',
+                                },
+                            },
+                        }}
+                    >
+                        <MenuItem onClick={() => handleDelete(deleteId)} style={{ backgroundColor: '#ffffff' }}>Delete</MenuItem> {/* Use deleteId state here */}
+                        <MenuItem style={{ backgroundColor: '#ffffff' }}>Edit</MenuItem>
+                    </Menu>
                 </TableCell>
             </TableRow>
         ));
@@ -55,35 +140,70 @@ function ArtistContents() {
 
     return (
         <ArtistLayout>
-            <div className="col-10 h-100 d-flex flex-column align-items-center justify-content-center p-5">
-                <Tabs selectedIndex={selectedTab} onSelect={index => setSelectedTab(index)} style={{ width: '100%', backgroundColor: 'black' }}>
-                <TabList style={{ width: 'fit-content', backgroundColor: 'black' }}>
-                    <Tab style={{ width: '100px', marginRight: '10px', backgroundColor: selectedTab === 0 ? '#EEE3E1' : 'transparent', color: selectedTab === 0 ? 'black' : 'gray' }}>Music</Tab>
-                    <Tab style={{ width: '100px', marginRight: '10px', backgroundColor: selectedTab === 1 ? '#EEE3E1' : 'transparent', color: selectedTab === 1 ? 'black' : 'gray' }}>Podcast</Tab>
-                    <Tab style={{ width: '100px', marginRight: '10px', backgroundColor: selectedTab === 2 ? '#EEE3E1' : 'transparent', color: selectedTab === 2 ? 'black' : 'gray' }}>Videocast</Tab>
-                </TabList>
+            <div className="col-10 h-100 d-flex flex-column align-items-start justify-content-center p-4">
+                {/* Add search box */}
+                <TextField
+    label="Search"
+    variant="outlined"
+    value={searchQuery}
+    onChange={handleSearchInputChange}
+    style={{
+        marginBottom: '20px',
+        marginTop: '0px',
+        width: '300px',
+        borderColor: 'white',
+        border: '1px solid gray',
+        '&:focus': {
+            borderColor: 'transparent',
+            outline: 'none',
+            boxShadow: 'none'
+        }
+    }}
+    InputProps={{
+        style: { color: 'white' }
+    }}
+    InputLabelProps={{
+        style: { color: 'white' }
+    }}
+/>
 
+
+
+                <Tabs selectedIndex={selectedTab} onSelect={index => setSelectedTab(index)} style={{ width: '100%', backgroundColor: 'black' }}>
+                    <TabList style={{ width: 'fit-content', backgroundColor: 'black' }}>
+                        <Tab style={{ width: '100px', marginRight: '10px', backgroundColor: selectedTab === 0 ? '#EEE3E1' : 'transparent', color: selectedTab === 0 ? 'black' : 'gray' }}>Music</Tab>
+                        <Tab style={{ width: '100px', marginRight: '10px', backgroundColor: selectedTab === 1 ? '#EEE3E1' : 'transparent', color: selectedTab === 1 ? 'black' : 'gray' }}>Podcast</Tab>
+                        <Tab style={{ width: '100px', marginRight: '10px', backgroundColor: selectedTab === 2 ? '#EEE3E1' : 'transparent', color: selectedTab === 2 ? 'black' : 'gray' }}>Videocast</Tab>
+                    </TabList>
 
                     <TabPanel>
-                        {musicData.length === 0 ? (
+                        {filteredData.length === 0 ? (
                             <div className="no-records">There are no records to display for Music</div>
                         ) : (
-                            <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
-                                <TableContainer component={Paper}>
+                            <div className="scrollable-table">
+                                <TableContainer component={Paper} style={{ maxHeight: '400px', overflowY: 'auto' }}>
                                     <Table>
-                                        <TableHead>
+                                        <TableHead style={{ position: 'sticky', top: 0, backgroundColor: 'white', zIndex: 1 }}>
                                             <TableRow>
-                                                <TableCell>#</TableCell>
+                                                <TableCell onClick={() => requestSort('id')} className={getClassNamesFor('id')}>
+                                                    # {sortConfig.key === 'id' && (sortConfig.direction === 'ascending' ? '\u25B2' : '\u25BC')}
+                                                </TableCell>
                                                 <TableCell> </TableCell>
-                                                <TableCell>Title</TableCell>
-                                                <TableCell>Date Uploaded</TableCell>
-                                                <TableCell>Total Listens</TableCell>
+                                                <TableCell onClick={() => requestSort('title')} className={getClassNamesFor('title')}>
+                                                    Title {sortConfig.key === 'title' && (sortConfig.direction === 'ascending' ? '\u25B2' : '\u25BC')}
+                                                </TableCell>
+                                                <TableCell onClick={() => requestSort('dateUploaded')} className={getClassNamesFor('dateUploaded')}>
+                                                    Date Uploaded {sortConfig.key === 'dateUploaded' && (sortConfig.direction === 'ascending' ? '\u25B2' : '\u25BC')}
+                                                </TableCell>
+                                                <TableCell onClick={() => requestSort('totalListens')} className={getClassNamesFor('totalListens')}>
+                                                    Total Listens {sortConfig.key === 'totalListens' && (sortConfig.direction === 'ascending' ? '\u25B2' : '\u25BC')}
+                                                </TableCell>
                                                 <TableCell>Status</TableCell>
-                                                <TableCell>Controls</TableCell>
+                                                <TableCell></TableCell>
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                            {renderTableRows(musicData, 'music')}
+                                            {renderTableRows(filteredData)} {/* Use filteredData here */}
                                         </TableBody>
                                     </Table>
                                 </TableContainer>
@@ -95,7 +215,7 @@ function ArtistContents() {
                     </TabPanel>
                     <TabPanel>
                         {/* Similar structure as above */}
-                    </TabPanel> 
+                    </TabPanel>
                 </Tabs>
             </div>
         </ArtistLayout>
