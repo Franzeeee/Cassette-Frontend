@@ -10,9 +10,11 @@
 
 .pplaylist-cards-container {
     display: flex;
-    gap: 25px;
-    margin: 10px 20px 10px 20px;
-
+    gap: 5px;
+    width: 100%;
+    max-width: 100%;
+    flex-wrap: wrap;
+    transition: all .3s ease;
   }
   
   .playlist-card {
@@ -48,13 +50,13 @@
   }
   
   .pplaylist-title {
-    color: rgb(199, 197, 197);
+    color: rgb(255, 255, 255);
     font-size: 16px;
   }
   
   .pplaylist-description {
     font-size: 12px;
-    color: #a8a8a8; 
+    color: #ffffff; 
     margin-top: 5px; 
   }
   
@@ -65,7 +67,7 @@
   }
   
   .playlist-card:hover {
-    background-color: rgb(15, 15, 15);
+    background-color: #a00101;
     transition: background-color 0.3s ease;
   }
   
