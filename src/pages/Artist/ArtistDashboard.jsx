@@ -53,7 +53,7 @@ function ArtistDashboard() {
         }
         return (
             <div className={`d-flex align-align-items-center justify-content-center`}>
-                <button className={`${styles.viewButton}`} onClick={() => handleButtonClick(rowData)}>View Album</button>
+                <button className={`${styles.viewButton}`} onClick={() => handleButtonClick(rowData)}>View Album {rowData}</button>
             </div>
         );
     };
@@ -99,7 +99,7 @@ function ArtistDashboard() {
                             <Column field="points" header="Points"></Column>
                             <Column field="date" header="Upload Date"></Column>
                             
-                            <Column header="Control" body={customBody(1)}></Column>
+                            <Column header="Control" body={(rowData) => customBody(rowData.id)}></Column>
                         </DataTable>
                     </div>
                 </div>
