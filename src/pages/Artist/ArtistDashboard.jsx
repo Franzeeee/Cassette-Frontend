@@ -6,7 +6,7 @@ import styles from '../../assets/css/ArtistStudio/artist-dashboard.module.css'
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeadphones, faUpload, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faFire, faHeadphones, faUpload, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
 
 function ArtistDashboard() {
     const [music, setMusic] = useState([]);
@@ -74,10 +74,10 @@ function ArtistDashboard() {
 
                         <div className="card text-center" style={{minWidth: '120px', flex: '1', boxShadow: '0 1px 24px #1c1c1c'}}>
                         <div className={`card-header ${styles['card-header']}`}>
-                                <p className='m-0'>Total Listens</p>
+                                <p className='m-0'>Total Points</p>
                             </div>
                             <div className="card-body text-light d-flex align-items-center justify-content-center ">
-                                <h5 className='m-0'><span className={`${styles.followIcon}`}><FontAwesomeIcon icon={faHeadphones} /></span>43048</h5>
+                                <h5 className='m-0'><span className={`${styles.followIcon}`}><FontAwesomeIcon icon={faFire} /></span>43048</h5>
                             </div>
                         </div>
 
