@@ -94,7 +94,7 @@ function HeaderMP({ verified }) {
   };
 
   return (
-    <header className="w-100 p-2 row m-0 text-light bg-black">
+    <header className="w-100 p-2 row m-0 text-light" style={{ backgroundColor: '#080808' }}>
       <RequestForm
         show={show}
         handleClose={() => setShow(false)}
@@ -200,7 +200,7 @@ function HeaderMP({ verified }) {
             </MenuItem>
           )}
           <hr className="profile-menu-divider" />
-          <MenuItem onClick={handleProfileMenuClose} className="profile-menu-item">
+          <MenuItem onClick={() => navigate('/profile')} className="profile-menu-item">
             <FontAwesomeIcon icon={faUser} className="menu-icon" />
             <span className="menu-text">Profile</span>
           </MenuItem>

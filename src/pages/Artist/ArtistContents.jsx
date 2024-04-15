@@ -5,16 +5,17 @@ import ArtistLayout from '../../Layout/ArtistLayout';
 import { Image } from 'primereact/image';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Menu, MenuItem, TextField } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import defaultCover from '../../assets/img/default.png'
 
 function ArtistContents() {
     const [selectedTab, setSelectedTab] = useState(0);
     const [musicData, setMusicData] = useState([
-        { id: 1, albumCover: 'album1.jpg', title: 'Song 1', dateUploaded: '2024-04-13', totalListens: 100, status: 'Active' },
-        { id: 2, albumCover: 'album2.jpg', title: 'yawa', dateUploaded: '2024-04-12', totalListens: 200, status: 'Inactive' },
-        { id: 3, albumCover: 'album3.jpg', title: 'sili', dateUploaded: '2024-04-11', totalListens: 550, status: 'Active' },
-        { id: 4, albumCover: 'album4.jpg', title: 'gague', dateUploaded: '2024-04-11', totalListens: 450, status: 'Active' },
-        { id: 5, albumCover: 'album5.jpg', title: 'Song 5', dateUploaded: '2024-04-11', totalListens: 150, status: 'Active' },
-        { id: 6, albumCover: 'album6.jpg', title: 'Song 6', dateUploaded: '2024-04-11', totalListens: 850, status: 'Active' },
+        { id: 1, albumCover: defaultCover, title: 'Song 1', dateUploaded: '2024-04-13', totalListens: 100, status: 'Posted' },
+        { id: 2, albumCover: defaultCover, title: 'yawa', dateUploaded: '2024-04-12', totalListens: 200, status: 'Draft' },
+        { id: 3, albumCover: defaultCover, title: 'sili', dateUploaded: '2024-04-11', totalListens: 550, status: 'Posted' },
+        { id: 4, albumCover: defaultCover, title: 'gague', dateUploaded: '2024-04-11', totalListens: 450, status: 'Posted' },
+        { id: 5, albumCover: defaultCover, title: 'Song 5', dateUploaded: '2024-04-11', totalListens: 150, status: 'Removed' },
+        { id: 6, albumCover: defaultCover, title: 'Song 6', dateUploaded: '2024-04-11', totalListens: 850, status: 'Removed' },
     ]);
     const [anchorEl, setAnchorEl] = useState(null);
     const [deleteId, setDeleteId] = useState(null); // Store the ID of the item to be deleted
@@ -88,7 +89,7 @@ function ArtistContents() {
                         #{row.id}
                     </div>
                 </TableCell>
-                <TableCell><Image src={row.albumCover} alt="Album Cover" style={{ width: '30px', height: '20px' }} /></TableCell>
+                <TableCell><img src={row.albumCover} alt="Album Cover" style={{ width: '80px', height: 'auto' }} /></TableCell>
                 <TableCell onClick={() => requestSort('title')} className={getClassNamesFor('title')}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100px' }}>
                         {row.title}
@@ -131,7 +132,7 @@ function ArtistContents() {
                         }}
                     >
                         <MenuItem onClick={() => handleDelete(deleteId)} style={{ backgroundColor: '#ffffff' }}>Delete</MenuItem> {/* Use deleteId state here */}
-                        <MenuItem style={{ backgroundColor: '#ffffff' }}>Edit</MenuItem>
+                        <MenuItem style={{ backgroundColor: '#ffffff' }}>View</MenuItem>
                     </Menu>
                 </TableCell>
             </TableRow>
@@ -139,35 +140,33 @@ function ArtistContents() {
     };
 
     return (
-        <ArtistLayout>
+        <ArtistLayout active={"Content"}>
             <div className="col-10 h-100 d-flex flex-column align-items-start justify-content-center p-4">
                 {/* Add search box */}
                 <TextField
-    label="Search"
-    variant="outlined"
-    value={searchQuery}
-    onChange={handleSearchInputChange}
-    style={{
-        marginBottom: '20px',
-        marginTop: '0px',
-        width: '300px',
-        borderColor: 'white',
-        border: '1px solid gray',
-        '&:focus': {
-            borderColor: 'transparent',
-            outline: 'none',
-            boxShadow: 'none'
-        }
-    }}
-    InputProps={{
-        style: { color: 'white' }
-    }}
-    InputLabelProps={{
-        style: { color: 'white' }
-    }}
-/>
-
-
+                    label="Search"
+                    variant="outlined"
+                    value={searchQuery}
+                    onChange={handleSearchInputChange}
+                    style={{
+                        marginBottom: '20px',
+                        marginTop: '0px',
+                        width: '300px',
+                        borderColor: 'white',
+                        border: '1px solid gray',
+                        '&:focus': {
+                            borderColor: 'transparent',
+                            outline: 'none',
+                            boxShadow: 'none'
+                        }
+                    }}
+                    InputProps={{
+                        style: { color: 'white' }
+                    }}
+                    InputLabelProps={{
+                        style: { color: 'white' }
+                    }}
+                />
 
                 <Tabs selectedIndex={selectedTab} onSelect={index => setSelectedTab(index)} style={{ width: '100%', backgroundColor: 'black' }}>
                     <TabList style={{ width: 'fit-content', backgroundColor: 'black' }}>
@@ -178,7 +177,7 @@ function ArtistContents() {
 
                     <TabPanel>
                         {filteredData.length === 0 ? (
-                            <div className="no-records">There are no records to display for Music</div>
+                            <div className="no-records text-white">There are no records to display for Music</div>
                         ) : (
                             <div className="scrollable-table">
                                 <TableContainer component={Paper} style={{ maxHeight: '400px', overflowY: 'auto' }}>
@@ -188,7 +187,7 @@ function ArtistContents() {
                                                 <TableCell onClick={() => requestSort('id')} className={getClassNamesFor('id')}>
                                                     # {sortConfig.key === 'id' && (sortConfig.direction === 'ascending' ? '\u25B2' : '\u25BC')}
                                                 </TableCell>
-                                                <TableCell> </TableCell>
+                                                <TableCell>Album Cover</TableCell>
                                                 <TableCell onClick={() => requestSort('title')} className={getClassNamesFor('title')}>
                                                     Title {sortConfig.key === 'title' && (sortConfig.direction === 'ascending' ? '\u25B2' : '\u25BC')}
                                                 </TableCell>
@@ -203,7 +202,7 @@ function ArtistContents() {
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                            {renderTableRows(filteredData)} {/* Use filteredData here */}
+                                            {renderTableRows(sortedData())} {/* Use filteredData here */}
                                         </TableBody>
                                     </Table>
                                 </TableContainer>

@@ -11,11 +11,13 @@ import cassette_api from "../api";
 import { Tooltip } from "@mui/material";
 import DeletePlaylistModal from "../Components/DeletePlaylistModal";
 import EditPlaylistModal from "../Components/EditPlaylistModal";
+import { toast, ToastContainer } from 'react-toastify'
 
 function Playlist() {
 
   const { index } = useParams();
   const navigate = useNavigate();
+  const [hoveredIndex, setHoveredIndex] = useState(null);
 
   const [playlistTracks, setPlaylistTracks] = useState([]);
 
@@ -47,8 +49,6 @@ function Playlist() {
 
         // Update playlistTracks state
         setPlaylistTracks(fetchedTracks);
-        console.log(fetchedTracks)
-
       })
       .catch(err => {
         console.log(err)
@@ -66,10 +66,32 @@ function Playlist() {
   const hideEditModal = () => {
     setShowEditModal(false)
   }
+
+  const handleDeleteTrack = (index) => {
+    // Check if the track is already deleted
+    if (!playlistTracks.some(track => track.id === index)) {
+      return;
+    }
+  
+    const formData = {
+      id: index
+    }
+    cassette_api.post('/playlist/music/delete', formData)
+      .then(response => {
+        toast.success("Track Deleted Successfully!")
+        const newTracklist = playlistTracks.filter(track => track.id !== index);
+        setPlaylistTracks(newTracklist);
+        document.getElementById(`playlist-row-${index}`).classList.add('playlist-trackDeleted');
+      })
+      .catch(error => {
+        console.error("Error deleting track: ", error)
+      })
+  }
   
   return (
     <LayoutMP activePage={"Music"}>
       <div className="playlist-container">
+        <ToastContainer />
         <DeletePlaylistModal show={showDeleteModal} handleClose={hideDeletemodal} playlistId={index}/>
         <EditPlaylistModal show={showEditModal} onClose={hideEditModal} playlistData={index}/>
         <div className="top-container position-relative ">
@@ -103,13 +125,13 @@ function Playlist() {
                   <th>#</th>
                   <th>Title</th>
                   <th>Album</th>
-                  <th>Date Added</th>
                   <th>Duration</th>
+                  <th>Date Added</th>
                 </tr>
               </thead>
               <tbody>
                 {playlistTracks.map((track, index) => (
-                  <tr key={index}>
+                  <tr id={`playlist-row-${index}`} key={index} className="playlist-tr" onMouseEnter={() => setHoveredIndex(index)} onMouseLeave={() => setHoveredIndex(null)}>
                     <td>{index + 1}</td>
                     <td>
                       <div className="p-track-info">
@@ -121,8 +143,14 @@ function Playlist() {
                       </div>
                     </td>
                     <td>{track.album_name}</td>
-                    <td>{formatDate(track.created_at)}</td>
                     <td>{track.duration}</td>
+                    <td className="lastTD" style={{maxWidth: '50px'}}>
+                    {hoveredIndex === index ? (
+                      <button onClick={() => handleDeleteTrack(track.id)} className="playlist-DeleteTrack">Delete</button>
+                    ) : (
+                      formatDate(track.created_at)
+                    )}
+                    </td>
                   </tr>
                 ))}
               </tbody>

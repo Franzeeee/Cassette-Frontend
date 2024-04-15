@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'; // Import Link from React Router
 import LayoutMP from '../Layout/LayoutMP';
 import '../assets/css/playlists.css';
 import '../assets/css/Circular.css';
 import DefImage from "../assets/img/Cassettelogosq.png";
+import cassette_api from '../api';
+import defaultImage from '../assets/img/default-playlilst.jpg';
 
 function Playlists() {
-  const playlistData = [
+  const userId = localStorage.getItem("ID");
+  const [playlistData, setPlaylistData] = useState([
     {
       title: 'Playlist 1',
       description: 'Description for Playlist 1',
@@ -22,7 +25,18 @@ function Playlists() {
       description: 'Description for Playlist 3',
       imageUrl: DefImage,
     },
-  ];
+  ]);
+
+  useEffect(() => {
+    cassette_api.post('/playlists', {id: userId})
+    .then(response => {
+      const playlistsData = response.data;
+      setPlaylistData(playlistsData.playlists);
+    })
+    .catch(error => {
+      console.error("Error fetching playlists: ", error)
+    })
+  },[])
 
   return (
     <LayoutMP activePage="Playlists">
@@ -30,14 +44,14 @@ function Playlists() {
         <h2 className="plplaylist-title">Playlists</h2>
         <div className="pplaylist-cards-container">
           {playlistData.map((item, index) => (
-            <Link to={`/playlist/${index}`} key={index} className="playlist-link"> {/* Wrap each card in a Link component */}
+            <Link to={`/playlist/${item.id}`} key={index} className="playlist-link"> {/* Wrap each card in a Link component */}
               <div className="playlist-card">
                 <div className="pplaylist-image-container">
-                  <img src={item.imageUrl} alt={item.title} className="pplaylist-image" />
+                  <img src={defaultImage} alt={item.title} className="pplaylist-image" />
                 </div>
                 <div className="pplaylist-info-container">
-                  <h4 className="pplaylist-title">{item.title}</h4>
-                  <p className="pplaylist-description">{item.description}</p>
+                  <h4 className="pplaylist-title">{item.name}</h4>
+                  <p className="pplaylist-description">Sample Description</p>
                 </div>
               </div>
             </Link>

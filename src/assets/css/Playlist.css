@@ -279,3 +279,26 @@
 .Playlist-ControlContainer > * {
   cursor: pointer;
 }
+.playlist-DeleteTrack {
+  color: white;
+  border: 1px solid #eb0505;
+  background-color: transparent;
+  padding: 5px 10px;
+  border-radius: 10px;
+  animation: slideUp 0.5s ease;
+  margin: 0 !important;
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateX(30%);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(0);
+    opacity: 1;
+  }
+}
+.playlist-trackDeleted {
+  display: none !important;
+}
