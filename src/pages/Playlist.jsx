@@ -14,6 +14,7 @@ import EditPlaylistModal from "../Components/EditPlaylistModal";
 import { toast, ToastContainer } from 'react-toastify'
 import '../App.css'
 
+
 function Playlist() {
 
   const { index } = useParams();
@@ -50,6 +51,7 @@ function Playlist() {
         // Update playlistTracks state
         setPlaylistTracks(fetchedTracks);
         console.log(fetchedTracks);
+
       })
       .catch(err => {
         console.log(err)
@@ -128,6 +130,7 @@ function Playlist() {
                   <th>Album</th>
                   <th className="playlist-duration">Duration</th>
                   <th className="playlist-date">Date Added</th>
+
                 </tr>
               </thead>
               <tbody>

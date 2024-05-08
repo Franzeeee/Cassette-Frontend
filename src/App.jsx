@@ -33,6 +33,7 @@ import ArtistSpotlight from './pages/MusicBrowseCards/ArtistSpotlight'
 import Rock from './pages/MusicBrowseCards/Rock'
 import ArtistContents from './pages/Artist/ArtistContents';
 import ArtistDashboard from './pages/Artist/ArtistDashboard';
+import Profile from './pages/Profile';
 
 
 function App() {
@@ -76,6 +77,7 @@ function App() {
           <Route path="/home_mp" element={<HomeMP />} />
           <Route path="/music" element={<Music />} />
           <Route path="/playlists" element={<Playlists />} /> 
+          <Route path='/profile' element={<Profile />}/>       {/* Profile Route */}
           
           {/* Rooutes for Music Cards Categories */}
           <Route path="/music/top-charts" element={<TopCharts />} />
@@ -90,6 +92,7 @@ function App() {
           <Route path="/player/:type/:index" element={<MusicPlayer />} />
           <Route path="/playlist/:index" element={<Playlist />} />
           <Route path="/artist" element={<Artist />} />
+          
         </Route>
 
         <Route element={<StudioRoutes role={role} />} >

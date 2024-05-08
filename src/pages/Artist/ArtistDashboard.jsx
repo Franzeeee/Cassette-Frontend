@@ -12,6 +12,7 @@ import { toast, ToastContainer } from 'react-toastify'
 function ArtistDashboard() {
     const [music, setMusic] = useState([]);
     const [totalPoints, setTotalPoints] = useState(null);
+
     const hasFetchedData = useRef(false);
 
     const formatDate = (dateString) => {
@@ -22,6 +23,7 @@ function ArtistDashboard() {
 
     useEffect(() => {
         toast.loading('Fetching data...', {theme: 'dark'});
+
         if (!hasFetchedData.current) {
             cassette_api.post('/listen/top-ten', { user_id: localStorage.getItem("ID") })
                 .then(response => {
@@ -37,6 +39,7 @@ function ArtistDashboard() {
                     }));
         
                     musicArray.sort((a, b) => b.points - a.points);
+
                     
                     // Sum up all points
                     const totalPointsSum = musicArray.reduce((acc, curr) => acc + curr.points, 0);
@@ -57,6 +60,9 @@ function ArtistDashboard() {
             if(toast.isActive){
                 toast.dismiss();
             }
+                });
+
+            hasFetchedData.current = true;
         }
     }, []);
     
@@ -113,6 +119,7 @@ function ArtistDashboard() {
                             </div>
                             <div className="card-body text-light d-flex align-items-center justify-content-center ">
                                 <h5 className='m-0'><span className={`${styles.followIcon}`}><FontAwesomeIcon icon={faRankingStar} /></span>1</h5>
+
                             </div>
                         </div>
                     </div>
