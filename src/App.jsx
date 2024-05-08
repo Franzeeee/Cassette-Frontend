@@ -24,6 +24,7 @@ import NotFound from './pages/NotFound';
 import ArtistUpload from './pages/Artist/ArtistUpload';
 import Album from './pages/Album';
 import RequestForm from './Components/Artist/RequestForm';
+import Search from './pages/Search';
 
 // Pages for music categories
 import TopCharts from './pages/MusicBrowseCards/TopCharts';
@@ -78,6 +79,7 @@ function App() {
           <Route path="/music" element={<Music />} />
           <Route path="/playlists" element={<Playlists />} /> 
           <Route path='/profile' element={<Profile />}/>       {/* Profile Route */}
+          <Route path='/search' element={<Search />}/> 
           
           {/* Rooutes for Music Cards Categories */}
           <Route path="/music/top-charts" element={<TopCharts />} />
