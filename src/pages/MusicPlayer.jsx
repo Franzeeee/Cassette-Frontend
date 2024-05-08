@@ -16,30 +16,30 @@ function MusicPlayer() {
 
   useEffect( () => {
 
-    if(totalPoints === 0 && tracks.length > 0){
+    // if(totalPoints === 0 && tracks.length > 0){
       
-      cassette_api.post('/listen/record', { music_id: tracks[currentTrackIndex].id, points: 0 })
-      .then(response => {
-        console.log('Points recorded:', response.data);
-      })
-      .catch(error => {
-        console.error('Error recording points:', error);
-      });
+    //   cassette_api.post('/listen/record', { music_id: tracks[currentTrackIndex].id, points: 0 })
+    //   .then(response => {
+    //     console.log('Points recorded:', response.data);
+    //   })
+    //   .catch(error => {
+    //     console.error('Error recording points:', error);
+    //   });
 
-    }else if(totalPoints > 0 && tracks.length > 0){
-      cassette_api.post('/listen/record', { music_id: tracks[currentTrackIndex].id, points: totalPoints })
-      .then(response => {
-        console.log('Points recorded:', response.data);
-      })
-      .catch(error => {
-        console.error('Error recording points:', error);
-      });
-    }
+    // }else if(totalPoints > 0 && tracks.length > 0){
+    //   cassette_api.post('/listen/record', { music_id: tracks[currentTrackIndex].id, points: totalPoints })
+    //   .then(response => {
+    //     console.log('Points recorded:', response.data);
+    //   })
+    //   .catch(error => {
+    //     console.error('Error recording points:', error);
+    //   });
+    // }
 
-    setTimeout(() => {
-      setTotalPoints(prev => (prev + 1))
-    },10000)
-  } ,[totalPoints])
+    // setTimeout(() => {
+    //   setTotalPoints(prev => (prev + 1))
+    // },10000)
+  } ,[])
 
   useEffect(() => {
     // Define the API endpoint based on the type
@@ -63,7 +63,9 @@ function MusicPlayer() {
       .then(response => {
         // Set the fetched tracks to the state
         if (type === 'playlist') {
-          setTracks(response.data.music);
+          const filteredTracks = response.data.music.filter(track => !track.deleted_at);
+          
+          setTracks(filteredTracks);
         } else {
           setTracks(response.data);
         }
@@ -94,6 +96,30 @@ function MusicPlayer() {
     console.log('Seek time:', seekTime);
   };
 
+  const [audioBlob, setAudioBlob] = useState(null);
+  const [audioBlobFetched, setAudioBlobFetched] = useState(false);
+
+  useEffect(() => {
+    // Fetch the audio blob only if it hasn't been fetched yet
+    if (!audioBlobFetched) {
+      fetchAudioBlob();
+    }
+  }, [audioBlobFetched]);
+    
+  async function fetchAudioBlob() {
+    try {
+      const response = await fetch('http://localhost/api/audio');
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const blob = await response.blob();
+      setAudioBlob(URL.createObjectURL(blob));
+      setAudioBlobFetched(true); // Set audioBlobFetched to true after fetching
+    } catch (error) {
+      console.error('Error fetching audio blob:', error);
+    }
+  }
+  
   return (
     <LayoutMP activePage={"Music"}>
       <div className={styles.Container}>
@@ -103,7 +129,7 @@ function MusicPlayer() {
             <img src={tracks.length > 0 ? tracks[currentTrackIndex].album_cover : ArtistImg} alt="Album Image" className={styles.AlbumImage} />
             <div className={`${styles.AudioPlayerWrapper} ${showAudioPlayer ? styles.Show : styles.Hide}`}>
               <ReactAudioPlayer
-                src={tracks.length > 0 ? tracks[currentTrackIndex].file_name : null}
+                src={tracks.length > 0 && audioBlob !== null? audioBlob : null}
                 autoPlay={true}
                 showSkipControls
                 controls

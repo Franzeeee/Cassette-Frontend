@@ -13,10 +13,9 @@ const AddToPlaylistModal = ({ show, handleClose, musicId }) => {
         const fetchPlaylists = async () => {
             try {
                 const response = await cassette_api.get(`/playlists/${userId}`);
-                console.log(response.data); // Log the response data to inspect it
                 setPlaylists(response.data.playlists);
             } catch (error) {
-                console.error("Error fetching playlists:", error);
+                console.log(error);
             }
         };
     

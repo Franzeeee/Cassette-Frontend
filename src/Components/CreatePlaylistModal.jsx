@@ -73,8 +73,6 @@ function CreatePlaylistModal({ show, onClose, confirmUpdate }) {
             user_id: localStorage.getItem('ID'),
             music_ids: selectedSongIds // Include the IDs of selected songs
         }
-
-        console.log(formData)
     
         cassette_api.post('/playlist/create', formData)
             .then(response => {

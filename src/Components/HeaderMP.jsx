@@ -92,6 +92,31 @@ function HeaderMP({ verified }) {
       // Handle error, such as displaying an error message
     }
   };
+  
+  const [audioBlob, setAudioBlob] = useState()
+
+  // useEffect(() => {
+  //   async function fetchAudioBlob() {
+  //     try {
+  //       // Fetch audio using Laravel route
+  //       const response = await fetch('http://localhost/api/audio');
+        
+  //       if (!response.ok) {
+  //         throw new Error('Network response was not ok');
+  //       }
+        
+  //       // Convert response to blob
+  //       const blob = await response.blob();
+  //       setAudioBlob(blob);
+  //     } catch (error) {
+  //       console.error('Error fetching audio blob:', error);
+  //     }
+  //   }
+  
+  //   fetchAudioBlob();
+  // }, []);
+
+  
 
   return (
     <header className="w-100 p-2 row m-0 text-light bg-black">
@@ -103,7 +128,7 @@ function HeaderMP({ verified }) {
       <div className="col-lg-2 col-md-2 col-sm-4 d-flex gap-2">
         <div className="logo-container d-flex align-items-center justify-content-start gap-2">
           <img src={logo} alt="cassette logo" className="logo" />
-          <h1 className="mb-0 ml-2" style={{ fontSize: '1.7rem' }}>Cassette</h1>
+          <h1 className="mb-0 ml-2" style={{ fontSize: '1.7rem', cursor: 'pointer' }} onClick={() => navigate('/')}>Cassette</h1>
         </div>
       </div>
 
