@@ -24,7 +24,6 @@ const RequestForm = ({ show, handleClose }) => {
       setRequesting(true);
       cassette_api.post('/artist_request', {"id": id})
         .then(response => {
-          console.log(response.data.message);
           setRequesting(false);
           setSent(true);
         })

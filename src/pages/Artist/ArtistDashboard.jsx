@@ -6,10 +6,13 @@ import styles from '../../assets/css/ArtistStudio/artist-dashboard.module.css'
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFire, faHeadphones, faUpload, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faFire, faHeadphones, faRankingStar, faUpload, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { toast, ToastContainer } from 'react-toastify'
 
 function ArtistDashboard() {
     const [music, setMusic] = useState([]);
+    const [totalPoints, setTotalPoints] = useState(null);
+
     const hasFetchedData = useRef(false);
 
     const formatDate = (dateString) => {
@@ -19,6 +22,8 @@ function ArtistDashboard() {
     };
 
     useEffect(() => {
+        toast.loading('Fetching data...', {theme: 'dark'});
+
         if (!hasFetchedData.current) {
             cassette_api.post('/listen/top-ten', { user_id: localStorage.getItem("ID") })
                 .then(response => {
@@ -34,10 +39,27 @@ function ArtistDashboard() {
                     }));
         
                     musicArray.sort((a, b) => b.points - a.points);
+
+                    
+                    // Sum up all points
+                    const totalPointsSum = musicArray.reduce((acc, curr) => acc + curr.points, 0);
+                    setTotalPoints(totalPointsSum);
+
                     setMusic(musicArray);
                 })
                 .catch(error => {
                     console.error('Error fetching top uploaded music: ', error);
+                })
+                .finally(() => {
+                    if(toast.isActive){
+                        toast.dismiss();
+                    }
+                })
+
+            hasFetchedData.current = true;
+            if(toast.isActive){
+                toast.dismiss();
+            }
                 });
 
             hasFetchedData.current = true;
@@ -61,6 +83,7 @@ function ArtistDashboard() {
     return (
         <ArtistLayout active={"Dashboard"}>
             <div className={`col-10 h-100 d-flex align-align-items-center justify-content-center p-3 overflow-auto ${styles['artistDashboard']}`}  style={{minHeight: '90vh', maxHeight: '90svh'}}>
+                <ToastContainer />
                 <div className="row w-100 d-flex flex-column justify-content-between align-align-items-center">
                     <div className="col-12 h-2 d-flex gap-2 mt-1" style={{flex: '.5', maxHeight: '30%'}}>
                         <div className="card text-center" style={{minWidth: '120px', flex: '1', boxShadow: '0 1px 24px #1c1c1c'}}>
@@ -77,7 +100,7 @@ function ArtistDashboard() {
                                 <p className='m-0'>Total Points</p>
                             </div>
                             <div className="card-body text-light d-flex align-items-center justify-content-center ">
-                                <h5 className='m-0'><span className={`${styles.followIcon}`}><FontAwesomeIcon icon={faFire} /></span>43048</h5>
+                                <h5 className='m-0'><span className={`${styles.followIcon}`}><FontAwesomeIcon icon={faFire} /></span>{totalPoints !== null ? totalPoints : 0}</h5>
                             </div>
                         </div>
 
@@ -87,6 +110,16 @@ function ArtistDashboard() {
                             </div>
                             <div className="card-body text-light d-flex align-items-center justify-content-center ">
                                 <h5 className='m-0'><span className={`${styles.followIcon}`}><FontAwesomeIcon icon={faUpload} /></span>69</h5>
+                            </div>
+                        </div>
+
+                        <div className="card text-center" style={{minWidth: '120px', flex: '1', boxShadow: '0 1px 24px #1c1c1c'}}>
+                        <div className={`card-header ${styles['card-header']}`}>
+                                <p className='m-0'>Artist Ranking</p>
+                            </div>
+                            <div className="card-body text-light d-flex align-items-center justify-content-center ">
+                                <h5 className='m-0'><span className={`${styles.followIcon}`}><FontAwesomeIcon icon={faRankingStar} /></span>1</h5>
+
                             </div>
                         </div>
                     </div>

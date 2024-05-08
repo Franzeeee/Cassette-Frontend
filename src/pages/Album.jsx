@@ -2,7 +2,7 @@ import React, { useEffect,useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import LayoutMP from "../Layout/LayoutMP";
 import "../assets/css/Playlist.css";
-import { faEdit, faPlayCircle, faTrashCan, faCheck, faAdd} from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faPlayCircle, faTrashCan, faCheck, faAdd, faSpinner} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PlaylistImg from "../assets/img/artist-img.jpg";
 import AlbumImg from "../assets/img/Cassettelogosq.png";
@@ -23,6 +23,9 @@ function Album() {
   const { index } = useParams();
   const [playlistTracks, setPlaylistTracks] = useState([]);
   const navigate = useNavigate();
+  const [fetching, setFetching] = useState(false);
+  const [page, setPage] = useState(2);
+  const [isFinalPage, setIsFinalPage] = useState(false)
 
   const [editTitle, setEditTitle] = useState(false);
   const [newTitle, setNewTitle] = useState("");
@@ -78,14 +81,17 @@ function Album() {
         cassette_api.get(`/albums/${index}`)
         .then(response => {
             const responseData = response.data;
+            const paginate = response.data.pagination;
             setPlaylistData({
             ...playlistData,
             name: responseData.title,
             songs: responseData.music.length,
-            image: responseData.cover_image
+            image: responseData.cover_image,
+            pagination: paginate
             });
             setPlaylistTracks(response.data.music)
             setCanEdit(userId == responseData.artist || role === "admin")
+            setIsFinalPage(paginate.current_page === paginate.last_page)
         })
         .catch(error => {
             console.log(error);
@@ -140,6 +146,21 @@ function Album() {
       setShowAddToPlaylist(true)
       setMusicToAdd(id)
     }
+    const fetchTracks = () => {
+      setFetching(true)
+      cassette_api.get(`/albums/${index}?page=${page}&per_page=10`)
+        .then(response => {
+          const fetchedTrack = response.data.music;
+          setPlaylistTracks([...playlistTracks,...fetchedTrack]);
+          setPage(prev => prev + 1)
+        })
+        .catch(error => {
+          toast.error(error);
+        })
+        .finally(() => {
+          setFetching(false);
+        });
+    }
     
 
   return (
@@ -161,7 +182,7 @@ function Album() {
               </>
             )
           }
-          <ToastContainer />
+          <ToastContainer containerId={"album"}/>
           <div className="top-mid-container">
             <div className="p-image">
               <img src={playlistData.image} alt="Playlist" />
@@ -245,6 +266,7 @@ function Album() {
                 ))}
               </tbody>
             </table>
+            <p className={`w-100 text-center viewMore ${isFinalPage && "d-none"}`} onClick={fetchTracks}>Load More Tracks {fetching && <FontAwesomeIcon icon={faSpinner} spin/>} </p>
           </div>
         </div>
       </div>

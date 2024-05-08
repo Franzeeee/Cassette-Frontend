@@ -12,6 +12,8 @@ import { Tooltip } from "@mui/material";
 import DeletePlaylistModal from "../Components/DeletePlaylistModal";
 import EditPlaylistModal from "../Components/EditPlaylistModal";
 import { toast, ToastContainer } from 'react-toastify'
+import '../App.css'
+
 
 function Playlist() {
 
@@ -38,7 +40,6 @@ function Playlist() {
       .then(response => {
         const playlistDetail = response.data.playlist;
         const fetchedTracks = response.data.music;
-
         // Update playlistData state
         setPlaylistData({
           type: "Playlist",
@@ -49,6 +50,8 @@ function Playlist() {
 
         // Update playlistTracks state
         setPlaylistTracks(fetchedTracks);
+        console.log(fetchedTracks);
+
       })
       .catch(err => {
         console.log(err)
@@ -125,13 +128,14 @@ function Playlist() {
                   <th>#</th>
                   <th>Title</th>
                   <th>Album</th>
-                  <th>Duration</th>
-                  <th>Date Added</th>
+                  <th className="playlist-duration">Duration</th>
+                  <th className="playlist-date">Date Added</th>
+
                 </tr>
               </thead>
               <tbody>
                 {playlistTracks.map((track, index) => (
-                  <tr id={`playlist-row-${index}`} key={index} className="playlist-tr" onMouseEnter={() => setHoveredIndex(index)} onMouseLeave={() => setHoveredIndex(null)}>
+                  <tr id={`playlist-row-${index}`} key={index} className={`${track.deleted_at !== null && "deleted"}`} onMouseEnter={() => track.deleted_at === null && setHoveredIndex(index)} onMouseLeave={() => setHoveredIndex(null)}>
                     <td>{index + 1}</td>
                     <td>
                       <div className="p-track-info">
