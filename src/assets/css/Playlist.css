@@ -302,3 +302,18 @@
 .playlist-trackDeleted {
   display: none !important;
 }
+.viewMore {
+  transition: all .3s ease;
+  cursor: pointer;
+  margin-top: 5px !important;
+  margin-bottom: 0;
+  text-decoration: underline;
+}
+.viewMore:hover {
+  color: #ff0000;
+}
+.hideLoadText {
+  color: red !important;
+  display: none !important;
+} 
+
