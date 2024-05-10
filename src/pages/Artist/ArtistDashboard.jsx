@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import ArtistLayout from '../../Layout/ArtistLayout';
 import cassette_api from '../../api';
 import styles from '../../assets/css/ArtistStudio/artist-dashboard.module.css'
-
+import { useNavigate } from 'react-router-dom';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,6 +12,11 @@ import { toast, ToastContainer } from 'react-toastify'
 function ArtistDashboard() {
     const [music, setMusic] = useState([]);
     const [totalPoints, setTotalPoints] = useState(null);
+    const [totalAlbum, setTotalAlbum] = useState(0)
+    const [rank, setRank] = useState(0)
+    const navigate = useNavigate();
+    const userId = localStorage.getItem('ID');
+
 
     const hasFetchedData = useRef(false);
 
@@ -22,7 +27,7 @@ function ArtistDashboard() {
     };
 
     useEffect(() => {
-        toast.loading('Fetching data...', {theme: 'dark'});
+        toast.loading('Fetching top music...', {theme: 'dark'});
 
         if (!hasFetchedData.current) {
             cassette_api.post('/listen/top-ten', { user_id: localStorage.getItem("ID") })
@@ -55,12 +60,28 @@ function ArtistDashboard() {
                         toast.dismiss();
                     }
                 })
+            
+            // Fetch the total albums posted
+            cassette_api.get(`/album/all/${userId}`)
+            .then(response => {
+                setTotalAlbum(response.data)
+            })
+            .catch(error => {
+                console.error('Error fetching albums');
+            })
+
+            cassette_api.get(`/artist-rankings/${userId}`)
+                .then(response => {
+                    setRank(response.data.rank)
+                })
+                .catch(error => {
+                    console.error('Error fetching artist rankings: ', error);
+                })
 
             hasFetchedData.current = true;
             if(toast.isActive){
                 toast.dismiss();
             }
-                });
 
             hasFetchedData.current = true;
         }
@@ -71,11 +92,11 @@ function ArtistDashboard() {
     const customBody = (rowData) => {
         // Return the custom content for each row
         const handleButtonClick = (data) => {
-
+            navigate(`/album/${data}`)
         }
         return (
             <div className={`d-flex align-align-items-center justify-content-center`}>
-                <button className={`${styles.viewButton}`} onClick={() => handleButtonClick(rowData)}>View Album {rowData}</button>
+                <button className={`${styles.viewButton}`} onClick={() => handleButtonClick(rowData)}>View Album</button>
             </div>
         );
     };
@@ -91,7 +112,7 @@ function ArtistDashboard() {
                                 <p className='m-0'>Follows</p>
                             </div>
                             <div className="card-body text-light d-flex align-items-center justify-content-center ">
-                                <h5 className='m-0'><span className={`${styles.followIcon}`}><FontAwesomeIcon icon={faUsers} /></span>24760</h5>
+                                <h5 className='m-0'><span className={`${styles.followIcon}`}><FontAwesomeIcon icon={faUsers} /></span>24760(static)</h5>
                             </div>
                         </div>
 
@@ -106,10 +127,10 @@ function ArtistDashboard() {
 
                         <div className="card text-center" style={{minWidth: '120px', flex: '1', boxShadow: '0 1px 24px #1c1c1c'}}>
                         <div className={`card-header ${styles['card-header']}`}>
-                                <p className='m-0'>Content Posted</p>
+                                <p className='m-0'>Published Album</p>
                             </div>
                             <div className="card-body text-light d-flex align-items-center justify-content-center ">
-                                <h5 className='m-0'><span className={`${styles.followIcon}`}><FontAwesomeIcon icon={faUpload} /></span>69</h5>
+                                <h5 className='m-0'><span className={`${styles.followIcon}`}><FontAwesomeIcon icon={faUpload} /></span>{totalAlbum}</h5>
                             </div>
                         </div>
 
@@ -118,7 +139,7 @@ function ArtistDashboard() {
                                 <p className='m-0'>Artist Ranking</p>
                             </div>
                             <div className="card-body text-light d-flex align-items-center justify-content-center ">
-                                <h5 className='m-0'><span className={`${styles.followIcon}`}><FontAwesomeIcon icon={faRankingStar} /></span>1</h5>
+                                <h5 className='m-0'><span className={`${styles.followIcon}`}><FontAwesomeIcon icon={faRankingStar} /></span>{rank}</h5>
 
                             </div>
                         </div>

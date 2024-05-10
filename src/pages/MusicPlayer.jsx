@@ -76,18 +76,26 @@ function MusicPlayer() {
   const handleTrackChange = (index) => {
     setCurrentTrackIndex(index);
     setTotalPoints(0); // Reset points when changing tracks
+    const url = tracks[currentTrackIndex].file_name;
+    fetchAudioBlob(url.replace("http://localhost/music/", ""));
   };
 
   const handleNextTrack = () => {
     if (currentTrackIndex === tracks.length - 1) {
       setCurrentTrackIndex(0);
+      const url = tracks[currentTrackIndex].file_name;
+      fetchAudioBlob(url.replace("http://localhost/music/", ""));
     } else {
       setCurrentTrackIndex(currentTrackIndex + 1);
+      const url = tracks[currentTrackIndex].file_name;
+      fetchAudioBlob(url.replace("http://localhost/music/", ""));
     }
   }
   const handlePrevTrack = () => {
     if( currentTrackIndex > 0){
       setCurrentTrackIndex(currentTrackIndex - 1);
+      const url = tracks[currentTrackIndex].file_name;
+      fetchAudioBlob(url.replace("http://localhost/music/", ""));
     }
   }
 
@@ -101,14 +109,15 @@ function MusicPlayer() {
 
   useEffect(() => {
     // Fetch the audio blob only if it hasn't been fetched yet
-    if (!audioBlobFetched) {
-      fetchAudioBlob();
+    if (!audioBlobFetched && tracks.length > 0) {
+      const url = tracks[currentTrackIndex].file_name;
+      fetchAudioBlob(url.replace("http://localhost/music/", ""));
     }
-  }, [audioBlobFetched]);
+  }, [audioBlobFetched, currentTrackIndex, tracks]);
     
-  async function fetchAudioBlob() {
+  async function fetchAudioBlob(file) {
     try {
-      const response = await fetch('http://localhost/api/audio');
+      const response = await fetch(`http://localhost/api/audio/${file}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
