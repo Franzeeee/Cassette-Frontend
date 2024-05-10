@@ -1,0 +1,70 @@
+.ResultsContainer {
+    height: 100%;
+}
+
+.musicContainer,
+.artistContainer,
+.videocastContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    height: 40vh;
+    padding: 15px 15px 0px 15px;
+}
+
+.musicHeader,
+.artistHeader,
+.videocastHeader {
+    font-size: 25px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 15px;
+}
+
+.musicCards,
+.artistCards,
+.videocastCards {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    gap: 30px;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.musicCards::-webkit-scrollbar,
+.artistCards::-webkit-scrollbar,
+.videocastCards::-webkit-scrollbar {
+    height: 0px;
+}
+
+.card {
+    flex: 0 0 auto; /* Allow cards to shrink */
+    border-radius: 5px;
+    width: 15vw;
+    height: 100%;
+    margin-bottom: 20px; 
+    display: flex;
+    flex-direction: column;
+}
+
+.cardImage {
+    width: 105px; 
+    height: 105px; 
+    object-fit: cover; 
+    margin: 0 auto; 
+    position: relative; 
+    top: 90px;
+    left: 63px;
+    transform: rotate(30deg); 
+    border-radius: 6px;
+}
+
+h5 {
+    padding: 10px 0px 10px 15px;
+    color: #cfcfcf;
+    font-size: 16px;
+    position: relative;
+    top: -100px;
+    right: 5px;
+}

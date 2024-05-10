@@ -44,12 +44,12 @@ function ArtistDashboard() {
                     }));
         
                     musicArray.sort((a, b) => b.points - a.points);
-
+    
                     
                     // Sum up all points
                     const totalPointsSum = musicArray.reduce((acc, curr) => acc + curr.points, 0);
                     setTotalPoints(totalPointsSum);
-
+    
                     setMusic(musicArray);
                 })
                 .catch(error => {
@@ -87,20 +87,20 @@ function ArtistDashboard() {
         }
     }, []);
     
-
     // Custom Column for the data table
     const customBody = (rowData) => {
         // Return the custom content for each row
         const handleButtonClick = (data) => {
             navigate(`/album/${data}`)
         }
+
         return (
             <div className={`d-flex align-align-items-center justify-content-center`}>
                 <button className={`${styles.viewButton}`} onClick={() => handleButtonClick(rowData)}>View Album</button>
             </div>
         );
     };
-
+    
     return (
         <ArtistLayout active={"Dashboard"}>
             <div className={`col-10 h-100 d-flex align-align-items-center justify-content-center p-3 overflow-auto ${styles['artistDashboard']}`}  style={{minHeight: '90vh', maxHeight: '90svh'}}>
