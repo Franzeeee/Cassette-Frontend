@@ -17,6 +17,7 @@ function HeaderMP({ verified }) {
   const id = localStorage.getItem("ID")
   const [requestStatus, setRequestStatus] = useState(false);
   const navigate = useNavigate();
+  const [searchValue, setSearchValue] = useState('')
 
   // Function to handle menu click
   const handleMenuClick = (event) => {
@@ -92,31 +93,18 @@ function HeaderMP({ verified }) {
       // Handle error, such as displaying an error message
     }
   };
-  
-  const [audioBlob, setAudioBlob] = useState()
 
-  // useEffect(() => {
-  //   async function fetchAudioBlob() {
-  //     try {
-  //       // Fetch audio using Laravel route
-  //       const response = await fetch('http://localhost/api/audio');
-        
-  //       if (!response.ok) {
-  //         throw new Error('Network response was not ok');
-  //       }
-        
-  //       // Convert response to blob
-  //       const blob = await response.blob();
-  //       setAudioBlob(blob);
-  //     } catch (error) {
-  //       console.error('Error fetching audio blob:', error);
-  //     }
-  //   }
-  
-  //   fetchAudioBlob();
-  // }, []);
+  const handleSearchValue = (e) => {
+    const value = e.target.value;
+    setSearchValue(value);
+  }
 
-  
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      // Call a function to handle the search
+      navigate(`/search/${searchValue}`)
+    }
+  };
 
   return (
     <header className="w-100 p-2 row m-0 text-light" style={{ backgroundColor: '#080808' }}>
@@ -150,6 +138,9 @@ function HeaderMP({ verified }) {
             type="text"
             placeholder="Search for songs, artists etc."
             className="search-input"
+            value={searchValue}
+            onChange={handleSearchValue}
+            onKeyDown={handleKeyPress}
           />
         </div>
       </div>

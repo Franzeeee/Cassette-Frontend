@@ -79,7 +79,7 @@ function App() {
           <Route path="/music" element={<Music />} />
           <Route path="/playlists" element={<Playlists />} /> 
           <Route path='/profile' element={<Profile />}/>       {/* Profile Route */}
-          <Route path='/search' element={<Search />}/> 
+          <Route path='/search/:search' element={<Search />}/> 
           
           {/* Rooutes for Music Cards Categories */}
           <Route path="/music/top-charts" element={<TopCharts />} />

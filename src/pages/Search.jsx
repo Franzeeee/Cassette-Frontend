@@ -1,10 +1,15 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import LayoutMP from "../Layout/LayoutMP";
 import styles from '../assets/css/search.module.css';
 import CardImage from "../assets/img/Cassettelogosq.png";
+import cassette_api from "../api";
+import { ToastContainer, toast } from "react-toastify";
 
 function Search() {
+
+    const {search} = useParams()
+    const navigate = useNavigate()
 
     const generateRandomColor = () => {
         const baseColor = "#c20000"; 
@@ -15,16 +20,9 @@ function Search() {
         return newColor;
     };
 
-    
-    const dummySongs = [
-        { id: 1, songName: "Song 1" },
-        { id: 2, songName: "Song 2" },
-        { id: 3, songName: "Song 3" },
-        { id: 4, songName: "Song 4" },
-        { id: 5, songName: "Song 5" },
-        { id: 6, songName: "Song 6" }
-
-    ];
+    const [albums, setAlbums] = useState([]);
+    const [artists, setArtists] = useState([]);
+    const [tracks, setTracks] = useState([]);
 
     const dummyArtists = [
         { id: 1, artistName: "Artist 1" },
@@ -45,39 +43,77 @@ function Search() {
         { id: 6, VideoCastName: "Videocast 6" }        
     ];
 
+    useEffect(() => {
+        toast.loading("Fetching Search Result...")
+        cassette_api.get(`/search/${search}`)
+        .then(response => {
+            const albumsFetched = response.data.albums;
+            const artistFetched = response.data.users;
+            const musicFetched = response.data.music;
+
+            setAlbums([...albumsFetched])
+            setArtists([...artistFetched])
+            setTracks([...musicFetched])
+            console.log(albumsFetched)
+        })
+        .catch(error => {
+            console.log(error)
+        })
+        .finally(() => {
+            toast.dismiss();
+        })
+
+    }, [search]);
+
+    useEffect(() => {
+        console.log("Albums: ", albums)
+        console.log("Artists: ",artists)
+        console.log("Music: " ,tracks)
+    },[albums, artists, tracks])
     return (
         <LayoutMP activePage={"Home"}>
             <div className={styles.ResultsContainer}>
+                <ToastContainer  containerId={"search"} />
                 <div className={styles.musicContainer}>
-                    <div className={styles.musicHeader}>Music</div>
+                    <div className={styles.musicHeader}>Album</div>
                     <div className={styles.musicCards}>
-                        {dummySongs.map(song => (
-                            <div className={styles.card} key={song.id} style={{ backgroundColor: generateRandomColor() }}>
+                        {albums.length > 0 ? albums.map(album => (
+                            <div className={styles.card} key={album.id} 
+                                style={{ backgroundImage: `url(${album.cover_image})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}
+                                onClick={() => navigate(`/album/${album.id}`)
+                            }>
                                 <img src={CardImage} alt="Song" className={styles.cardImage} />
                                 <div className={styles.cardContent}>
-                                    <h5>{song.songName}</h5>
+                                    <h5>{album.title}</h5>
                                 </div>
                             </div>
-                        ))}
+                        )): 
+                        <h4 className="m-0 text-danger">No Result Found</h4>
+                        }
                     </div>
                 </div>
 
                 <div className={styles.artistContainer}>
                     <div className={styles.artistHeader}>Artist</div>
                     <div className={styles.artistCards}>
-                        {dummyArtists.map(artist => (
-                            <div className={styles.card} key={artist.id} style={{ backgroundColor: generateRandomColor() }}>
+                        {artists.length > 0 ? artists.map(artist => (
+                            <div className={styles.card} key={artist.id} style={{ backgroundColor: generateRandomColor() }} onClick={() => navigate('')}>
                                 <img src={CardImage} alt="Artist" className={styles.cardImage} />
                                 <div className={styles.cardContent}>
-                                    <h5>{artist.artistName}</h5>
+                                    <h5>{artist.name}</h5>
                                 </div>
                             </div>
-                        ))}
+                        )) : 
+                        <h4 className="m-0 text-danger">No Result Found</h4>
+                        }
                     </div>
                 </div>
 
                 <div className={styles.videocastContainer}>
-                    <div className={styles.videocastHeader}>Videocast</div>
+                    <div className={styles.videocastHeader}>
+                        <h3>Song</h3> 
+                        <h5>View All</h5>
+                    </div>
                     <div className={styles.videocastCards}>
                         {dummyVideocasts.map(videocast => (
                             <div className={styles.card} key={videocast.id} style={{ backgroundColor: generateRandomColor() }}>

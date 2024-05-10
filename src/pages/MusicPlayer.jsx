@@ -16,29 +16,29 @@ function MusicPlayer() {
 
   useEffect( () => {
 
-    // if(totalPoints === 0 && tracks.length > 0){
+    if(totalPoints === 0 && tracks.length > 0){
       
-    //   cassette_api.post('/listen/record', { music_id: tracks[currentTrackIndex].id, points: 0 })
-    //   .then(response => {
-    //     console.log('Points recorded:', response.data);
-    //   })
-    //   .catch(error => {
-    //     console.error('Error recording points:', error);
-    //   });
+      cassette_api.post('/listen/record', { music_id: tracks[currentTrackIndex].id, points: 0 })
+      .then(response => {
+        console.log('Points recorded:', response.data);
+      })
+      .catch(error => {
+        console.error('Error recording points:', error);
+      });
 
-    // }else if(totalPoints > 0 && tracks.length > 0){
-    //   cassette_api.post('/listen/record', { music_id: tracks[currentTrackIndex].id, points: totalPoints })
-    //   .then(response => {
-    //     console.log('Points recorded:', response.data);
-    //   })
-    //   .catch(error => {
-    //     console.error('Error recording points:', error);
-    //   });
-    // }
+    }else if(totalPoints > 0 && tracks.length > 0){
+      cassette_api.post('/listen/record', { music_id: tracks[currentTrackIndex].id, points: totalPoints })
+      .then(response => {
+        console.log('Points recorded:', response.data);
+      })
+      .catch(error => {
+        console.error('Error recording points:', error);
+      });
+    }
 
-    // setTimeout(() => {
-    //   setTotalPoints(prev => (prev + 1))
-    // },10000)
+    setTimeout(() => {
+      setTotalPoints(prev => (prev + 1))
+    },10000)
   } ,[])
 
   useEffect(() => {

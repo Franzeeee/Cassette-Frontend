@@ -27,3 +27,13 @@
     max-width: 50px !important;
 }
 
+.MuiPagination-root {
+    background-color: transparent !important;
+}
+.MuiButtonBase-root {
+    color: white !important;
+    
+}
+.MuiPagination-ul:hover {
+    border: none;
+}

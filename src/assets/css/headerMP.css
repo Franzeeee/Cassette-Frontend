@@ -151,3 +151,9 @@
 .menu-text {
   vertical-align: middle; /* Align text vertically in the middle */
 }
+.greyedText {
+  color: #727272;
+}
+.greyedText:hover {
+  color: #727272 !important;
+}

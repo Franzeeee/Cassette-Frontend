@@ -20,7 +20,24 @@
     color: #ffffff;
     margin-bottom: 15px;
 }
+.videocastHeader {
+    display: flex;
+    font-size: 25px !important;
+    font-weight: 600;
+    width: 100%;
+    justify-content: space-between;
+}
+.videocastHeader {
 
+}
+.videocastHeader h5 {
+    top: 0 !important;
+    cursor: pointer;
+    transition: all .3s ease;
+}
+.videocastHeader h5:hover {
+    color: #ff0000b3;
+}
 .musicCards,
 .artistCards,
 .videocastCards {
@@ -30,12 +47,13 @@
     gap: 30px;
     overflow-x: auto;
     overflow-y: hidden;
+    padding-block-end: 10px;
 }
 
 .musicCards::-webkit-scrollbar,
 .artistCards::-webkit-scrollbar,
 .videocastCards::-webkit-scrollbar {
-    height: 0px;
+    height: 10px;
 }
 
 .card {
@@ -46,6 +64,8 @@
     margin-bottom: 20px; 
     display: flex;
     flex-direction: column;
+    overflow: hidden !important;
+    cursor: pointer;
 }
 
 .cardImage {
@@ -60,7 +80,7 @@
     border-radius: 6px;
 }
 
-h5 {
+.ResultsContainer h5 {
     padding: 10px 0px 10px 15px;
     color: #cfcfcf;
     font-size: 16px;
