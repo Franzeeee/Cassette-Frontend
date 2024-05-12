@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import ArtistLayout from '../../Layout/ArtistLayout';
@@ -7,28 +7,58 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import defaultCover from '../../assets/img/default.png';
 import Pagination from '@mui/material/Pagination'; // Import Pagination component
+import cassette_api from '../../api';
+import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 function ArtistContents() {
     // State variables
     const [selectedTab, setSelectedTab] = useState(0);
-    const [musicData, setMusicData] = useState([
-        { id: 1, albumCover: defaultCover, title: 'Song 1', dateUploaded: '2024-04-13', totalListens: 100, status: 'Posted' },
-        { id: 2, albumCover: defaultCover, title: 'Song 2', dateUploaded: '2024-04-12', totalListens: 200, status: 'Draft' },
-        { id: 3, albumCover: defaultCover, title: 'move', dateUploaded: '2024-04-11', totalListens: 550, status: 'Posted' },
-        { id: 4, albumCover: defaultCover, title: 'gague', dateUploaded: '2024-04-11', totalListens: 450, status: 'Posted' },
-        { id: 5, albumCover: defaultCover, title: 'Song 5', dateUploaded: '2024-04-11', totalListens: 150, status: 'Posted' },
-        { id: 6, albumCover: defaultCover, title: 'Song 6', dateUploaded: '2024-04-11', totalListens: 850, status: 'Posted' },
-        { id: 7, albumCover: defaultCover, title: 'deadline', dateUploaded: '2024-04-11', totalListens: 850, status: 'Removed' },
-        { id: 8, albumCover: defaultCover, title: 'please', dateUploaded: '2024-04-11', totalListens: 850, status: 'Posted' },
-        { id: 9, albumCover: defaultCover, title: 'Song 6', dateUploaded: '2024-04-11', totalListens: 850, status: 'Posted' },
-
-    ]);
+    const [musicData, setMusicData] = useState([])
     const [anchorEl, setAnchorEl] = useState(null);
     const [deleteId, setDeleteId] = useState(null);
     const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
     const [searchQuery, setSearchQuery] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
-    const [rowsPerPage] = useState(5); // Number of items per page
+    const [rowsPerPage] = useState(5); // Number of items per page\
+    const navigate = useNavigate()
+    
+    const userId = localStorage.getItem('ID');
+
+    function formatDate(inputDate) {
+        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        const date = new Date(inputDate);
+        const month = months[date.getMonth()];
+        const day = date.getDate();
+        const year = date.getFullYear();
+    
+        return `${month} ${day}, ${year}`;
+    }
+
+    useEffect(() => {
+        toast.loading("Fetching Data...");
+        cassette_api.get(`/artist/album/${userId}`)
+            .then(response => {
+                const musicFetched = response.data
+                setMusicData([
+                    ...musicFetched.map((item, index) => ({
+                        id: item.id,
+                        albumCover: item.cover_image,
+                        title: item.title,
+                        dateUploaded: formatDate(item.created_at), // Assuming this property exists in the fetched data
+                        totalListens: item.points, // Assuming this property exists in the fetched data
+                        status: item.deleted_at === null ? "Active" : "Deleted", // Assuming this property exists in the fetched data
+                        position: index + 1
+                    }))
+                ]);
+            })
+            .catch(error => {
+                console.error('Error fetching albums');
+            })
+            .finally(() => {
+                toast.dismiss()
+            });
+    },[])
 
     // Pagination handler
     const handlePageChange = (event, value) => {
@@ -103,7 +133,7 @@ function ArtistContents() {
             <TableRow key={row.id} style={{ backgroundColor: index % 2 === 0 ? '#f2f2f2' : 'white' }}>
                 <TableCell onClick={() => requestSort('id')} className={getClassNamesFor('id')}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '50px' }}>
-                        #{row.id}
+                        #{row.position}
                     </div>
                 </TableCell>
                 <TableCell><img src={row.albumCover} alt="Album Cover" style={{ width: '50px', height: 'auto' }} /></TableCell>
@@ -122,10 +152,10 @@ function ArtistContents() {
                         {row.totalListens}
                     </div>
                 </TableCell>
-                <TableCell>{row.status}</TableCell>
+                <TableCell style={row.status === 'Deleted' ? {color: 'red'} : {color: 'green'}}>{row.status}</TableCell>
                 <TableCell>
                     <IconButton onClick={(event) => handleClick(event, row.id)}>
-                        <MoreVertIcon style={{ fontSize: '20px' }} />
+                        <MoreVertIcon style={{ fontSize: '20px', color: "black !important" }} />
                     </IconButton>
                     <Menu
                         anchorEl={anchorEl}
@@ -149,7 +179,7 @@ function ArtistContents() {
                         }}
                     >
                         <MenuItem onClick={() => handleDelete(deleteId)} style={{ backgroundColor: '#ffffff' }}>Delete</MenuItem>
-                        <MenuItem style={{ backgroundColor: '#ffffff' }}>View</MenuItem>
+                        <MenuItem style={{ backgroundColor: '#ffffff', }} className={`${row.status === 'Deleted' ? " d-none" : ""}`} onClick={() => navigate(`/album/${row.id}`)}>View</MenuItem>
                     </Menu>
                 </TableCell>
             </TableRow>
@@ -159,6 +189,7 @@ function ArtistContents() {
     return (
         <ArtistLayout active={"Content"}>
             <div className="col-10 h-100 d-flex flex-column align-items-start justify-content-center p-4">
+                <ToastContainer containerId={"content"} />
                 {/* Add search box */}
                 <TextField
                     label="Search"
@@ -212,7 +243,7 @@ function ArtistContents() {
                                                     Date Uploaded {sortConfig.key === 'dateUploaded' && (sortConfig.direction === 'ascending' ? '\u25B2' : '\u25BC')}
                                                 </TableCell>
                                                 <TableCell onClick={() => requestSort('totalListens')} className={getClassNamesFor('totalListens')}>
-                                                    Total Listens {sortConfig.key === 'totalListens' && (sortConfig.direction === 'ascending' ? '\u25B2' : '\u25BC')}
+                                                    Total Points {sortConfig.key === 'totalListens' && (sortConfig.direction === 'ascending' ? '\u25B2' : '\u25BC')}
                                                 </TableCell>
                                                 <TableCell>Status</TableCell>
                                                 <TableCell></TableCell>

@@ -112,17 +112,19 @@ function Search() {
                 <div className={styles.videocastContainer}>
                     <div className={styles.videocastHeader}>
                         <h3>Song</h3> 
-                        <h5>View All</h5>
+                        <h5 className={`${tracks.length > 10 ? "opacity-100 " : "opacity-0"}`}>View All</h5>
                     </div>
                     <div className={styles.videocastCards}>
-                        {dummyVideocasts.map(videocast => (
-                            <div className={styles.card} key={videocast.id} style={{ backgroundColor: generateRandomColor() }}>
-                                <img src={CardImage} alt="Videocast" className={styles.cardImage} />
+                        {tracks.length > 0 ? tracks.slice(0, 10).map(track => (
+                            <div className={styles.card} key={track.id} style={{ backgroundColor: generateRandomColor() }} onClick={() => navigate(`/album/${track.album_id}`)}>
+                                <img src={CardImage} alt="Track" className={styles.cardImage} />
                                 <div className={styles.cardContent}>
-                                    <h5>{videocast.VideoCastName}</h5>
+                                    <h5>{track.title}</h5>
                                 </div>
                             </div>
-                        ))}
+                        )) : 
+                        <h4 className="m-0 text-danger">No Result Found</h4>
+                        }
                     </div>
                 </div>
             </div>

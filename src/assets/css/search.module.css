@@ -88,3 +88,6 @@
     top: -100px;
     right: 5px;
 }
+.show {
+    opacity: 1;
+}

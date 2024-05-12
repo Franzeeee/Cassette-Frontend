@@ -125,7 +125,7 @@ function ArtistDashboard() {
                             </div>
                         </div>
 
-                        <div className="card text-center" style={{minWidth: '120px', flex: '1', boxShadow: '0 1px 24px #1c1c1c'}}>
+                        <div className="card text-center" style={{minWidth: '120px', flex: '1', boxShadow: '0 1px 24px #1c1c1c'}} onClick={() => navigate('/studio/content')}>
                         <div className={`card-header ${styles['card-header']}`}>
                                 <p className='m-0'>Published Album</p>
                             </div>

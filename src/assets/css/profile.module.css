@@ -11,6 +11,14 @@
     height: 40vh;
     padding: 30px 0px 20px 40px;
     margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+.profileHeader input {
+    padding: 5px !important;
+    color: black;
+    font-size: 1rem;
+    width: 20%;
 }
   
 .profileFooter {
@@ -118,3 +126,4 @@
 .playButton:hover {
     background-color: #d40909;
 }
+
